@@ -23,7 +23,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    session: ({ session, token }) => {
+    session: ({ session }) => {
       return {
         ...session,
         user: {
