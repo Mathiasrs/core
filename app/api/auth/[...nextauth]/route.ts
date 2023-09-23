@@ -40,7 +40,6 @@ export const authOptions: NextAuthOptions = {
       await prisma.account.create({ data: account })
     },
     session: ({ session, token }) => {
-      console.log(token)
       return {
         ...session,
         user: {
