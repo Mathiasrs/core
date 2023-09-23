@@ -8,7 +8,7 @@ import SlackProvider from "next-auth/providers/slack"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import prisma from "@/lib/prisma"
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
 
   secret: process.env.SECRET,
