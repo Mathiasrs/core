@@ -20,25 +20,9 @@ export const authOptions: NextAuthOptions = {
     SlackProvider({
       clientId: process.env.SLACK_CLIENT_ID,
       clientSecret: process.env.SLACK_CLIENT_SECRET,
-
-      account: {
-        accessToken: null,
-        // Omit access_token field for Slack
-      },
     }),
   ],
   callbacks: {
-    oauth: async (params) => {
-      const { account } = params
-
-      // Remove for Slack
-      if (account.provider === "slack") {
-        delete account.accessToken
-      }
-
-      // Create account
-      await prisma.account.create({ data: account })
-    },
     session: ({ session, token }) => {
       return {
         ...session,
