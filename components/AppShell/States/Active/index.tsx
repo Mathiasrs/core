@@ -64,7 +64,7 @@ export default function Active({ user, session, children }: any) {
                 className={clsx(
                   "min-w-40 text-md flex items-center justify-items-center gap-2 pl-6 text-zinc-900  dark:text-zinc-400",
                   {
-                    "border-l-2 border-green-500 dark:border-secondary pr-10":
+                    "border-l-2 border-green-500 pr-10":
                       pathname &&
                       (item.href === "/" ? pathname === item.href : pathname.startsWith(item.href)),
                   },
@@ -169,7 +169,7 @@ export default function Active({ user, session, children }: any) {
                 className={clsx(
                   "flex flex-col items-center justify-items-center gap-1 py-2 text-xs text-zinc-900 dark:text-zinc-300 mt-1",
                   {
-                    "-b-2 border-green-500 dark:border-secondary":
+                    "border-b-2 border-green-500":
                       pathname &&
                       (item.href === "/" ? pathname === item.href : pathname.startsWith(item.href)),
                   }
