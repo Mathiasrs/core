@@ -23,11 +23,13 @@ const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    session: ({ session }) => {
+    session: ({ session, token }) => {
       return {
         ...session,
         user: {
           ...session.user,
+          id: token.id,
+          randomKey: token.randomKey,
         },
       }
     },
@@ -36,6 +38,7 @@ const authOptions: NextAuthOptions = {
         const u = user as unknown as any
         return {
           ...token,
+          id: u.id,
           randomKey: u.randomKey,
         }
       }
@@ -45,4 +48,4 @@ const authOptions: NextAuthOptions = {
 }
 
 const handler = NextAuth(authOptions)
-export { handler as GET, handler as POST }
+export { handler as GET, handler as POST, authOptions }
