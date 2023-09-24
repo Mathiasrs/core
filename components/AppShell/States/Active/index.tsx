@@ -64,7 +64,7 @@ export default function Active({ user, session, children }: any) {
                 className={clsx(
                   "min-w-40 text-md flex items-center justify-items-center gap-2 pl-6 text-zinc-900  dark:text-zinc-400",
                   {
-                    "border-l-2 border-blue-500 dark:border-secondary pr-10":
+                    "border-l-2 border-green-500 dark:border-secondary pr-10":
                       pathname &&
                       (item.href === "/" ? pathname === item.href : pathname.startsWith(item.href)),
                   },
@@ -160,8 +160,8 @@ export default function Active({ user, session, children }: any) {
       </main>
 
       {/* Small screens*/}
-      <aside className="fixed bottom-0 left-0 z-20 w-full bg-zinc-200/20 pt-1 ring ring-zinc-100 backdrop-blur-lg dark:bg-zinc-800/30 dark:ring-zinc-800 lg:hidden">
-        <div className="flex justify-between gap-4 px-8">
+      <aside className="absolute inset-x-0 bottom-0 m-4 bg-white shadow-lg ring-1 ring-zinc-100 dark:bg-zinc-950 dark:ring-zinc-900 rounded-md z-50">
+        <div className="flex justify-between gap-4 px-8 ">
           {navigation(user)
             .filter((item: any) => item.isMobile)
             .map((item: any) => (
@@ -169,9 +169,9 @@ export default function Active({ user, session, children }: any) {
                 key={item.index}
                 href={item.href}
                 className={clsx(
-                  "flex flex-col items-center justify-items-center gap-1 py-2 text-xs text-zinc-900 dark:text-zinc-300",
+                  "flex flex-col items-center justify-items-center gap-1 py-2 text-xs text-zinc-900 dark:text-zinc-300 mt-1",
                   {
-                    "border-b-2 border-blue-500 dark:border-secondary":
+                    "-b-2 border-green-500 dark:border-secondary":
                       pathname &&
                       (item.href === "/" ? pathname === item.href : pathname.startsWith(item.href)),
                   }
@@ -198,7 +198,7 @@ export default function Active({ user, session, children }: any) {
 
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="flex flex-col items-center justify-items-center gap-1 py-2 text-xs text-zinc-900 dark:text-zinc-300"
+            className="flex flex-col items-center justify-items-center gap-1 py-2 text-xs text-zinc-900 dark:text-zinc-300 mt-1"
           >
             <FaBars className="text-zinc-950 dark:text-white w-5 h-5" />
             <span className="text-zinc-950 dark:text-white">More</span>
@@ -211,10 +211,10 @@ export default function Active({ user, session, children }: any) {
           initial={{ y: "100%", zIndex: 0 }}
           animate={isMenuOpen ? "open" : "closed"}
           variants={variants}
-          className="fixed inset-x-0 bottom-0 z-10 mb-16 flex justify-between rounded-t-2xl bg-zinc-200/20 py-2 ring ring-zinc-200 backdrop-blur-lg dark:bg-zinc-900/60 dark:ring-zinc-800 lg:hidden"
+          className="absolute inset-x-0 bottom-0 m-4 mb-16 bg-white ring-1 ring-zinc-100 dark:bg-zinc-950 dark:ring-zinc-900 rounded-md z-50"
         >
           <nav className="h-full w-full p-2 text-zinc-900 dark:text-white">
-            <div className="b flex items-center justify-between border-b border-zinc-300 dark:border-zinc-700">
+            <div className="b flex items-center justify-between border-b border-zinc-100 dark:border-zinc-900">
               <h3 className="pb-2 pl-5 text-xl font-bold">More</h3>
             </div>
 
@@ -222,7 +222,7 @@ export default function Active({ user, session, children }: any) {
               {session ? (
                 <Link
                   href="/settings"
-                  className="flex items-center justify-between border-b border-zinc-300 p-4 hover:opacity-80 dark:border-zinc-700"
+                  className="flex items-center justify-between border-b border-zinc-100 p-4 hover:opacity-80 dark:border-zinc-900"
                 >
                   <div className="flex items-center gap-4">
                     <Image
@@ -298,7 +298,7 @@ export default function Active({ user, session, children }: any) {
                         key={item.index}
                         href={item.href}
                         className={clsx("flex items-center gap-2 p-4 text-md", {
-                          "border-l-2 border-blue-500 dark:border-secondary":
+                          "border-l-2 border-green-500 dark:border-secondary":
                             pathname &&
                             (item.href === "/"
                               ? pathname === item.href
