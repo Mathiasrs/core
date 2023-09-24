@@ -30,7 +30,7 @@ export default function Active({ user, session, children }: any) {
     open: {
       y: 0,
       zIndex: 10,
-      transition: { ease: "easeOut", duration: 0.3 },
+      transition: { ease: "easeOut", duration: 0.2 },
     },
     closed: {
       y: "200%",
