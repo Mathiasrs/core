@@ -116,11 +116,13 @@ export default function Active({ user, session, children }: any) {
                     className="h-8 w-8 rounded-3xl object-cover ring-2 ring-white ring-opacity-40 focus:outline-none focus:ring-opacity-100 xl:h-10 xl:w-10"
                   />
 
-                  <div className="flex items-center gap-2 text-left text-xs xl:text-sm">
-                    <>
-                      <h3 className="font-semibold text-zinc-900 dark:text-white">{user?.name}</h3>
+                  <div className="flex items-center gap-4 text-left text-xs xl:text-sm">
+                    <div className="flex flex-col gap-1">
+                      <h3 className="font-semibold text-zinc-900 dark:text-white">
+                        {user?.name.split(" ")[0]}
+                      </h3>
                       <p className="text-zinc-500 dark:text-zinc-300">{session?.user?.email}</p>
-                    </>
+                    </div>
                     <FaArrowRight className="text-xs text-zinc-950 dark:text-white" />
                   </div>
                 </div>
@@ -139,11 +141,13 @@ export default function Active({ user, session, children }: any) {
                     className="h-8 w-8 rounded-3xl object-cover ring-2 ring-white ring-opacity-40 focus:outline-none focus:ring-opacity-100 xl:h-10 xl:w-10"
                   />
 
-                  <div className="flex items-center gap-2 text-left text-xs xl:text-sm">
-                    <>
-                      <h3 className="font-semibold text-zinc-900 dark:text-white">{user?.name}</h3>
+                  <div className="flex items-center gap-4 text-left text-xs xl:text-sm">
+                    <div className="flex flex-col gap-2">
+                      <h3 className="font-semibold text-zinc-900 dark:text-white">
+                        {user?.name.split(" ")[0]}
+                      </h3>
                       <p className="text-zinc-500 dark:text-zinc-300">{session?.user?.email}</p>
-                    </>
+                    </div>
                     <FaArrowRight className="text-xs text-zinc-950 dark:text-white" />
                   </div>
                 </div>
@@ -242,7 +246,7 @@ export default function Active({ user, session, children }: any) {
 
                     <div className="text-left">
                       <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">
-                        {user.name}
+                        {user?.name.split(" ")[0]}
                       </h3>
                       <p className="text-zinc-500 dark:text-zinc-300">{session?.user?.email}</p>
                     </div>

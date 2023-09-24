@@ -3,6 +3,9 @@
 // Queries
 import useProfile from "@/actions/queries/profile/useProfile"
 
+// Libraries
+import { Toaster } from "@/components/ui/toaster"
+
 // Components
 import Deactivated from "@/components/AppShell/States/Deactivated"
 import AwaitingApproval from "@/components/AppShell/States/AwaitingApproval"
@@ -36,5 +39,10 @@ export default function AppShell({ children, session }: any) {
     }
   }
 
-  return <States />
+  return (
+    <>
+      <States />
+      <Toaster />
+    </>
+  )
 }
