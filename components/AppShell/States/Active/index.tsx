@@ -49,9 +49,9 @@ export default function Active({ user, session, children }: any) {
   }, [isMenuOpen])
 
   return (
-    <div className="h-screen w-full overflow-hidden lg:flex">
+    <div className="h-screen w-full overflow-hidden md:flex">
       {/* Large screens */}
-      <aside className="hidden w-96 lg:grid overflow-hidden">
+      <aside className="hidden w-fit md:grid overflow-hidden pr-14">
         <div className="mt-10 flex flex-col justify-between">
           <div className="flex flex-col gap-8">
             <div className="flex text-left pl-6 mb-4">
@@ -98,7 +98,7 @@ export default function Active({ user, session, children }: any) {
                 href="/settings"
                 className="flex items-center justify-between p-4 hover:opacity-80"
               >
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
                   <Image
                     src={
                       session.user?.image?.startsWith(
@@ -116,15 +116,13 @@ export default function Active({ user, session, children }: any) {
                     className="h-8 w-8 rounded-3xl object-cover ring-2 ring-white ring-opacity-40 focus:outline-none focus:ring-opacity-100 xl:h-10 xl:w-10"
                   />
 
-                  <div className="text-left text-xs xl:text-sm">
-                    <h3 className="font-semibold text-zinc-900 dark:text-white">
-                      {user?.role === "hairdresser" ? user?.firstName : user?.name}
-                    </h3>
-                    <p className="text-zinc-500 dark:text-zinc-300">{session?.user?.email}</p>
+                  <div className="flex items-center gap-2 text-left text-xs xl:text-sm">
+                    <>
+                      <h3 className="font-semibold text-zinc-900 dark:text-white">{user?.name}</h3>
+                      <p className="text-zinc-500 dark:text-zinc-300">{session?.user?.email}</p>
+                    </>
+                    <FaArrowRight className="text-xs text-zinc-950 dark:text-white" />
                   </div>
-                </div>
-                <div>
-                  <FaArrowRight className="text-xs text-zinc-950 dark:text-white" />
                 </div>
               </Link>
             ) : (
@@ -132,7 +130,7 @@ export default function Active({ user, session, children }: any) {
                 href="/settings"
                 className="flex items-center justify-between p-4 hover:opacity-80"
               >
-                <div className="flex items-center gap-x-4">
+                <div className="flex items-center gap-2">
                   <Image
                     src="https://res.cloudinary.com/dwh5z8lp5/image/upload/v1687339586/za4mqfois45pscl4xfk5.png"
                     alt="Profile"
@@ -141,13 +139,13 @@ export default function Active({ user, session, children }: any) {
                     className="h-8 w-8 rounded-3xl object-cover ring-2 ring-white ring-opacity-40 focus:outline-none focus:ring-opacity-100 xl:h-10 xl:w-10"
                   />
 
-                  <div className="text-left text-xs xl:text-sm">
-                    <h3 className=" font-semibold text-zinc-900 dark:text-white ">Sign in</h3>
-                    <p className="text-zinc-500 dark:text-zinc-300">User</p>
+                  <div className="flex items-center gap-2 text-left text-xs xl:text-sm">
+                    <>
+                      <h3 className="font-semibold text-zinc-900 dark:text-white">{user?.name}</h3>
+                      <p className="text-zinc-500 dark:text-zinc-300">{session?.user?.email}</p>
+                    </>
+                    <FaArrowRight className="text-xs text-zinc-950 dark:text-white" />
                   </div>
-                </div>
-                <div>
-                  <FaArrowRight className="text-xs text-zinc-950 dark:text-white" />
                 </div>
               </Link>
             )}
@@ -155,13 +153,13 @@ export default function Active({ user, session, children }: any) {
         </div>
       </aside>
 
-      <main className="relative mb-20 flex h-full w-full flex-col bg-white shadow-lg ring-1 ring-zinc-100 dark:bg-zinc-950 dark:ring-zinc-900 lg:mt-4 lg:rounded-tl-xl">
+      <main className="relative mb-20 flex h-full w-full flex-col bg-white shadow-lg ring-1 ring-zinc-100 dark:bg-zinc-950 dark:ring-zinc-900 md:mt-4 md:rounded-tl-xl">
         <div className="flex-grow overflow-y-auto pb-20 p-4 sm:p-6 md:p-8">{children}</div>
       </main>
 
       {/* Small screens*/}
-      <aside className="absolute inset-x-0 bottom-0 m-4 bg-white shadow-lg ring-1 ring-zinc-100 dark:bg-zinc-950 dark:ring-zinc-900 rounded-md z-50">
-        <div className="flex justify-between gap-4 px-8 ">
+      <aside className="absolute md:hidden inset-x-0 bottom-0 m-4 bg-white shadow-lg ring-1 ring-zinc-100 dark:bg-zinc-950 dark:ring-zinc-900 rounded-md z-50">
+        <div className="flex justify-between gap-4 px-8">
           {navigation(user)
             .filter((item: any) => item.isMobile)
             .map((item: any) => (
