@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma"
 import { getServerSession } from "next-auth"
 import { authOptions } from "app/api/auth/[...nextauth]/route"
 
-interface Profile {
+interface User {
   id: string
   name: string
   about: string
@@ -22,29 +22,24 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const userId = session.user.id
 
   try {
-    const { id, name, about, url }: Profile = JSON.parse(await request.text())
+    const { name, about, url }: User = JSON.parse(await request.text())
 
-    const createOrUpdateProfile = await prisma.profile.upsert({
-      where: { id: id || "" },
-      update: {
+    const updateUser = await prisma.user.update({
+      where: { id: userId },
+
+      data: {
         name: name,
         about: about,
         url: url,
-      },
-      create: {
-        name: name,
-        about: about,
-        url: url,
-        user: { connect: { id: userId } },
       },
     })
 
-    return NextResponse.json(createOrUpdateProfile)
+    return NextResponse.json(updateUser)
   } catch (error) {
-    console.error("Error createOrUpdateProfile:", error)
+    console.error("Error updateUser:", error)
     return NextResponse.json(
       { message: "An error occurred while creating or updating profile" },
-      { status: 500 },
+      { status: 500 }
     )
   }
 }

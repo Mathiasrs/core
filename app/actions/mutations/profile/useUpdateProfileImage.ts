@@ -9,9 +9,8 @@ export function useUpdateProfileImage() {
   const queryClient = useQueryClient()
 
   const mutation = useMutation(
-    async ({ id, image }: ProfileImage) => {
-      return axios.post("/api/create/createOrUpdateProfileImage", {
-        id,
+    async ({ image }: ProfileImage) => {
+      return axios.post("/api/update/updateImage", {
         image,
       })
     },
@@ -22,7 +21,7 @@ export function useUpdateProfileImage() {
       onError: (error) => {
         console.error("Mutation error:", error)
       },
-    },
+    }
   )
 
   return mutation

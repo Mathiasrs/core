@@ -8,7 +8,7 @@ import { authOptions } from "app/api/auth/[...nextauth]/route"
 import prisma from "@/lib/prisma"
 import { Session } from "@/typings"
 
-interface Profile {
+interface User {
   id: string
   image: string
 }
@@ -25,29 +25,24 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const userId = session.user.id
 
   try {
-    const { id, image }: Profile = JSON.parse(await request.text())
+    const { image }: User = JSON.parse(await request.text())
 
-    const updateProfileImage = await prisma.profile.upsert({
-      where: { id: id || "" },
+    const updateImage = await prisma.user.update({
+      where: { id: userId },
 
-      update: {
+      data: {
         image: image,
-      },
-
-      create: {
-        image: image,
-        user: { connect: { id: userId } },
       },
     })
 
-    return NextResponse.json(updateProfileImage)
+    return NextResponse.json(updateImage)
   } catch (error) {
-    console.error("Error updateProfileImage:", error)
+    console.error("Error updateImage:", error)
     return NextResponse.json(
       {
         message: "An error occurred while updating profile image.",
       },
-      { status: 500 },
+      { status: 500 }
     )
   }
 }
