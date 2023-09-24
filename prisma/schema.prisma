@@ -49,6 +49,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  Profile       Profile?
 }
 
 model VerificationToken {
@@ -57,4 +58,18 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Profile {
+  id     String  @id @default(cuid())
+  name   String?
+  about  String?
+  image  String? @db.Text
+  status String?
+  url    String?
+  role   String?
+  userId String  @unique
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }

@@ -1,13 +1,19 @@
-import { ThemeSelector } from "@/components/ThemeSelector"
+// Next
+import { redirect } from "next/navigation"
 
-export default function Home() {
-  return (
-    <div className="grid gap-4 items-center justify-center m-20 text-4xl">
-      <h1>Core Initial</h1>
+// Auth
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "./api/auth/[...nextauth]/route"
 
-      <div className="flex place-self-center">
-        <ThemeSelector />
-      </div>
-    </div>
-  )
+// Components
+import Authentication from "@/components/Authentication"
+
+export default async function Page() {
+  const session = await getServerSession(authOptions)
+
+  if (session) {
+    redirect("/dashboard")
+  }
+
+  return <Authentication />
 }
