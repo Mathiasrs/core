@@ -55,7 +55,7 @@ export default function Active({ user, session, children }: any) {
         <div className="mt-10 flex flex-col justify-between">
           <div className="flex flex-col gap-8">
             <div className="flex text-left pl-6 mb-4">
-              <Logo color="black dark:white" className="h-10" />
+              <Logo />
             </div>
             {navigation(user).map((item: any) => (
               <CustomLink
