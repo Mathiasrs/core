@@ -1,9 +1,15 @@
 "use client"
 
 import * as React from "react"
+
+// Mutations
+import { useUpdateTheme } from "@/app/actions/mutations/user/useUpdateTheme"
+
+// Libraries
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons"
 import { useTheme } from "next-themes"
 
+// Components
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -15,6 +21,16 @@ import {
 export function ThemeSelector() {
   const { setTheme } = useTheme()
 
+  const mutation = useUpdateTheme()
+
+  const setThemeAndUpdateUser = (data: any) => {
+    setTheme(data)
+
+    mutation.mutate({
+      theme: data,
+    })
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -25,9 +41,9 @@ export function ThemeSelector() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>Light</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>Dark</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>System</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setThemeAndUpdateUser("light")}>Light</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setThemeAndUpdateUser("dark")}>Dark</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setThemeAndUpdateUser("system")}>System</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )
