@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 
 // Types
-import { Profile } from "typings"
+import { Profile } from "@/types/typings"
 
 export function useUpdateProfile() {
   const queryClient = useQueryClient()

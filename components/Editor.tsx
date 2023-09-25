@@ -105,12 +105,13 @@ export const Editor: React.FC<EditorProps> = ({ contentId }) => {
             config: {
               uploader: {
                 async uploadByFile(file: File) {
+                  //@ts-ignore
                   const [res] = await uploadFiles([file], "imageUploader")
 
                   return {
                     success: 1,
                     file: {
-                      url: res.fileUrl,
+                      url: res.url,
                     },
                   }
                 },

@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 
 // Types
-import { ProfileImage } from "typings"
+import { ProfileImage } from "@/types/typings"
 
 export function useUpdateProfileImage() {
   const queryClient = useQueryClient()

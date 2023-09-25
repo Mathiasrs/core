@@ -6,7 +6,7 @@ import { authOptions } from "app/api/auth/[...nextauth]/route"
 
 // Libraries
 import prisma from "@/lib/prisma"
-import { Session } from "@/typings"
+import { Session } from "@/types/typings"
 
 interface User {
   id: string

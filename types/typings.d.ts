@@ -28,7 +28,7 @@ interface Session {
   name: string
 }
 
-interface Profile {
+interface User {
   id?: string
   name?: string
   about?: string
@@ -37,7 +37,7 @@ interface Profile {
   userId?: string
 }
 
-interface ProfileImage {
+interface Image {
   secure_url?: any
   id: string
   image: string
