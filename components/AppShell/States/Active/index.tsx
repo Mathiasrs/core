@@ -112,7 +112,7 @@ export default function Active({ user, session, children }: any) {
                     className="h-8 w-8 rounded-3xl object-cover ring-2 ring-white ring-opacity-40 focus:outline-none focus:ring-opacity-100 xl:h-10 xl:w-10"
                   />
 
-                  <div className="flex items-center gap-4 text-left text-xs xl:text-sm">
+                  <div className="flex items-center gap-4 text-left text-xs xl:text-sm pl-2">
                     <div className="flex flex-col gap-1">
                       <h3 className="font-semibold text-zinc-900 dark:text-white">
                         {user?.name.split(" ")[0]}
