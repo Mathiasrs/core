@@ -1,4 +1,4 @@
-import { FaFingerprint } from "react-icons/fa6"
+import { FaFingerprint, FaSlack } from "react-icons/fa6"
 import { MdSpaceDashboard } from "react-icons/md"
 
 const navigationItems = [
@@ -9,6 +9,16 @@ const navigationItems = [
     roles: ["admin", "support"],
     isMobile: true,
     isInMoreMenu: false,
+    isNewTap: false,
+  },
+  {
+    href: "https://ordrestyring.slack.com",
+    name: "Slack",
+    icon: FaSlack,
+    roles: ["admin", "support"],
+    isMobile: false,
+    isInMoreMenu: true,
+    isNewTap: true,
   },
 ]
 
