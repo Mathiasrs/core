@@ -102,16 +102,11 @@ export default function Active({ user, session, children }: any) {
                 <div className="flex items-center gap-2">
                   <Image
                     src={
-                      session.user?.image?.startsWith(
-                        "https://res.cloudinary.com" || "https://avatars.slack-edge.com"
-                      ) ||
-                      user?.image?.startsWith(
-                        "https://res.cloudinary.com" || "https://avatars.slack-edge.com"
-                      )
+                      session?.user?.image
                         ? session?.user?.image || user.image
                         : "https://res.cloudinary.com/dwh5z8lp5/image/upload/v1687339586/za4mqfois45pscl4xfk5.png"
                     }
-                    alt={session?.user?.name}
+                    alt={user?.name}
                     width={32}
                     height={32}
                     className="h-8 w-8 rounded-3xl object-cover ring-2 ring-white ring-opacity-40 focus:outline-none focus:ring-opacity-100 xl:h-10 xl:w-10"
@@ -231,12 +226,7 @@ export default function Active({ user, session, children }: any) {
                   <div className="flex items-center gap-4">
                     <Image
                       src={
-                        session.user?.image?.startsWith(
-                          "https://res.cloudinary.com" || "https://avatars.slack-edge.com"
-                        ) ||
-                        user?.image?.startsWith(
-                          "https://res.cloudinary.com" || "https://avatars.slack-edge.com"
-                        )
+                        session?.user?.image
                           ? session?.user?.image || user.image
                           : "https://res.cloudinary.com/dwh5z8lp5/image/upload/v1687339586/za4mqfois45pscl4xfk5.png"
                       }
