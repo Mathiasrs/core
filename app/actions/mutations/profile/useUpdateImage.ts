@@ -3,13 +3,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 
 // Types
-import { ProfileImage } from "@/types/typings"
+import { Image } from "@/types/typings"
 
-export function useUpdateProfileImage() {
+export function useUpdateImage() {
   const queryClient = useQueryClient()
 
   const mutation = useMutation(
-    async ({ image }: ProfileImage) => {
+    async ({ image }: Image) => {
       return axios.post("/api/update/updateImage", {
         image,
       })
