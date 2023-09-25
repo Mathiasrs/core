@@ -58,45 +58,52 @@ export default function Active({ user, session, children }: any) {
               <Logo />
             </div>
             {navigation(user).map((item: any) => (
-              <CustomLink
-                key={item.index}
-                href={item.href}
-                isNewTap={item.isNewTap}
-                className={clsx(
-                  "min-w-40 text-md flex items-center justify-items-center gap-2 pl-6 text-zinc-900  dark:text-zinc-400",
-                  {
-                    "border-l-2 border-green-500 pr-10":
-                      pathname &&
-                      (item.href === "/" ? pathname === item.href : pathname.startsWith(item.href)),
-                  },
-                  item.approvalStatus && !user.isApproved
-                    ? "opacity-50 cursor-not-allowed"
-                    : " hover:font-semibold"
-                )}
-              >
-                <item.icon
-                  className={clsx({
-                    "text-zinc-950 dark:text-white":
-                      pathname &&
-                      (item.href === "/" ? pathname === item.href : pathname.startsWith(item.href)),
-                  })}
-                />
-                <span
-                  className={clsx({
-                    "font-semibold text-zinc-950 dark:text-white":
-                      pathname &&
-                      (item.href === "/" ? pathname === item.href : pathname.startsWith(item.href)),
-                  })}
+              <div key={`desktop-${item.index}`}>
+                <CustomLink
+                  href={item.href}
+                  isNewTap={item.isNewTap}
+                  className={clsx(
+                    "min-w-40 text-md flex items-center justify-items-center gap-2 pl-6 text-zinc-900  dark:text-zinc-400",
+                    {
+                      "border-l-2 border-green-500 pr-10":
+                        pathname &&
+                        (item.href === "/"
+                          ? pathname === item.href
+                          : pathname.startsWith(item.href)),
+                    },
+                    item.approvalStatus && !user.isApproved
+                      ? "opacity-50 cursor-not-allowed"
+                      : " hover:font-semibold"
+                  )}
                 >
-                  {item.name}
-                </span>
-              </CustomLink>
+                  <item.icon
+                    className={clsx({
+                      "text-zinc-950 dark:text-white":
+                        pathname &&
+                        (item.href === "/"
+                          ? pathname === item.href
+                          : pathname.startsWith(item.href)),
+                    })}
+                  />
+                  <span
+                    className={clsx({
+                      "font-semibold text-zinc-950 dark:text-white":
+                        pathname &&
+                        (item.href === "/"
+                          ? pathname === item.href
+                          : pathname.startsWith(item.href)),
+                    })}
+                  >
+                    {item.name}
+                  </span>
+                </CustomLink>
+              </div>
             ))}
           </div>
           <div>
             {session ? (
               <Link
-                href="/settings"
+                href="/profile"
                 className="flex items-center justify-between p-4 hover:opacity-80"
               >
                 <div className="flex items-center gap-2">
@@ -163,36 +170,43 @@ export default function Active({ user, session, children }: any) {
           {navigation(user)
             .filter((item: any) => item.isMobile)
             .map((item: any) => (
-              <CustomLink
-                key={item.index}
-                href={item.href}
-                isNewTap={item.isNewTap}
-                className={clsx(
-                  "flex flex-col items-center justify-items-center gap-1 py-2 text-xs text-zinc-900 dark:text-zinc-300 mt-1",
-                  {
-                    "border-b-2 border-green-500":
-                      pathname &&
-                      (item.href === "/" ? pathname === item.href : pathname.startsWith(item.href)),
-                  }
-                )}
-              >
-                <item.icon
-                  className={clsx("w-5 h-5", {
-                    "text-zinc-950 dark:text-white":
-                      pathname &&
-                      (item.href === "/" ? pathname === item.href : pathname.startsWith(item.href)),
-                  })}
-                />
-                <span
-                  className={clsx({
-                    "font-semibold text-zinc-950 dark:text-white":
-                      pathname &&
-                      (item.href === "/" ? pathname === item.href : pathname.startsWith(item.href)),
-                  })}
+              <div key={`mobile-${item.index}`}>
+                <CustomLink
+                  href={item.href}
+                  isNewTap={item.isNewTap}
+                  className={clsx(
+                    "flex flex-col items-center justify-items-center gap-1 py-2 text-xs text-zinc-900 dark:text-zinc-300 mt-1",
+                    {
+                      "border-b-2 border-green-500":
+                        pathname &&
+                        (item.href === "/"
+                          ? pathname === item.href
+                          : pathname.startsWith(item.href)),
+                    }
+                  )}
                 >
-                  {item.name}
-                </span>
-              </CustomLink>
+                  <item.icon
+                    className={clsx("w-5 h-5", {
+                      "text-zinc-950 dark:text-white":
+                        pathname &&
+                        (item.href === "/"
+                          ? pathname === item.href
+                          : pathname.startsWith(item.href)),
+                    })}
+                  />
+                  <span
+                    className={clsx({
+                      "font-semibold text-zinc-950 dark:text-white":
+                        pathname &&
+                        (item.href === "/"
+                          ? pathname === item.href
+                          : pathname.startsWith(item.href)),
+                    })}
+                  >
+                    {item.name}
+                  </span>
+                </CustomLink>
+              </div>
             ))}
 
           <button
@@ -220,7 +234,7 @@ export default function Active({ user, session, children }: any) {
             <div className="flex flex-col gap-y-2">
               {session ? (
                 <Link
-                  href="/settings"
+                  href="/profile"
                   className="flex items-center justify-between border-b border-zinc-100 p-4 hover:opacity-80 dark:border-zinc-900"
                 >
                   <div className="flex items-center gap-4">
@@ -279,7 +293,7 @@ export default function Active({ user, session, children }: any) {
                   .filter((item: any) => item.isInMoreMenu)
                   .map((item: any, index: any) => (
                     <motion.div
-                      key={item.href}
+                      key={`motion-${item.index}`}
                       initial={{ y: 200, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{
@@ -289,7 +303,6 @@ export default function Active({ user, session, children }: any) {
                       }}
                     >
                       <CustomLink
-                        key={item.index}
                         href={item.href}
                         isNewTap={item.isNewTap}
                         className={clsx("flex items-center gap-2 p-4 text-md", {

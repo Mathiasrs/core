@@ -2,7 +2,7 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 
-export default function useProfile(session: any) {
+export default function useUser(session: any) {
   return useQuery({
     queryKey: ["profile"],
     queryFn: async () => {

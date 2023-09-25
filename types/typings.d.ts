@@ -35,6 +35,7 @@ interface User {
   image?: string
   url?: string
   userId?: string
+  theme?: string
 }
 
 interface Image {

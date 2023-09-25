@@ -1,7 +1,7 @@
 "use client"
 
 // Queries
-import useProfile from "@/actions/queries/profile/useProfile"
+import useProfile from "@/app/actions/queries/user/useUser"
 
 // Libraries
 import { Toaster } from "@/components/ui/toaster"

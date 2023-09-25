@@ -36,7 +36,7 @@ export default function Authentication() {
             </div>
           </div>
 
-          <h2 className="text-center text-xl font-extrabold text-gray-900 dark:text-white pt-10">
+          <h2 className="text-center text-xl font-extrabold text-zinc-900 dark:text-white pt-10">
             Sign in using your Slack account
           </h2>
         </div>
@@ -45,7 +45,7 @@ export default function Authentication() {
           <Button disabled>
             <LoadingSpinner
               fillColor={"fill-white"}
-              textColor={"text-gray-200 dark:text-gray-600"}
+              textColor={"text-zinc-200 dark:text-zinc-600"}
               className="w-4 h-5"
             />
             <span className="flex pl-2">Signing in</span>
