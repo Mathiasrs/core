@@ -3,15 +3,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 
 // Types
-import { ProfileImage } from "typings"
+import { Image } from "@/types/typings"
 
-export function useUpdateProfileImage() {
+export function useUpdateImage() {
   const queryClient = useQueryClient()
 
   const mutation = useMutation(
-    async ({ id, image }: ProfileImage) => {
-      return axios.post("/api/create/createOrUpdateProfileImage", {
-        id,
+    async ({ image }: Image) => {
+      return axios.post("/api/update/updateImage", {
         image,
       })
     },
@@ -22,7 +21,7 @@ export function useUpdateProfileImage() {
       onError: (error) => {
         console.error("Mutation error:", error)
       },
-    },
+    }
   )
 
   return mutation

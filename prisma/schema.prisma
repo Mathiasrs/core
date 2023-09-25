@@ -9,6 +9,11 @@ datasource db {
   relationMode      = "prisma"
 }
 
+enum VoteType {
+  UP
+  DOWN
+}
+
 model Account {
   id                String   @id @default(cuid())
   userId            String
@@ -47,9 +52,19 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  about         String?
+  status        String?
+  url           String?
+  role          String?
+
   accounts      Account[]
   sessions      Session[]
-  Profile       Profile?
+  article       Article[]
+  content       Content[]      @relation("CreatedBy")
+  comment       Comment[]
+  votes         Vote[]
+  commentVote   CommentVote[]
+  subscriptions Subscription[]
 }
 
 model VerificationToken {
@@ -60,16 +75,87 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Profile {
-  id     String  @id @default(cuid())
-  name   String?
-  about  String?
-  image  String? @db.Text
-  status String?
-  url    String?
-  role   String?
-  userId String  @unique
-  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+model Content {
+  id          String         @id @default(cuid())
+  name        String         @unique
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  article     Article[]
+  creatorId   String?
+  creator     User?          @relation("CreatedBy", fields: [creatorId], references: [id])
+  subscribers Subscription[]
 
+  @@index([name])
+  @@index([creatorId])
+}
+
+model Subscription {
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String
+  content   Content @relation(fields: [contentId], references: [id])
+  contentId String
+
+  @@id([userId, contentId])
+  @@index([contentId])
   @@index([userId])
+}
+
+model Article {
+  id              String    @id @default(cuid())
+  title           String
+  content         Json?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  author          User      @relation(fields: [authorId], references: [id])
+  authorId        String
+  contentRelation Content   @relation(fields: [contentId], references: [id])
+  contentId       String
+  comments        Comment[]
+  votes           Vote[]
+
+  @@index([authorId])
+  @@index([contentId])
+}
+
+model Comment {
+  id        String        @id @default(cuid())
+  text      String
+  createdAt DateTime      @default(now())
+  author    User          @relation(fields: [authorId], references: [id])
+  authorId  String
+  article   Article       @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  articleId String
+  replyToId String?
+  replyTo   Comment?      @relation("ReplyTo", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  replies   Comment[]     @relation("ReplyTo")
+  votes     CommentVote[]
+  commentId String?
+
+  @@index([authorId])
+  @@index([articleId])
+  @@index([replyToId])
+}
+
+model Vote {
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  articleId String
+  type      VoteType
+
+  @@id([userId, articleId])
+  @@index([articleId])
+  @@index([userId])
+}
+
+model CommentVote {
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  commentId String
+  type      VoteType
+
+  @@id([userId, commentId])
+  @@index([userId])
+  @@index([commentId])
 }

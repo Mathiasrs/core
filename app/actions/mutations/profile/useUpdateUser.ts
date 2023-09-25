@@ -3,15 +3,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 
 // Types
-import { Profile } from "typings"
+import { User } from "@/types/typings"
 
-export function useUpdateProfile() {
+export function useUpdateUser() {
   const queryClient = useQueryClient()
 
   const mutation = useMutation(
-    async ({ id, name, about, url }: Profile) => {
-      return axios.post("/api/create/createOrUpdateProfile", {
-        id,
+    async ({ name, about, url }: User) => {
+      return axios.post("/api/update/updateProfile", {
         name,
         about,
         url,
@@ -24,7 +23,7 @@ export function useUpdateProfile() {
       onError: (error) => {
         console.error("Mutation error:", error)
       },
-    },
+    }
   )
 
   return mutation

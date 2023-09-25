@@ -10,7 +10,7 @@ export default function useProfile(session: any) {
         return null
       }
 
-      const { data } = await axios.get("/api/read/readProfile")
+      const { data } = await axios.get("/api/read/readUser")
 
       return data
     },
