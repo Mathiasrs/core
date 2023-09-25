@@ -96,7 +96,7 @@ export default function Active({ user, session, children }: any) {
           <div>
             {session ? (
               <Link
-                href="/settings"
+                href="/profile"
                 className="flex items-center justify-between p-4 hover:opacity-80"
               >
                 <div className="flex items-center gap-2">
@@ -220,7 +220,7 @@ export default function Active({ user, session, children }: any) {
             <div className="flex flex-col gap-y-2">
               {session ? (
                 <Link
-                  href="/settings"
+                  href="/profile"
                   className="flex items-center justify-between border-b border-zinc-100 p-4 hover:opacity-80 dark:border-zinc-900"
                 >
                   <div className="flex items-center gap-4">
