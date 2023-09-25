@@ -1,14 +1,22 @@
 import Link from "next/link"
 
-export default function CustomLink({ href, children, disabled, ...props }: any) {
+export default function CustomLink({ href, children, disabled, isNewTap, ...props }: any) {
   return (
     <>
       {disabled ? (
         <div {...props}>{children}</div>
       ) : (
-        <Link href={href} {...props}>
-          {children}
-        </Link>
+        <>
+          {isNewTap ? (
+            <Link href={href} target="_blank" {...props}>
+              {children}
+            </Link>
+          ) : (
+            <Link href={href} {...props}>
+              {children}
+            </Link>
+          )}
+        </>
       )}
     </>
   )

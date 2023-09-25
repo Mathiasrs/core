@@ -61,6 +61,7 @@ export default function Active({ user, session, children }: any) {
               <CustomLink
                 key={item.index}
                 href={item.href}
+                isNewTap={item.isNewTap}
                 className={clsx(
                   "min-w-40 text-md flex items-center justify-items-center gap-2 pl-6 text-zinc-900  dark:text-zinc-400",
                   {
@@ -170,6 +171,7 @@ export default function Active({ user, session, children }: any) {
               <CustomLink
                 key={item.index}
                 href={item.href}
+                isNewTap={item.isNewTap}
                 className={clsx(
                   "flex flex-col items-center justify-items-center gap-1 py-2 text-xs text-zinc-900 dark:text-zinc-300 mt-1",
                   {
@@ -299,6 +301,7 @@ export default function Active({ user, session, children }: any) {
                       <CustomLink
                         key={item.index}
                         href={item.href}
+                        isNewTap={item.isNewTap}
                         className={clsx("flex items-center gap-2 p-4 text-md", {
                           "border-l-2 border-green-500 dark:border-secondary":
                             pathname &&
