@@ -58,14 +58,14 @@ model User {
   role          String?
   theme         String?
 
-  accounts      Account[]
-  sessions      Session[]
-  article       Article[]
-  content       Content[]      @relation("CreatedBy")
-  comment       Comment[]
-  votes         Vote[]
-  commentVote   CommentVote[]
-  subscriptions Subscription[]
+  accounts    Account[]
+  sessions    Session[]
+  content     Content[]
+  comment     Comment[]
+  votes       Vote[]
+  commentVote CommentVote[]
+
+  @@index([id])
 }
 
 model VerificationToken {
@@ -77,76 +77,60 @@ model VerificationToken {
 }
 
 model Content {
-  id          String         @id @default(cuid())
-  name        String         @unique
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
-  article     Article[]
-  creatorId   String?
-  creator     User?          @relation("CreatedBy", fields: [creatorId], references: [id])
-  subscribers Subscription[]
-
-  @@index([name])
-  @@index([creatorId])
-}
-
-model Subscription {
-  user      User    @relation(fields: [userId], references: [id])
-  userId    String
-  content   Content @relation(fields: [contentId], references: [id])
+  id        String   @id @default(cuid())
   contentId String
+  type      String
+  title     String   @unique
+  content   Json?
+  status    String
+  label     String
+  priority  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  @@id([userId, contentId])
-  @@index([contentId])
-  @@index([userId])
-}
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
 
-model Article {
-  id              String    @id @default(cuid())
-  title           String
-  content         Json?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  author          User      @relation(fields: [authorId], references: [id])
-  authorId        String
-  contentRelation Content   @relation(fields: [contentId], references: [id])
-  contentId       String
-  comments        Comment[]
-  votes           Vote[]
+  comments Comment[]
+  votes    Vote[]
 
   @@index([authorId])
-  @@index([contentId])
 }
 
 model Comment {
-  id        String        @id @default(cuid())
-  text      String
-  createdAt DateTime      @default(now())
-  author    User          @relation(fields: [authorId], references: [id])
-  authorId  String
-  article   Article       @relation(fields: [articleId], references: [id], onDelete: Cascade)
-  articleId String
+  id   String @id @default(cuid())
+  text String
+
+  createdAt DateTime @default(now())
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
+
+  contentId String
+  content   Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+
   replyToId String?
-  replyTo   Comment?      @relation("ReplyTo", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  replies   Comment[]     @relation("ReplyTo")
+  replyTo   Comment?  @relation("ReplyTo", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  replies   Comment[] @relation("ReplyTo")
+
   votes     CommentVote[]
   commentId String?
 
-  @@index([authorId])
-  @@index([articleId])
   @@index([replyToId])
+  @@index([contentId])
+  @@index([authorId])
 }
 
 model Vote {
   user      User     @relation(fields: [userId], references: [id])
   userId    String
-  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
-  articleId String
+  contentId String
+  content   Content  @relation(fields: [contentId], references: [id], onDelete: Cascade)
   type      VoteType
 
-  @@id([userId, articleId])
-  @@index([articleId])
+  @@id([userId, contentId])
   @@index([userId])
+  @@index([contentId])
 }
 
 model CommentVote {

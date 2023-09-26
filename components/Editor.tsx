@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form"
 import TextareaAutosize from "react-textarea-autosize"
 import { z } from "zod"
 import { uploadFiles } from "@/lib/uploadthing"
-import { ArticleCreationRequest, ArticleValidator } from "@/lib/validators/article"
+import { ContentCreationRequest, ContentValidator } from "@/lib/validators/content"
 import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
 
@@ -21,7 +21,7 @@ import { toast } from "@/components/ui/use-toast"
 
 import "@/styles/editor.css"
 
-type FormData = z.infer<typeof ArticleValidator>
+type FormData = z.infer<typeof ContentValidator>
 
 interface EditorProps {
   contentId: string
@@ -33,7 +33,7 @@ export const Editor: React.FC<EditorProps> = ({ contentId }) => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: zodResolver(ArticleValidator),
+    resolver: zodResolver(ContentValidator),
     defaultValues: {
       contentId,
       title: "",
@@ -47,8 +47,24 @@ export const Editor: React.FC<EditorProps> = ({ contentId }) => {
   const pathname = usePathname()
 
   const { mutate: createArticle } = useMutation({
-    mutationFn: async ({ title, content, contentId }: ArticleCreationRequest) => {
-      const payload: ArticleCreationRequest = { title, content, contentId }
+    mutationFn: async ({
+      contentId,
+      type,
+      title,
+      content,
+      status,
+      label,
+      priority,
+    }: ContentCreationRequest) => {
+      const payload: ContentCreationRequest = {
+        contentId,
+        type,
+        title,
+        content,
+        status,
+        label,
+        priority,
+      }
       const { data } = await axios.post("/api/create/content/createArticle", payload)
       return data
     },
@@ -169,10 +185,11 @@ export const Editor: React.FC<EditorProps> = ({ contentId }) => {
   async function onSubmit(data: FormData) {
     const blocks = await ref.current?.save()
 
-    const payload: ArticleCreationRequest = {
+    const payload: ContentCreationRequest = {
       title: data.title,
       content: blocks,
       contentId,
+      type: "",
     }
 
     createArticle(payload)

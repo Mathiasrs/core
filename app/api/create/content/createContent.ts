@@ -4,7 +4,7 @@ import { authOptions } from "app/api/auth/[...nextauth]/route"
 
 // Libraries
 import prisma from "@/lib/prisma"
-import { ArticleValidator } from "@/lib/validators/article"
+import { ContentValidator } from "@/lib/validators/content"
 import { z } from "zod"
 
 export async function POST(req: Request) {
@@ -13,16 +13,17 @@ export async function POST(req: Request) {
   try {
     const body = await req.json()
 
-    const { title, content, contentId } = ArticleValidator.parse(body)
+    const { contentId, type, title, content, status, label, priority } =
+      ContentValidator.parse(body)
 
     if (!session?.user) {
       return new Response("Unauthorized", { status: 401 })
     }
 
-    const subscription = await prisma.subscription.findFirst({
+    const subscription = await prisma.content.findFirst({
       where: {
         contentId,
-        userId: session.user.id,
+        authorId: session.user.id,
       },
     })
 
@@ -30,12 +31,20 @@ export async function POST(req: Request) {
       return new Response("Subscribe to post", { status: 403 })
     }
 
-    await prisma.article.create({
+    await prisma.content.create({
       data: {
+        contentId,
+        type,
         title,
         content,
-        contentId,
-        authorId: session.user.id,
+        status,
+        label,
+        priority,
+        author: {
+          connect: {
+            id: session.user.id,
+          },
+        },
       },
     })
 
