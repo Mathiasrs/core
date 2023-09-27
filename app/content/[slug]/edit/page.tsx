@@ -17,7 +17,7 @@ interface pageProps {
   }
 }
 
-const page = ({ params }: pageProps) => {
+const Page = ({ params }: pageProps) => {
   const { data: session } = useSession()
 
   const slug = params.slug
@@ -46,4 +46,4 @@ const page = ({ params }: pageProps) => {
   )
 }
 
-export default page
+export default Page

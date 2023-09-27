@@ -1,20 +1,17 @@
 'use client'
 
+import React, { useEffect, useRef } from 'react';
+
 // Mutations
 import { useUpdateContent } from '@/actions/mutations/user/useUpdateContent'
 
 // Libraries
-import EditorJS from '@editorjs/editorjs'
+import EditorJS from '@editorjs/editorjs';
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import TextareaAutosize from 'react-textarea-autosize'
 import { z } from 'zod'
-import { uploadFiles } from '@/lib/uploadthing'
-import { ContentCreationRequest, ContentValidator } from '@/lib/validators/content'
-
-// Components
-import { toast } from '@/components/ui/use-toast'
+import {  ContentValidator } from '@/lib/validators/content'
 
 import '@/styles/editor.css'
 
@@ -29,6 +26,7 @@ export const Editor: React.FC<EditorProps> = ({ data: contentData }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FormData>({
     resolver: zodResolver(ContentValidator),
@@ -38,143 +36,116 @@ export const Editor: React.FC<EditorProps> = ({ data: contentData }) => {
       content: contentData ? contentData?.content : null,
     },
   })
-  const ref = useRef<EditorJS>()
-  const _titleRef = useRef<HTMLTextAreaElement>(null)
-  const [isMounted, setIsMounted] = useState<boolean>(false)
-
   const mutation = useUpdateContent()
+  const titleRef = useRef<HTMLTextAreaElement | null>(null);  
+  const editorRef = useRef<EditorJS | null>(null);  
 
-  const initializeEditor = useCallback(async () => {
-    const EditorJS = (await import('@editorjs/editorjs')).default
-    const Header = (await import('@editorjs/header')).default
-    const Embed = (await import('@editorjs/embed')).default
-    const Table = (await import('@editorjs/table')).default
-    const List = (await import('@editorjs/list')).default
-    const Code = (await import('@editorjs/code')).default
-    const LinkTool = (await import('@editorjs/link')).default
-    const InlineCode = (await import('@editorjs/inline-code')).default
-    const ImageTool = (await import('@editorjs/image')).default
+  useEffect(() => {
+    if (contentData) {
+      reset({
+        contentId: contentData?.contentId,
+        title: contentData?.title,
+        content: contentData?.content,
+      });
+    }
+  }, [contentData, reset]);
 
-    if (!ref.current) {
-      const editor = new EditorJS({
-        holder: 'editor',
-        onReady() {
-          ref.current = editor
-        },
-        placeholder: 'Type here to write your post...',
-        inlineToolbar: true,
-        data: { blocks: [] },
-        tools: {
-          header: Header,
-          linkTool: {
-            class: LinkTool,
-            config: {
-              endpoint: '/api/link',
+  useEffect(() => {
+    const initializeEditor = async () => {
+      const EditorJS = (await import('@editorjs/editorjs')).default
+      const Header = (await import('@editorjs/header')).default
+      const Embed = (await import('@editorjs/embed')).default
+      const Table = (await import('@editorjs/table')).default
+      const List = (await import('@editorjs/list')).default
+      const Code = (await import('@editorjs/code')).default
+      const LinkTool = (await import('@editorjs/link')).default
+      const InlineCode = (await import('@editorjs/inline-code')).default
+      const ImageTool = (await import('@editorjs/image')).default
+
+      try {
+        const editor = new EditorJS({
+          holder: 'editor',
+          tools: {
+            header: Header,
+            linkTool: {
+              class: LinkTool,
+              config: {
+                endpoint: '/api/link',
+              },
             },
-          },
-          image: {
-            class: ImageTool,
-            config: {
-              uploader: {
-                async uploadByFile(file: File) {
-                  //@ts-ignore
-                  const [res] = await uploadFiles([file], 'imageUploader')
-
-                  return {
-                    success: 1,
-                    file: {
-                      url: res.fileUrl,
-                    },
-                  }
+            image: {
+              class: ImageTool,
+              config: {
+                uploader: {
+                  async uploadByFile(file: File) {
+                    //@ts-ignore
+                    const [res] = await uploadFiles([file], 'imageUploader')
+  
+                    return {
+                      success: 1,
+                      file: {
+                        url: res.fileUrl,
+                      },
+                    }
+                  },
                 },
               },
             },
+            list: List,
+            code: Code,
+            inlineCode: InlineCode,
+            table: Table,
+            embed: Embed,
           },
-          list: List,
-          code: Code,
-          inlineCode: InlineCode,
-          table: Table,
-          embed: Embed,
-        },
-      })
-    }
-  }, [])
-
-  useEffect(() => {
-    if (Object.keys(errors).length) {
-      for (const [_key, value] of Object.entries(errors)) {
-        value
-        toast({
-          title: 'Something went wrong.',
-          description: (value as { message: string }).message,
-          variant: 'destructive',
-        })
+        });
+        
+        await editor.isReady;
+        editorRef.current = editor;
+      } catch (e) {
+        console.error('Editor.js initialization failed', e);
       }
-    }
-  }, [errors])
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setIsMounted(true)
-    }
-  }, [])
-
-  useEffect(() => {
-    const init = async () => {
-      await initializeEditor()
-
-      setTimeout(() => {
-        _titleRef?.current?.focus()
-      }, 0)
-    }
-
-    if (isMounted) {
-      init()
-
-      return () => {
-        ref.current?.destroy()
-        ref.current = undefined
-      }
-    }
-  }, [isMounted, initializeEditor])
-
-  async function onSubmit(data: FormData) {
-    const blocks = await ref.current?.save()
-
-    const payload: ContentCreationRequest = {
-      id: data.id,
-      title: data.title,
-      content: blocks,
-      contentId: "",    
-    }
-
-    mutation.mutate(payload)
-  }
-
-  if (!isMounted) {
-    return null
-  }
-
-  const { ref: titleRef, ...rest } = register('title')
+    };
+    
+    initializeEditor();
+    
+    return () => {
+      const destroyEditor = async () => {
+        if (editorRef.current) {
+          try {
+            await editorRef.current.isReady;         
+            editorRef.current.destroy();
+          } catch (e) {
+            console.error('Failed to destroy Editor.js', e);
+          }
+        }
+      };
+  
+      destroyEditor();
+    };
+  }, []);
+  
+    
+  const { ref: registerTitleRef, ...rest } = register('title')
 
   return (
     <div className='w-full p-4 bg-zinc-50 rounded-lg border border-zinc-200'>
       <form
-        id='subreddit-post-form'
-        className='w-fit'
-        onSubmit={handleSubmit(onSubmit)}>
+        id='content-form'
+        className='w-fit p-2'        
+        >
         <div className='prose prose-stone dark:prose-invert'>
-          <TextareaAutosize
+        <TextareaAutosize
             ref={(e) => {
-              titleRef(e)
-              // @ts-ignore
-              _titleRef.current = e
+              registerTitleRef(e);
+              titleRef.current = e; 
             }}
             {...rest}
             placeholder='Title'
             className='w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none'
           />
-          <div id='editor' className='min-h-[500px]' />
+
+          <div id='editor' className='min-h-[24rem]' />
+
           <p className='text-sm text-gray-500'>
             Use{' '}
             <kbd className='rounded-md border bg-muted px-1 text-xs uppercase'>
