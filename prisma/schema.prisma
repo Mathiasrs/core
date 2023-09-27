@@ -60,12 +60,25 @@ model User {
 
   accounts    Account[]
   sessions    Session[]
+  permission  Permission[]
   content     Content[]
   comment     Comment[]
   votes       Vote[]
   commentVote CommentVote[]
 
   @@index([id])
+}
+
+model Permission {
+  id                   String  @id @default(cuid())
+  userCanViewContent   Boolean @default(false)
+  userCanEditContent   Boolean @default(false)
+  userCanCreateContent Boolean @default(false)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model VerificationToken {
@@ -78,15 +91,16 @@ model VerificationToken {
 
 model Content {
   id        String   @id @default(cuid())
-  contentId String
-  type      String
-  title     String   @unique
+  title     String
+  slug      String   @unique
   content   Json?
-  status    String
-  label     String
-  priority  String
+  type      String
+  status    String?
+  label     String?
+  priority  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  contentId String   @unique
 
   authorId String
   author   User   @relation(fields: [authorId], references: [id])

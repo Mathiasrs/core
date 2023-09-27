@@ -1,8 +1,8 @@
 import { z } from "zod"
 
 export const ContentValidator = z.object({
+  id: z.string(),
   contentId: z.string(),
-  type: z.string(),
   title: z
     .string()
     .min(3, {
@@ -11,11 +11,7 @@ export const ContentValidator = z.object({
     .max(128, {
       message: "Title must be less than 128 characters long",
     }),
-
   content: z.any(),
-  status: z.any(),
-  label: z.any(),
-  priority: z.any(),
 })
 
 export type ContentCreationRequest = z.infer<typeof ContentValidator>

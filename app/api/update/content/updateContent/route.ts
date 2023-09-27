@@ -13,39 +13,34 @@ export async function POST(req: Request) {
   try {
     const body = await req.json()
 
-    const { contentId, type, title, content, status, label, priority } =
+    const {  id, title,
+      content,
+      contentId,
+      } =
       ContentValidator.parse(body)
 
     if (!session?.user) {
       return new Response("Unauthorized", { status: 401 })
     }
 
-    const subscription = await prisma.content.findFirst({
-      where: {
-        contentId,
-        authorId: session.user.id,
-      },
-    })
+   
 
-    if (!subscription) {
-      return new Response("Subscribe to post", { status: 403 })
-    }
+  
 
-    await prisma.content.create({
+    await prisma.content.update({
+      where: {id: id},
+
       data: {
-        contentId,
-        type,
         title,
         content,
-        status,
-        label,
-        priority,
+        contentId,       
         author: {
           connect: {
             id: session.user.id,
           },
         },
       },
+    
     })
 
     return new Response("OK")
