@@ -165,7 +165,7 @@ export default function Active({ user, session, children }: any) {
       </main>
 
       {/* Small screens*/}
-      <aside className="absolute md:hidden inset-x-0 bottom-0 m-4 bg-white shadow-lg ring-1 ring-zinc-100 dark:bg-zinc-950 dark:ring-zinc-900 rounded-md z-50">
+      <aside className="absolute md:hidden inset-x-0 bottom-0 m-4 bg-white shadow-lg ring-1 ring-zinc-100 dark:bg-zinc-950 dark:ring-zinc-900 rounded-md z-40">
         <div className="flex justify-between gap-4 px-8">
           {navigation(user)
             .filter((item: any) => item.isMobile)
@@ -224,7 +224,7 @@ export default function Active({ user, session, children }: any) {
           initial={{ y: "100%", zIndex: 0 }}
           animate={isMenuOpen ? "open" : "closed"}
           variants={variants}
-          className="absolute inset-x-0 bottom-0 m-4 mb-16 bg-white ring-1 ring-zinc-100 dark:bg-zinc-950 dark:ring-zinc-900 rounded-md z-50"
+          className="absolute inset-x-0 bottom-0 m-4 mb-16 bg-white ring-1 ring-zinc-100 dark:bg-zinc-950 dark:ring-zinc-900 rounded-md z-30"
         >
           <nav className="h-full w-full p-2 text-zinc-900 dark:text-white">
             <div className="b flex items-center justify-between border-b border-zinc-100 dark:border-zinc-900">

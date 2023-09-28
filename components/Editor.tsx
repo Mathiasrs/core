@@ -128,10 +128,10 @@ export const Editor: React.FC<EditorProps> = ({ data: contentData }) => {
   const { ref: registerTitleRef, ...rest } = register('title')
 
   return (
-    <div className='w-full p-4 bg-zinc-50 rounded-lg border border-zinc-200'>
+    <div className='z-50 w-full p-4 bg-zinc-50 rounded-lg border border-zinc-200'>
       <form
         id='content-form'
-        className='w-fit p-2'        
+        className='w-fit'        
         >
         <div className='prose prose-stone dark:prose-invert'>
         <TextareaAutosize
@@ -141,7 +141,7 @@ export const Editor: React.FC<EditorProps> = ({ data: contentData }) => {
             }}
             {...rest}
             placeholder='Title'
-            className='w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none'
+            className='w-full h-20 resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none'
           />
 
           <div id='editor' className='min-h-[24rem]' />
