@@ -1,56 +1,42 @@
+import { NextRequest, NextResponse } from "next/server"
+
 // Auth
 import { getServerSession } from "next-auth"
 import { authOptions } from "app/api/auth/[...nextauth]/route"
 
 // Libraries
 import prisma from "@/lib/prisma"
-import { ContentValidator } from "@/lib/validators/content"
-import { z } from "zod"
 
-export async function POST(req: Request) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   const session = (await getServerSession(authOptions)) as any
 
   try {
-    const body = await req.json()
+    const { payload }: any = JSON.parse(await request.text())
 
-    const {  id, title,
-      content,
-      contentId,
-      } =
-      ContentValidator.parse(body)
+    const { id, content } = payload
 
-    if (!session?.user) {
-      return new Response("Unauthorized", { status: 401 })
+    if (!session) {
+      return NextResponse.next({
+        status: 401,
+      })
     }
-
-   
-
-  
 
     await prisma.content.update({
-      where: {id: id},
+      where: { id: id },
 
       data: {
-        title,
         content,
-        contentId,       
-        author: {
-          connect: {
-            id: session.user.id,
-          },
-        },
       },
-    
     })
 
-    return new Response("OK")
+    return NextResponse.json("OK")
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return new Response(error.message, { status: 400 })
-    }
-
-    return new Response("Could not post to subreddit at this time. Please try later", {
-      status: 500,
-    })
+    console.error("Error updating content:", error)
+    return NextResponse.json(
+      {
+        message: "An error occurred while updating content.",
+      },
+      { status: 500 },
+    )
   }
 }

@@ -23,7 +23,7 @@ export default function EditContentOptions({ content }: any) {
       </CardHeader>
 
       <CardContent>
-        <div className="flex items-center space-x-4 rounded-md border p-4">
+        <div className="flex items-center space-x-4 rounded-md border p-4 dark:border-zinc-800">
           <RocketIcon />
 
           <div className="flex-1 space-y-1">
