@@ -1,28 +1,29 @@
 "use client"
 
-// Next
-import { useRouter } from "next/navigation"
-
 // Libraries
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 
 // Types
-import { ContentCreationRequest } from "@/lib/validators/content"
+import { TitleCreationRequest } from "@/lib/validators/content"
 
-export function useUpdateContent(slug: string, setSaveStatus: any) {
+export function useUpdateTitle(slug: string, setSaveStatus: any) {
   const queryClient = useQueryClient()
 
   const mutation = useMutation(
-    async ({ id, content }: ContentCreationRequest) => {
-      const payload: ContentCreationRequest = {
+    async ({ id, title, slug }: TitleCreationRequest) => {
+      const payload: TitleCreationRequest = {
         id,
-        content,
+        title,
+        slug,
       }
 
-      const { data } = await axios.post("/api/update/content/updateContent", {
-        payload,
-      })
+      const { data } = await axios.post(
+        "/api/update/content/updateContentTitle",
+        {
+          payload,
+        },
+      )
 
       return data
     },
