@@ -16,12 +16,17 @@ import {
 } from "@/components/ui/card"
 
 import { Switch } from "@/components/ui/switch"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function EditContentOptions({ content, setSaveStatus }: any) {
-  const [isChecked, setIsChecked] = useState(content.isPublished)
-
+  const [isChecked, setIsChecked] = useState(false)
   const updateIsPublished = useUpdateIsPublished(content.slug, setSaveStatus)
+
+  useEffect(() => {
+    if (content?.isPublished !== undefined) {
+      setIsChecked(content.isPublished)
+    }
+  }, [content?.isPublished])
 
   const handleToggle = () => {
     const newStatus = !isChecked

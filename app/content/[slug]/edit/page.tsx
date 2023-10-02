@@ -32,29 +32,23 @@ export default function Page({ params }: pageProps) {
   const [saveStatus, setSaveStatus] = useState("")
 
   const { data: session } = useSession()
-
   const slug = params.slug
   const { data: content, isLoading } = useContentBySlug({ session, slug })
-
-  if (isLoading) return <EditorSkeleton />
 
   const debouncedSetTitle = useDebouncedCallback((title) => {
     handleUpdateTitle(title)
   }, 750)
 
   const updateTitleMutation = useUpdateTitle(slug, setSaveStatus)
-
   const updateContentMutation = useUpdateContent(slug, setSaveStatus)
 
   const handleUpdateTitle = async (title: string) => {
     setSaveStatus("Saving...")
-
     const payload = {
       id: content.id,
       title: title,
       slug: generateSlug(title),
     }
-
     updateTitleMutation.mutate(payload)
   }
 
@@ -63,12 +57,10 @@ export default function Page({ params }: pageProps) {
     if (editor) {
       const state = editor.state
       const json = state.doc.toJSON()
-
       const payload = {
         id: content.id,
         content: json,
       }
-
       updateContentMutation.mutate(payload)
     }
   }
@@ -79,6 +71,8 @@ export default function Page({ params }: pageProps) {
     }
   }, [content])
 
+  if (isLoading) return <EditorSkeleton />
+
   return (
     <div className="grid grid-cols-6 items-start gap-6">
       <div className="col-span-6 border-b border-zinc-200 pb-5 dark:border-zinc-800">
@@ -86,7 +80,6 @@ export default function Page({ params }: pageProps) {
           <h3 className="text-base font-semibold leading-6 text-gray-900 dark:text-white">
             Content editor
           </h3>
-
           {saveStatus && <Badge variant="outline">{saveStatus}</Badge>}
         </div>
       </div>
@@ -101,7 +94,6 @@ export default function Page({ params }: pageProps) {
             className="w-full resize-none appearance-none place-items-center overflow-hidden bg-transparent text-3xl font-bold focus:outline-none lg:text-5xl"
           />
         </div>
-
         <Editor
           onDebouncedUpdate={handleEditorUpdate}
           debounceDuration={750}
@@ -110,7 +102,6 @@ export default function Page({ params }: pageProps) {
           className="-mt-16"
         />
       </div>
-
       <div className="col-span-6 grid gap-4 md:col-span-2">
         <EditContentOptions content={content} setSaveStatus={setSaveStatus} />
       </div>
