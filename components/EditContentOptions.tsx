@@ -1,3 +1,8 @@
+"use client"
+
+// Mutations
+import { useUpdateIsPublished } from "@/actions/mutations/content/useUpdateIsPublished"
+
 // Libraries
 import { RocketIcon } from "@radix-ui/react-icons"
 
@@ -11,8 +16,25 @@ import {
 } from "@/components/ui/card"
 
 import { Switch } from "@/components/ui/switch"
+import { useState } from "react"
 
-export default function EditContentOptions({ content }: any) {
+export default function EditContentOptions({ content, setSaveStatus }: any) {
+  const [isChecked, setIsChecked] = useState(content.isPublished)
+
+  const updateIsPublished = useUpdateIsPublished(content.slug, setSaveStatus)
+
+  const handleToggle = () => {
+    const newStatus = !isChecked
+    setIsChecked(newStatus)
+
+    const payload = {
+      id: content.id,
+      isPublished: newStatus,
+    }
+
+    updateIsPublished.mutate(payload)
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -32,7 +54,7 @@ export default function EditContentOptions({ content }: any) {
               Publish content to users.
             </p>
           </div>
-          <Switch />
+          <Switch checked={isChecked} onCheckedChange={() => handleToggle()} />
         </div>
       </CardContent>
     </Card>

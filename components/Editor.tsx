@@ -1,20 +1,19 @@
-'use client'
+"use client"
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from "react"
 
 // Mutations
-import { useUpdateContent } from '@/actions/mutations/user/useUpdateContent'
+import { useUpdateContent } from "@/app/actions/mutations/content/useUpdateContent"
 
 // Libraries
-import EditorJS from '@editorjs/editorjs';
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import TextareaAutosize from 'react-textarea-autosize'
-import { z } from 'zod'
-import {  ContentValidator } from '@/lib/validators/content'
+import EditorJS from "@editorjs/editorjs"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import TextareaAutosize from "react-textarea-autosize"
+import { z } from "zod"
+import { ContentValidator } from "@/lib/validators/content"
 
-import '@/styles/editor.css'
-
+import "@/styles/editor.css"
 
 type FormData = z.infer<typeof ContentValidator>
 
@@ -37,8 +36,8 @@ export const Editor: React.FC<EditorProps> = ({ data: contentData }) => {
     },
   })
   const mutation = useUpdateContent()
-  const titleRef = useRef<HTMLTextAreaElement | null>(null);  
-  const editorRef = useRef<EditorJS | null>(null);  
+  const titleRef = useRef<HTMLTextAreaElement | null>(null)
+  const editorRef = useRef<EditorJS | null>(null)
 
   useEffect(() => {
     if (contentData) {
@@ -46,31 +45,31 @@ export const Editor: React.FC<EditorProps> = ({ data: contentData }) => {
         contentId: contentData?.contentId,
         title: contentData?.title,
         content: contentData?.content,
-      });
+      })
     }
-  }, [contentData, reset]);
+  }, [contentData, reset])
 
   useEffect(() => {
     const initializeEditor = async () => {
-      const EditorJS = (await import('@editorjs/editorjs')).default
-      const Header = (await import('@editorjs/header')).default
-      const Embed = (await import('@editorjs/embed')).default
-      const Table = (await import('@editorjs/table')).default
-      const List = (await import('@editorjs/list')).default
-      const Code = (await import('@editorjs/code')).default
-      const LinkTool = (await import('@editorjs/link')).default
-      const InlineCode = (await import('@editorjs/inline-code')).default
-      const ImageTool = (await import('@editorjs/image')).default
+      const EditorJS = (await import("@editorjs/editorjs")).default
+      const Header = (await import("@editorjs/header")).default
+      const Embed = (await import("@editorjs/embed")).default
+      const Table = (await import("@editorjs/table")).default
+      const List = (await import("@editorjs/list")).default
+      const Code = (await import("@editorjs/code")).default
+      const LinkTool = (await import("@editorjs/link")).default
+      const InlineCode = (await import("@editorjs/inline-code")).default
+      const ImageTool = (await import("@editorjs/image")).default
 
       try {
         const editor = new EditorJS({
-          holder: 'editor',
+          holder: "editor",
           tools: {
             header: Header,
             linkTool: {
               class: LinkTool,
               config: {
-                endpoint: '/api/link',
+                endpoint: "/api/link",
               },
             },
             image: {
@@ -79,8 +78,8 @@ export const Editor: React.FC<EditorProps> = ({ data: contentData }) => {
                 uploader: {
                   async uploadByFile(file: File) {
                     //@ts-ignore
-                    const [res] = await uploadFiles([file], 'imageUploader')
-  
+                    const [res] = await uploadFiles([file], "imageUploader")
+
                     return {
                       success: 1,
                       file: {
@@ -97,60 +96,56 @@ export const Editor: React.FC<EditorProps> = ({ data: contentData }) => {
             table: Table,
             embed: Embed,
           },
-        });
-        
-        await editor.isReady;
-        editorRef.current = editor;
+        })
+
+        await editor.isReady
+        editorRef.current = editor
       } catch (e) {
-        console.error('Editor.js initialization failed', e);
+        console.error("Editor.js initialization failed", e)
       }
-    };
-    
-    initializeEditor();
-    
+    }
+
+    initializeEditor()
+
     return () => {
       const destroyEditor = async () => {
         if (editorRef.current) {
           try {
-            await editorRef.current.isReady;         
-            editorRef.current.destroy();
+            await editorRef.current.isReady
+            editorRef.current.destroy()
           } catch (e) {
-            console.error('Failed to destroy Editor.js', e);
+            console.error("Failed to destroy Editor.js", e)
           }
         }
-      };
-  
-      destroyEditor();
-    };
-  }, []);
-  
-    
-  const { ref: registerTitleRef, ...rest } = register('title')
+      }
+
+      destroyEditor()
+    }
+  }, [])
+
+  const { ref: registerTitleRef, ...rest } = register("title")
 
   return (
-    <div className='z-50 w-full p-4 bg-zinc-50 rounded-lg border border-zinc-200'>
-      <form
-        id='content-form'
-        className='w-fit'        
-        >
-        <div className='prose prose-stone dark:prose-invert'>
-        <TextareaAutosize
+    <div className="z-50 w-full rounded-lg border border-zinc-200 bg-zinc-50 p-4">
+      <form id="content-form" className="w-fit">
+        <div className="prose prose-stone dark:prose-invert">
+          <TextareaAutosize
             ref={(e) => {
-              registerTitleRef(e);
-              titleRef.current = e; 
+              registerTitleRef(e)
+              titleRef.current = e
             }}
             {...rest}
-            placeholder='Title'
-            className='w-full h-20 resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none'
+            placeholder="Title"
+            className="h-20 w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
           />
 
-          <div id='editor' className='min-h-[24rem]' />
+          <div id="editor" className="min-h-[24rem]" />
 
-          <p className='text-sm text-gray-500'>
-            Use{' '}
-            <kbd className='rounded-md border bg-muted px-1 text-xs uppercase'>
+          <p className="text-sm text-gray-500">
+            Use{" "}
+            <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
               Tab
-            </kbd>{' '}
+            </kbd>{" "}
             to open the command menu.
           </p>
         </div>

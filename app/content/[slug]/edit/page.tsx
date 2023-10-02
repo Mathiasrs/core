@@ -4,8 +4,8 @@
 import { useSession } from "next-auth/react"
 
 // Mutations
-import { useUpdateTitle } from "@/actions/mutations/user/useUpdateTitle"
-import { useUpdateContent } from "@/actions/mutations/user/useUpdateContent"
+import { useUpdateTitle } from "@/app/actions/mutations/content/useUpdateTitle"
+import { useUpdateContent } from "@/app/actions/mutations/content/useUpdateContent"
 
 // Libraries
 import { Editor } from "novel"
@@ -112,7 +112,7 @@ export default function Page({ params }: pageProps) {
       </div>
 
       <div className="col-span-6 grid gap-4 md:col-span-2">
-        <EditContentOptions content={content} />
+        <EditContentOptions content={content} setSaveStatus={setSaveStatus} />
       </div>
     </div>
   )

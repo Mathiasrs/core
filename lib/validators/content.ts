@@ -14,3 +14,10 @@ export const TitleValidator = z.object({
 })
 
 export type TitleCreationRequest = z.infer<typeof TitleValidator>
+
+export const IsPublishedValidator = z.object({
+  id: z.string(),
+  isPublished: z.boolean(),
+})
+
+export type IsPublishedCreationRequest = z.infer<typeof IsPublishedValidator>

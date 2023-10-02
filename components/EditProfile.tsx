@@ -84,7 +84,8 @@ export default function EditUser({ session }: any) {
 
     const button = (
       <Button onClick={() => handleSignOut()}>
-        <FaSignOutAlt className="h-4 w-4" /> <span className="flex pl-2">Sign out</span>
+        <FaSignOutAlt className="h-4 w-4" />{" "}
+        <span className="flex pl-2">Sign out</span>
       </Button>
     )
 
@@ -94,7 +95,7 @@ export default function EditUser({ session }: any) {
           <LoadingSpinner
             fillColor={"fill-white"}
             textColor={"text-zinc-200 dark:text-zinc-600"}
-            className="w-4 h-5"
+            className="h-5 w-4"
           />
           <span className="flex pl-2">Signing out</span>
         </Button>
@@ -136,7 +137,7 @@ export default function EditUser({ session }: any) {
                   defaultValue={user?.name || ""}
                   disabled={isLoading ? true : false}
                   className={clsx({
-                    "p-2 block w-full rounded-md border-0 bg-white py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 dark:bg-zinc-700 dark:text-white dark:ring-zinc-600 sm:text-sm sm:leading-6":
+                    "block w-full rounded-md border-0 bg-white p-2 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 dark:bg-zinc-700 dark:text-white dark:ring-zinc-600 sm:text-sm sm:leading-6":
                       true,
                     "animate-pulse cursor-not-allowed": isLoading,
                   })}
@@ -163,7 +164,7 @@ export default function EditUser({ session }: any) {
                   {...register("about", { maxLength: 200 })}
                   disabled={isLoading ? true : false}
                   className={clsx({
-                    "p-2 block w-full rounded-md border-0 bg-white py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 dark:bg-zinc-700 dark:text-white dark:ring-zinc-600 sm:text-sm sm:leading-6":
+                    "block w-full rounded-md border-0 bg-white p-2 py-1.5 text-zinc-900 shadow-sm ring-1 ring-inset ring-zinc-300 placeholder:text-zinc-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 dark:bg-zinc-700 dark:text-white dark:ring-zinc-600 sm:text-sm sm:leading-6":
                       true,
                     "animate-pulse cursor-not-allowed": isLoading,
                   })}
@@ -217,8 +218,8 @@ export default function EditUser({ session }: any) {
               </div>
 
               <p className="text-sm leading-6 text-zinc-600  dark:text-zinc-400">
-                Choose your prefered theme. As standard it is using your device preferred theme
-                setting.
+                Choose your prefered theme. As standard it is using your device
+                preferred theme setting.
               </p>
             </div>
 
