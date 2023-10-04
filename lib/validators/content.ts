@@ -36,6 +36,20 @@ export const ContentIdValidator = z.object({
 
 export type ContentIdCreationRequest = z.infer<typeof ContentIdValidator>
 
+export const PriorityValidator = z.object({
+  id: z.string(),
+  priority: z.string(),
+})
+
+export type PriorityCreationRequest = z.infer<typeof PriorityValidator>
+
+export const StatusValidator = z.object({
+  id: z.string(),
+  status: z.string(),
+})
+
+export type StatusCreationRequest = z.infer<typeof StatusValidator>
+
 export const DescriptionValidator = z.object({
   id: z.string(),
   description: z.string(),

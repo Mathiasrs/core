@@ -5,6 +5,8 @@ import { useEffect, useState } from "react"
 // Mutations
 import { useUpdateIsPublished } from "@/actions/mutations/content/useUpdateIsPublished"
 import { useUpdateContentId } from "@/app/actions/mutations/content/useUpdateContentId"
+import { useUpdatePriority } from "@/app/actions/mutations/content/useUpdatePriority"
+import { useUpdateStatus } from "@/app/actions/mutations/content/useUpdateStatus"
 import { useUpdateDescription } from "@/app/actions/mutations/content/useUpdateDescription"
 
 // Libraries
@@ -41,6 +43,8 @@ export default function EditContentOptions({ content, setSaveStatus }: any) {
   const [isChecked, setIsChecked] = useState(false)
   const updateIsPublished = useUpdateIsPublished(content?.slug, setSaveStatus)
   const updateContentId = useUpdateContentId()
+  const updatePriority = useUpdatePriority()
+  const updateStatus = useUpdateStatus()
   const updateDescription = useUpdateDescription()
 
   const debouncedUpdateContentId = useDebouncedCallback((contentId) => {
@@ -76,6 +80,24 @@ export default function EditContentOptions({ content, setSaveStatus }: any) {
     }
 
     updateContentId.mutate(payload)
+  }
+
+  const handleUpdatePriority = (priority: string) => {
+    const payload = {
+      id: content.id,
+      priority,
+    }
+
+    updatePriority.mutate(payload)
+  }
+
+  const handleUpdateStatus = (status: string) => {
+    const payload = {
+      id: content.id,
+      status,
+    }
+
+    updateStatus.mutate(payload)
   }
 
   const handleUpdateDescription = (description: string) => {
@@ -135,7 +157,13 @@ export default function EditContentOptions({ content, setSaveStatus }: any) {
               <SelectGroup>
                 <SelectLabel>Priorities</SelectLabel>
                 {priorities.map((item: any) => (
-                  <SelectItem value={item?.value} className="flex items-center">
+                  <SelectItem
+                    value={item?.value}
+                    onClick={() => {
+                      handleUpdatePriority(item?.value)
+                    }}
+                    className="flex items-center"
+                  >
                     <div className="flex items-center justify-center">
                       {item.icon && (
                         <item.icon className="mr-2 inline-flex h-4 w-4 text-muted-foreground" />
@@ -164,7 +192,13 @@ export default function EditContentOptions({ content, setSaveStatus }: any) {
               <SelectGroup>
                 <SelectLabel>Statuses</SelectLabel>
                 {statuses.map((item: any) => (
-                  <SelectItem value={item?.value} className="flex items-center">
+                  <SelectItem
+                    value={item?.value}
+                    onClick={() => {
+                      handleUpdateStatus(item?.value)
+                    }}
+                    className="flex items-center"
+                  >
                     <div className="flex items-center justify-center">
                       {item.icon && (
                         <item.icon className="mr-2 inline-flex h-4 w-4 text-muted-foreground" />
