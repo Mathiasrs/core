@@ -30,7 +30,7 @@ export function useUpdateContentId() {
         queryClient.invalidateQueries(["content"])
 
         toast({
-          title: "Photo is now updated!",
+          title: "Content ID is now updated!",
         })
       },
 
