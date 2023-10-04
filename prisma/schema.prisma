@@ -94,10 +94,10 @@ model Content {
   title       String
   slug        String   @unique
   content     Json?
-  type        String
-  status      String?
-  label       String?
-  priority    String?
+  type        String?
+  status      String   @default("backlog")
+  label       String   @default("new")
+  priority    String   @default("low")
   isPublished Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

@@ -20,7 +20,7 @@ import { useEffect, useState } from "react"
 
 export default function EditContentOptions({ content, setSaveStatus }: any) {
   const [isChecked, setIsChecked] = useState(false)
-  const updateIsPublished = useUpdateIsPublished(content.slug, setSaveStatus)
+  const updateIsPublished = useUpdateIsPublished(content?.slug, setSaveStatus)
 
   useEffect(() => {
     if (content?.isPublished !== undefined) {
