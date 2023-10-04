@@ -28,3 +28,10 @@ export const LabelValidator = z.object({
 })
 
 export type LabelCreationRequest = z.infer<typeof LabelValidator>
+
+export const ContentIdValidator = z.object({
+  id: z.string(),
+  contentId: z.string(),
+})
+
+export type ContentIdCreationRequest = z.infer<typeof ContentIdValidator>

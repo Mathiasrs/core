@@ -2,9 +2,11 @@
 
 // Mutations
 import { useUpdateIsPublished } from "@/actions/mutations/content/useUpdateIsPublished"
+import { useUpdateContentId } from "@/app/actions/mutations/content/useUpdateContentId"
 
 // Libraries
 import { RocketIcon } from "@radix-ui/react-icons"
+import { useDebouncedCallback } from "use-debounce"
 
 // Components
 import {
@@ -17,10 +19,17 @@ import {
 
 import { Switch } from "@/components/ui/switch"
 import { useEffect, useState } from "react"
+import { Label } from "@radix-ui/react-label"
+import { Input, InputDescription } from "./ui/input"
 
 export default function EditContentOptions({ content, setSaveStatus }: any) {
   const [isChecked, setIsChecked] = useState(false)
   const updateIsPublished = useUpdateIsPublished(content?.slug, setSaveStatus)
+  const updateContentId = useUpdateContentId()
+
+  const debouncedUpdateContentId = useDebouncedCallback((contentId) => {
+    handleUpdateContentId(contentId)
+  }, 750)
 
   useEffect(() => {
     if (content?.isPublished !== undefined) {
@@ -40,6 +49,15 @@ export default function EditContentOptions({ content, setSaveStatus }: any) {
     updateIsPublished.mutate(payload)
   }
 
+  const handleUpdateContentId = (contentId: string) => {
+    const payload = {
+      id: content.id,
+      contentId,
+    }
+
+    updateContentId.mutate(payload)
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -49,7 +67,7 @@ export default function EditContentOptions({ content, setSaveStatus }: any) {
         </CardDescription>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="grid gap-4">
         <div className="flex items-center space-x-4 rounded-md border p-4 dark:border-zinc-800">
           <RocketIcon />
 
@@ -60,6 +78,19 @@ export default function EditContentOptions({ content, setSaveStatus }: any) {
             </p>
           </div>
           <Switch checked={isChecked} onCheckedChange={() => handleToggle()} />
+        </div>
+
+        <div className="grid w-full items-center gap-1.5">
+          <Label htmlFor="picture">Content ID</Label>
+          <Input
+            type="text"
+            placeholder="HT202020"
+            defaultValue={content?.contentId}
+            onChange={(e) => debouncedUpdateContentId(e.target.value)}
+          />
+          <InputDescription>
+            Provide an ID for better handling and finding content.
+          </InputDescription>
         </div>
       </CardContent>
     </Card>
