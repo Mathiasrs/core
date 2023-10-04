@@ -158,6 +158,7 @@ export default function EditContentOptions({ content, setSaveStatus }: any) {
                 <SelectLabel>Priorities</SelectLabel>
                 {priorities.map((item: any) => (
                   <SelectItem
+                    key={item?.value}
                     value={item?.value}
                     onClick={() => {
                       handleUpdatePriority(item?.value)
@@ -193,6 +194,7 @@ export default function EditContentOptions({ content, setSaveStatus }: any) {
                 <SelectLabel>Statuses</SelectLabel>
                 {statuses.map((item: any) => (
                   <SelectItem
+                    key={item?.value}
                     value={item?.value}
                     onClick={() => {
                       handleUpdateStatus(item?.value)
