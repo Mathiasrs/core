@@ -35,3 +35,10 @@ export const ContentIdValidator = z.object({
 })
 
 export type ContentIdCreationRequest = z.infer<typeof ContentIdValidator>
+
+export const DescriptionValidator = z.object({
+  id: z.string(),
+  description: z.string(),
+})
+
+export type DescriptionCreationRequest = z.infer<typeof DescriptionValidator>

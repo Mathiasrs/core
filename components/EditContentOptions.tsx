@@ -1,8 +1,11 @@
 "use client"
 
+import { useEffect, useState } from "react"
+
 // Mutations
 import { useUpdateIsPublished } from "@/actions/mutations/content/useUpdateIsPublished"
 import { useUpdateContentId } from "@/app/actions/mutations/content/useUpdateContentId"
+import { useUpdateDescription } from "@/app/actions/mutations/content/useUpdateDescription"
 
 // Libraries
 import { RocketIcon } from "@radix-ui/react-icons"
@@ -18,17 +21,34 @@ import {
 } from "@/components/ui/card"
 
 import { Switch } from "@/components/ui/switch"
-import { useEffect, useState } from "react"
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
 import { Label } from "@radix-ui/react-label"
-import { Input, InputDescription } from "./ui/input"
+import { Input, InputDescription } from "@/components/ui/input"
+import { priorities, statuses } from "@/lib/data"
+import { Textarea } from "@/components/ui/textarea"
 
 export default function EditContentOptions({ content, setSaveStatus }: any) {
   const [isChecked, setIsChecked] = useState(false)
   const updateIsPublished = useUpdateIsPublished(content?.slug, setSaveStatus)
   const updateContentId = useUpdateContentId()
+  const updateDescription = useUpdateDescription()
 
   const debouncedUpdateContentId = useDebouncedCallback((contentId) => {
     handleUpdateContentId(contentId)
+  }, 750)
+
+  const debouncedUpdateDescription = useDebouncedCallback((description) => {
+    handleUpdateDescription(description)
   }, 750)
 
   useEffect(() => {
@@ -58,6 +78,15 @@ export default function EditContentOptions({ content, setSaveStatus }: any) {
     updateContentId.mutate(payload)
   }
 
+  const handleUpdateDescription = (description: string) => {
+    const payload = {
+      id: content.id,
+      description,
+    }
+
+    updateDescription.mutate(payload)
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -67,7 +96,7 @@ export default function EditContentOptions({ content, setSaveStatus }: any) {
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="grid gap-4">
+      <CardContent className="grid gap-6">
         <div className="flex items-center space-x-4 rounded-md border p-4 dark:border-zinc-800">
           <RocketIcon />
 
@@ -91,6 +120,73 @@ export default function EditContentOptions({ content, setSaveStatus }: any) {
           <InputDescription>
             Provide an ID for better handling and finding content.
           </InputDescription>
+        </div>
+
+        <div className="grid w-full items-center gap-1.5">
+          <Label htmlFor="picture">Priority</Label>
+          <Select>
+            <SelectTrigger className="w-full">
+              <SelectValue
+                placeholder="Select a priority"
+                defaultValue={content?.priority}
+              />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Priorities</SelectLabel>
+                {priorities.map((item: any) => (
+                  <SelectItem value={item?.value} className="flex items-center">
+                    <div className="flex items-center justify-center">
+                      {item.icon && (
+                        <item.icon className="mr-2 inline-flex h-4 w-4 text-muted-foreground" />
+                      )}
+                      <span className="inline-flex items-center">
+                        {item?.label}
+                      </span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="grid w-full items-center gap-1.5">
+          <Label htmlFor="picture">Status</Label>
+          <Select>
+            <SelectTrigger className="w-full">
+              <SelectValue
+                placeholder="Select a status"
+                defaultValue={content?.status}
+              />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Statuses</SelectLabel>
+                {statuses.map((item: any) => (
+                  <SelectItem value={item?.value} className="flex items-center">
+                    <div className="flex items-center justify-center">
+                      {item.icon && (
+                        <item.icon className="mr-2 inline-flex h-4 w-4 text-muted-foreground" />
+                      )}
+                      <span className="inline-flex items-center">
+                        {item?.label}
+                      </span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="grid w-full items-center gap-1.5">
+          <Label htmlFor="picture">Description</Label>
+          <Textarea
+            placeholder="Provide a short description of the content."
+            defaultValue={content?.description}
+            onChange={(e) => debouncedUpdateDescription(e.target.value)}
+          />
         </div>
       </CardContent>
     </Card>

@@ -93,6 +93,7 @@ model Content {
   id          String   @id @default(cuid())
   title       String
   slug        String   @unique
+  description String?
   content     Json?
   type        String?
   status      String   @default("backlog")
