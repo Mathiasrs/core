@@ -21,3 +21,10 @@ export const IsPublishedValidator = z.object({
 })
 
 export type IsPublishedCreationRequest = z.infer<typeof IsPublishedValidator>
+
+export const LabelValidator = z.object({
+  id: z.string(),
+  label: z.string(),
+})
+
+export type LabelCreationRequest = z.infer<typeof LabelValidator>
