@@ -1,5 +1,8 @@
 "use client"
 
+// Next
+import Link from "next/link"
+
 // Auth
 import { useSession } from "next-auth/react"
 
@@ -20,6 +23,8 @@ import { Badge } from "@/components/ui/badge"
 import useContentBySlug from "@/app/actions/queries/content/useContentBySlug"
 import EditorSkeleton from "@/components/ui/skeletons/EditorSkeleton"
 import EditContentOptions from "@/components/EditContentOptions"
+import { FaArrowCircleLeft } from "react-icons/fa"
+import { Separator } from "@/components/ui/separator"
 
 type pageProps = {
   params: {
@@ -76,7 +81,15 @@ export default function Page({ params }: pageProps) {
   return (
     <div className="grid grid-cols-6 items-start gap-6">
       <div className="col-span-6 border-b border-zinc-200 pb-5 dark:border-zinc-800">
-        <div className="-ml-2 -mt-2 flex items-center gap-2">
+        <div className="flex items-center gap-2">
+          <Link
+            href="/content"
+            className="flex items-center gap-2 text-gray-900 hover:opacity-80 dark:text-white"
+          >
+            <FaArrowCircleLeft className="h-4 w-4" />
+            <span>Go back</span>
+          </Link>
+          -{" "}
           <h3 className="text-base font-semibold leading-6 text-gray-900 dark:text-white">
             Content editor
           </h3>
