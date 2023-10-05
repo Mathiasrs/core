@@ -95,16 +95,16 @@ export default function Page({ params }: pageProps) {
           {saveStatus && <Badge variant="outline">{saveStatus}</Badge>}
         </div>
       </div>
-      <div className="prose prose-stone dark:prose-invert relative col-span-6 rounded-xl border border-zinc-200 bg-white text-zinc-950 shadow dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 md:col-span-4">
-        <div className="flex items-center justify-between px-8 pt-10 sm:px-10 md:px-12">
+
+      <div className="prose prose-stone dark:prose-invert relative order-2 col-span-6 rounded-xl border border-zinc-200 bg-white text-zinc-950 shadow dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 lg:order-1 lg:col-span-4">
+        <div className="flex items-center justify-between px-8 pt-10 sm:px-10 lg:px-12">
           <textarea
             placeholder="Title"
-            disabled
             defaultValue={content?.title}
             onChange={(e) => {
               debouncedSetTitle(e.target.value)
             }}
-            className="w-full resize-none appearance-none place-items-center overflow-hidden bg-transparent text-3xl font-bold focus:outline-none lg:text-5xl"
+            className="w-full resize-none appearance-none place-items-center overflow-hidden bg-transparent text-3xl font-bold focus:outline-none lg:text-4xl xl:text-5xl"
           />
         </div>
         <Editor
@@ -112,10 +112,11 @@ export default function Page({ params }: pageProps) {
           debounceDuration={750}
           disableLocalStorage
           defaultValue={initialContent ? initialContent : ""}
-          className="-mt-16"
+          className="-mt-10"
         />
       </div>
-      <div className="col-span-6 grid gap-4 md:col-span-2">
+
+      <div className="order-1 col-span-6 grid gap-4 lg:order-2 lg:col-span-2">
         <EditContentOptions content={content} setSaveStatus={setSaveStatus} />
       </div>
     </div>
