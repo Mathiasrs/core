@@ -41,6 +41,8 @@ import { Textarea } from "@/components/ui/textarea"
 
 export default function EditContentOptions({ content, setSaveStatus }: any) {
   const [isChecked, setIsChecked] = useState(false)
+  const [priority, setPriority] = useState("")
+  const [status, setStatus] = useState("")
   const updateIsPublished = useUpdateIsPublished(content?.slug, setSaveStatus)
   const updateContentId = useUpdateContentId()
   const updatePriority = useUpdatePriority()
@@ -60,6 +62,16 @@ export default function EditContentOptions({ content, setSaveStatus }: any) {
       setIsChecked(content.isPublished)
     }
   }, [content?.isPublished])
+
+  useEffect(() => {
+    if (content?.priority) {
+      setPriority(content.priority)
+    }
+
+    if (content?.status) {
+      setStatus(content.status)
+    }
+  }, [content])
 
   const handleToggle = () => {
     const newStatus = !isChecked
@@ -150,12 +162,10 @@ export default function EditContentOptions({ content, setSaveStatus }: any) {
             onValueChange={(value) => {
               handleUpdatePriority(value)
             }}
+            value={priority}
           >
             <SelectTrigger className="w-full">
-              <SelectValue
-                placeholder="Select a priority"
-                defaultValue={content?.priority}
-              />
+              <SelectValue placeholder="Select a priority" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
@@ -187,12 +197,10 @@ export default function EditContentOptions({ content, setSaveStatus }: any) {
             onValueChange={(value) => {
               handleUpdateStatus(value)
             }}
+            value={status}
           >
             <SelectTrigger className="w-full">
-              <SelectValue
-                placeholder="Select a status"
-                defaultValue={content?.status}
-              />
+              <SelectValue placeholder="Select a status" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
