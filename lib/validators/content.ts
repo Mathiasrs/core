@@ -1,11 +1,20 @@
 import { z } from "zod"
 
+export const ContentCreationValidator = z.object({
+  contentId: z.string(),
+  title: z.string(),
+  description: z.string(),
+  slug: z.string(),
+})
+
+export type ContentCreationRequest = z.infer<typeof ContentCreationValidator>
+
 export const ContentValidator = z.object({
   id: z.string(),
   content: z.any(),
 })
 
-export type ContentCreationRequest = z.infer<typeof ContentValidator>
+export type ContentUpdateRequest = z.infer<typeof ContentValidator>
 
 export const TitleValidator = z.object({
   id: z.string(),
@@ -13,46 +22,46 @@ export const TitleValidator = z.object({
   slug: z.string(),
 })
 
-export type TitleCreationRequest = z.infer<typeof TitleValidator>
+export type TitleUpdateRequest = z.infer<typeof TitleValidator>
 
 export const IsPublishedValidator = z.object({
   id: z.string(),
   isPublished: z.boolean(),
 })
 
-export type IsPublishedCreationRequest = z.infer<typeof IsPublishedValidator>
+export type IsPublishedUpdateRequest = z.infer<typeof IsPublishedValidator>
 
 export const LabelValidator = z.object({
   id: z.string(),
   label: z.string(),
 })
 
-export type LabelCreationRequest = z.infer<typeof LabelValidator>
+export type LabelUpdateRequest = z.infer<typeof LabelValidator>
 
 export const ContentIdValidator = z.object({
   id: z.string(),
   contentId: z.string(),
 })
 
-export type ContentIdCreationRequest = z.infer<typeof ContentIdValidator>
+export type ContentIdUpdateRequest = z.infer<typeof ContentIdValidator>
 
 export const PriorityValidator = z.object({
   id: z.string(),
   priority: z.string(),
 })
 
-export type PriorityCreationRequest = z.infer<typeof PriorityValidator>
+export type PriorityUpdateRequest = z.infer<typeof PriorityValidator>
 
 export const StatusValidator = z.object({
   id: z.string(),
   status: z.string(),
 })
 
-export type StatusCreationRequest = z.infer<typeof StatusValidator>
+export type StatusUpdateRequest = z.infer<typeof StatusValidator>
 
 export const DescriptionValidator = z.object({
   id: z.string(),
   description: z.string(),
 })
 
-export type DescriptionCreationRequest = z.infer<typeof DescriptionValidator>
+export type DescriptionUpdateRequest = z.infer<typeof DescriptionValidator>

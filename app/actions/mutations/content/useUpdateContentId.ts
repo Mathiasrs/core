@@ -6,15 +6,15 @@ import axios from "axios"
 import { useToast } from "@/components/ui/use-toast"
 
 // Types
-import { ContentIdCreationRequest } from "@/lib/validators/content"
+import { ContentIdUpdateRequest } from "@/lib/validators/content"
 
 export function useUpdateContentId() {
   const queryClient = useQueryClient()
   const { toast } = useToast()
 
   const mutation = useMutation(
-    async ({ id, contentId }: ContentIdCreationRequest) => {
-      const payload: ContentIdCreationRequest = {
+    async ({ id, contentId }: ContentIdUpdateRequest) => {
+      const payload: ContentIdUpdateRequest = {
         id,
         contentId,
       }

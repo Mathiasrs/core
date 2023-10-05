@@ -5,14 +5,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 
 // Types
-import { IsPublishedCreationRequest } from "@/lib/validators/content"
+import { IsPublishedUpdateRequest } from "@/lib/validators/content"
 
 export function useUpdateIsPublished(slug: string, setSaveStatus: any) {
   const queryClient = useQueryClient()
 
   const mutation = useMutation(
-    async ({ id, isPublished }: IsPublishedCreationRequest) => {
-      const payload: IsPublishedCreationRequest = {
+    async ({ id, isPublished }: IsPublishedUpdateRequest) => {
+      const payload: IsPublishedUpdateRequest = {
         id,
         isPublished,
       }

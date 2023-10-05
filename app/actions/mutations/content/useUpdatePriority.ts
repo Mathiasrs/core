@@ -6,15 +6,15 @@ import axios from "axios"
 import { useToast } from "@/components/ui/use-toast"
 
 // Types
-import { PriorityCreationRequest } from "@/lib/validators/content"
+import { PriorityUpdateRequest } from "@/lib/validators/content"
 
 export function useUpdatePriority() {
   const queryClient = useQueryClient()
   const { toast } = useToast()
 
   const mutation = useMutation(
-    async ({ id, priority }: PriorityCreationRequest) => {
-      const payload: PriorityCreationRequest = {
+    async ({ id, priority }: PriorityUpdateRequest) => {
+      const payload: PriorityUpdateRequest = {
         id,
         priority,
       }

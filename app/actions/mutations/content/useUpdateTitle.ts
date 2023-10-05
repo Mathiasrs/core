@@ -5,14 +5,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 
 // Types
-import { TitleCreationRequest } from "@/lib/validators/content"
+import { TitleUpdateRequest } from "@/lib/validators/content"
 
 export function useUpdateTitle(slug: string, setSaveStatus: any) {
   const queryClient = useQueryClient()
 
   const mutation = useMutation(
-    async ({ id, title, slug }: TitleCreationRequest) => {
-      const payload: TitleCreationRequest = {
+    async ({ id, title, slug }: TitleUpdateRequest) => {
+      const payload: TitleUpdateRequest = {
         id,
         title,
         slug,

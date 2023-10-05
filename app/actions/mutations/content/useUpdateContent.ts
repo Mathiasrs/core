@@ -8,14 +8,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 
 // Types
-import { ContentCreationRequest } from "@/lib/validators/content"
+import { ContentUpdateRequest } from "@/lib/validators/content"
 
 export function useUpdateContent(slug: string, setSaveStatus: any) {
   const queryClient = useQueryClient()
 
   const mutation = useMutation(
-    async ({ id, content }: ContentCreationRequest) => {
-      const payload: ContentCreationRequest = {
+    async ({ id, content }: ContentUpdateRequest) => {
+      const payload: ContentUpdateRequest = {
         id,
         content,
       }

@@ -6,15 +6,15 @@ import axios from "axios"
 import { useToast } from "@/components/ui/use-toast"
 
 // Types
-import { DescriptionCreationRequest } from "@/lib/validators/content"
+import { DescriptionUpdateRequest } from "@/lib/validators/content"
 
 export function useUpdateDescription() {
   const queryClient = useQueryClient()
   const { toast } = useToast()
 
   const mutation = useMutation(
-    async ({ id, description }: DescriptionCreationRequest) => {
-      const payload: DescriptionCreationRequest = {
+    async ({ id, description }: DescriptionUpdateRequest) => {
+      const payload: DescriptionUpdateRequest = {
         id,
         description,
       }

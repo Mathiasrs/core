@@ -6,15 +6,15 @@ import axios from "axios"
 import { useToast } from "@/components/ui/use-toast"
 
 // Types
-import { LabelCreationRequest } from "@/lib/validators/content"
+import { LabelUpdateRequest } from "@/lib/validators/content"
 
 export function useUpdateLabel() {
   const queryClient = useQueryClient()
   const { toast } = useToast()
 
   const mutation = useMutation(
-    async ({ id, label }: LabelCreationRequest) => {
-      const payload: LabelCreationRequest = {
+    async ({ id, label }: LabelUpdateRequest) => {
+      const payload: LabelUpdateRequest = {
         id,
         label,
       }
