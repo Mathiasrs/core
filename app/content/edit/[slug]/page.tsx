@@ -24,7 +24,6 @@ import useContentBySlug from "@/app/actions/queries/content/useContentBySlug"
 import EditorSkeleton from "@/components/ui/skeletons/EditorSkeleton"
 import EditContentOptions from "@/components/EditContentOptions"
 import { FaArrowCircleLeft } from "react-icons/fa"
-import { Separator } from "@/components/ui/separator"
 
 type pageProps = {
   params: {
@@ -76,7 +75,7 @@ export default function Page({ params }: pageProps) {
     }
   }, [content])
 
-  if (isLoading) return <EditorSkeleton />
+  if (isLoading || !initialContent) return <EditorSkeleton />
 
   return (
     <div className="grid grid-cols-6 items-start gap-6">
@@ -100,6 +99,7 @@ export default function Page({ params }: pageProps) {
         <div className="flex items-center justify-between px-8 pt-10 sm:px-10 md:px-12">
           <textarea
             placeholder="Title"
+            disabled
             defaultValue={content?.title}
             onChange={(e) => {
               debouncedSetTitle(e.target.value)
