@@ -41,7 +41,8 @@ export default function EditorSkeleton() {
           </h3>
         </div>
       </div>
-      <div className="prose prose-stone dark:prose-invert relative col-span-6 rounded-xl border border-zinc-200 bg-white text-zinc-950 shadow dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 md:col-span-4">
+
+      <div className="prose prose-stone dark:prose-invert relative order-2 col-span-6 rounded-xl border border-zinc-200 bg-white text-zinc-950 shadow dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 lg:order-1 lg:col-span-4">
         <div className="flex items-center justify-between px-8 pt-10 sm:px-10 md:px-12">
           <textarea
             placeholder="Loading..."
@@ -55,7 +56,8 @@ export default function EditorSkeleton() {
           ))}
         </div>
       </div>
-      <div className="col-span-6 grid gap-4 md:col-span-2">
+
+      <div className="order-1 col-span-6 grid gap-4 lg:order-2 lg:col-span-2">
         <Card>
           <CardHeader>
             <CardTitle>Content details</CardTitle>
