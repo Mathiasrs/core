@@ -146,7 +146,11 @@ export default function EditContentOptions({ content, setSaveStatus }: any) {
 
         <div className="grid w-full items-center gap-1.5">
           <Label htmlFor="picture">Priority</Label>
-          <Select>
+          <Select
+            onValueChange={(value) => {
+              handleUpdatePriority(value)
+            }}
+          >
             <SelectTrigger className="w-full">
               <SelectValue
                 placeholder="Select a priority"
@@ -160,9 +164,6 @@ export default function EditContentOptions({ content, setSaveStatus }: any) {
                   <SelectItem
                     key={item?.value}
                     value={item?.value}
-                    onClick={() => {
-                      handleUpdatePriority(item?.value)
-                    }}
                     className="flex items-center"
                   >
                     <div className="flex items-center justify-center">
@@ -182,7 +183,11 @@ export default function EditContentOptions({ content, setSaveStatus }: any) {
 
         <div className="grid w-full items-center gap-1.5">
           <Label htmlFor="picture">Status</Label>
-          <Select>
+          <Select
+            onValueChange={(value) => {
+              handleUpdateStatus(value)
+            }}
+          >
             <SelectTrigger className="w-full">
               <SelectValue
                 placeholder="Select a status"

@@ -13,7 +13,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const { payload }: any = JSON.parse(await request.text())
 
-    const { id, priority } = payload
+    const { id, status } = payload
 
     if (!session) {
       return NextResponse.next({
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       where: { id: id },
 
       data: {
-        priority,
+        status,
       },
     })
 
