@@ -61,12 +61,14 @@ export default function CreateContentSheet() {
   return (
     <div>
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-        <SheetTrigger>
-          <Button className="flex gap-2">
-            <PlusIcon />
-            <span>Create new</span>
-          </Button>
-        </SheetTrigger>
+        <Button
+          onClick={() => setIsSheetOpen((prevState) => !prevState)}
+          className="flex gap-2"
+        >
+          <PlusIcon />
+          <span>Create new</span>
+        </Button>
+
         <SheetContent className="w-full sm:w-[34rem]">
           <SheetHeader>
             <SheetTitle>Create new content</SheetTitle>
