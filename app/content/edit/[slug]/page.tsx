@@ -72,6 +72,8 @@ export default function Page({ params }: pageProps) {
   useEffect(() => {
     if (content?.content) {
       setInitialContent(content?.content)
+    } else {
+      setInitialContent(" ")
     }
   }, [content])
 
