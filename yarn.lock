@@ -1569,6 +1569,7 @@
   dependencies:
     "@upstash/redis" "^1.19.3"
 
+
 "@upstash/ratelimit@^0.4.4":
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/@upstash/ratelimit/-/ratelimit-0.4.4.tgz#99b4d9e2428c18ef0946ec347b5f22dac0184e60"
@@ -5151,7 +5152,7 @@ symbol-tree@^3.2.4:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"
   integrity sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==
-
+  
 tailwind-merge@^1.14.0:
   version "1.14.0"
   resolved "https://registry.yarnpkg.com/tailwind-merge/-/tailwind-merge-1.14.0.tgz#e677f55d864edc6794562c63f5001f45093cdb8b"
