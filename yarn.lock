@@ -104,10 +104,10 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.36.0.tgz#9837f768c03a1e4a30bd304a64fb8844f0e72efe"
   integrity sha512-lxJ9R5ygVm8ZWgYdUweoq5ownDlJ4upvoWmO4eLxBYHdMo+vZ/Rx0EN6MbKWDJOSUGrqJy2Gt+Dyv/VKml0fjg==
 
-"@eslint/js@8.50.0":
-  version "8.50.0"
-  resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.50.0.tgz#9e93b850f0f3fa35f5fa59adfd03adae8488e484"
-  integrity sha512-NCC3zz2+nvYd+Ckfh87rA47zfu2QsQpvc6k1yzTk+b9KzRj0wkGa8LSoGOXN6Zv4lRf/EIoZ80biDh9HOI+RNQ==
+"@eslint/js@8.51.0":
+  version "8.51.0"
+  resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.51.0.tgz#6d419c240cfb2b66da37df230f7e7eef801c32fa"
+  integrity sha512-HxjQ8Qn+4SI3/AFv6sOrDB+g6PpUTDwSJiQqOrnneEk8L71161srI9gjzzZvYVbzHiVg/BvcH95+cK/zfIt4pg==
 
 "@floating-ui/core@^1.4.2":
   version "1.5.0"
@@ -1044,17 +1044,17 @@
     "@tanstack/query-core" "4.35.7"
     use-sync-external-store "^1.2.0"
 
-"@tanstack/react-table@^8.10.3":
-  version "8.10.3"
-  resolved "https://registry.yarnpkg.com/@tanstack/react-table/-/react-table-8.10.3.tgz#d109be13ffca4085336e92b4a856bddc1ddfebd8"
-  integrity sha512-Qya1cJ+91arAlW7IRDWksRDnYw28O446jJ/ljkRSc663EaftJoBCAU10M+VV1K6MpCBLrXq1BD5IQc1zj/ZEjA==
+"@tanstack/react-table@^8.10.4":
+  version "8.10.4"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-table/-/react-table-8.10.4.tgz#5ba5384836e3fd3d55835d23af33cd170ed765f7"
+  integrity sha512-t3VE77XotxEw1DdRc+b1f7wrD6Dr17CPcl9FVby4HFmfrC5zUIPhzAxPBYcm2WgS2g09n/hnITIQ5zh2zzu1hg==
   dependencies:
-    "@tanstack/table-core" "8.10.3"
+    "@tanstack/table-core" "8.10.4"
 
-"@tanstack/table-core@8.10.3":
-  version "8.10.3"
-  resolved "https://registry.yarnpkg.com/@tanstack/table-core/-/table-core-8.10.3.tgz#7f7a0753645e05bb15c97512785abbae7b626ee3"
-  integrity sha512-hJ55YfJlWbfzRROfcyA/kC1aZr/shsLA8XNAwN8jXylhYWGLnPmiJJISrUfj4dMMWRiFi0xBlnlC7MLH+zSrcw==
+"@tanstack/table-core@8.10.4":
+  version "8.10.4"
+  resolved "https://registry.yarnpkg.com/@tanstack/table-core/-/table-core-8.10.4.tgz#a983665c4a8680d346dc70b7f3f4f75b228e9883"
+  integrity sha512-1eJu8hY8U+bM/dkn+ldr/KtDqjcj3Wmn8u3n6rZsrb/wd88k8qmGTFcc+BA/fojGTqCRX1gKc8zMzuk2nauBEA==
 
 "@tiptap/core@^2.1.11", "@tiptap/core@^2.1.7":
   version "2.1.11"
@@ -1369,7 +1369,7 @@
     "@types/node" "*"
     form-data "^4.0.0"
 
-"@types/node@*", "@types/node@20.8.2":
+"@types/node@*":
   version "20.8.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.8.2.tgz#d76fb80d87d0d8abfe334fc6d292e83e5524efc4"
   integrity sha512-Vvycsc9FQdwhxE3y3DzeIxuEJbWGDsnrxvMADzTDF/lcdR9/K+AQIeAghTQsHtotg/q0j3WEOYS/jQgSdWue3w==
@@ -1378,6 +1378,11 @@
   version "18.15.3"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.15.3.tgz#f0b991c32cfc6a4e7f3399d6cb4b8cf9a0315014"
   integrity sha512-p6ua9zBxz5otCmbpb5D3U4B5Nanw6Pk3PPyX05xnxbB/fRv71N7CPmORg7uAD5P70T0xmx1pzAx/FUfa5X+3cw==
+
+"@types/node@20.8.3":
+  version "20.8.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.8.3.tgz#c4ae2bb1cfab2999ed441a95c122bbbe1567a66d"
+  integrity sha512-jxiZQFpb+NlH5kjW49vXxvxTjeeqlbsnTAdBTKpzEdPs9itay7MscYXz3Fo9VYFEsfQ6LJFitHad3faerLAjCw==
 
 "@types/node@^18.11.18":
   version "18.18.3"
@@ -1406,10 +1411,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-dom@18.2.10":
-  version "18.2.10"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.2.10.tgz#06247cb600e39b63a0a385f6a5014c44bab296f2"
-  integrity sha512-5VEC5RgXIk1HHdyN1pHlg0cOqnxHzvPGpMMyGAP5qSaDRmyZNDaQ0kkVAkK6NYlDhP6YBID3llaXlmAS/mdgCA==
+"@types/react-dom@18.2.11":
+  version "18.2.11"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.2.11.tgz#4332c315544698a0875dfdb6e320dda59e1b3d58"
+  integrity sha512-zq6Dy0EiCuF9pWFW6I6k6W2LdpUixLE4P6XjXU1QHLfak3GPACQfLwEuHzY5pOYa4hzj1d0GxX/P141aFjZsyg==
   dependencies:
     "@types/react" "*"
 
@@ -2616,15 +2621,15 @@ eslint@8.36.0:
     strip-json-comments "^3.1.0"
     text-table "^0.2.0"
 
-eslint@8.50.0:
-  version "8.50.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-8.50.0.tgz#2ae6015fee0240fcd3f83e1e25df0287f487d6b2"
-  integrity sha512-FOnOGSuFuFLv/Sa+FDVRZl4GGVAAFFi8LecRsI5a1tMO5HIE8nCm4ivAlzt4dT3ol/PaaGC0rJEEXQmHJBGoOg==
+eslint@8.51.0:
+  version "8.51.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-8.51.0.tgz#4a82dae60d209ac89a5cff1604fea978ba4950f3"
+  integrity sha512-2WuxRZBrlwnXi+/vFSJyjMqrNjtJqiasMzehF0shoLaW7DzS3/9Yvrmq5JiT66+pNjiX4UBnLDiKHcWAr/OInA==
   dependencies:
     "@eslint-community/eslint-utils" "^4.2.0"
     "@eslint-community/regexpp" "^4.6.1"
     "@eslint/eslintrc" "^2.1.2"
-    "@eslint/js" "8.50.0"
+    "@eslint/js" "8.51.0"
     "@humanwhocodes/config-array" "^0.11.11"
     "@humanwhocodes/module-importer" "^1.0.1"
     "@nodelib/fs.walk" "^1.2.8"
