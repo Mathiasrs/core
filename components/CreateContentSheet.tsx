@@ -1,5 +1,7 @@
 "use client"
 
+import { useState } from "react"
+
 // Mutations
 import { useCreateContent } from "@/app/actions/mutations/content/useCreateContent"
 
@@ -37,11 +39,14 @@ import { Textarea } from "./ui/textarea"
 import { ContentCreationValidator } from "@/lib/validators/content"
 
 export default function CreateContentSheet() {
+  const [isSheetOpen, setIsSheetOpen] = useState(false)
+  const [isMutating, setIsMutating] = useState(false)
+
   const form = useForm<z.infer<typeof ContentCreationValidator>>({
     resolver: zodResolver(ContentCreationValidator),
   })
 
-  const createContent = useCreateContent()
+  const createContent = useCreateContent(setIsSheetOpen, setIsMutating)
 
   function onSubmit(data: z.infer<typeof ContentCreationValidator>) {
     const payload = {
@@ -50,13 +55,12 @@ export default function CreateContentSheet() {
       slug: generateSlug(data.title),
       description: data.description,
     }
-
     createContent.mutate(payload)
   }
 
   return (
     <div>
-      <Sheet>
+      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetTrigger>
           <Button className="flex gap-2">
             <PlusIcon />

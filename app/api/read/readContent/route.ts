@@ -15,7 +15,11 @@ export async function GET(): Promise<NextResponse> {
   }
 
   try {
-    const readContent = await prisma.content.findMany()
+    const readContent = await prisma.content.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    })
 
     return NextResponse.json(readContent)
   } catch (error) {
@@ -23,7 +27,7 @@ export async function GET(): Promise<NextResponse> {
 
     return NextResponse.json(
       { message: "An error occurred while reading content" },
-      { status: 500 }
+      { status: 500 },
     )
   }
 }
