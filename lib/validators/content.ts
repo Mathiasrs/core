@@ -1,10 +1,27 @@
 import { z } from "zod"
 
 export const ContentCreationValidator = z.object({
-  contentId: z.string(),
-  title: z.string(),
-  description: z.string(),
+  contentId: z.string().max(12, {
+    message: "Content ID can maximum be 12 characters.",
+  }),
+  title: z
+    .string()
+    .min(10, {
+      message: "Title must be at least 10 characters.",
+    })
+    .max(60, {
+      message: "Description can maximum be 60 characters.",
+    }),
   slug: z.string(),
+  description: z
+    .string()
+    .min(10, {
+      message: "Description must be at least 10 characters.",
+    })
+    .max(140, {
+      message: "Description can maximum be 140 characters.",
+    })
+    .optional(),
 })
 
 export type ContentCreationRequest = z.infer<typeof ContentCreationValidator>

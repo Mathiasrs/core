@@ -34,36 +34,16 @@ import {
 } from "@/components/ui/form"
 import { Input } from "./ui/input"
 import { Textarea } from "./ui/textarea"
-
-const FormSchema = z.object({
-  contentId: z.string().max(12, {
-    message: "Content ID can maximum be 12 characters.",
-  }),
-  title: z.string().min(10, {
-    message: "Title must be at least 10 characters.",
-  }),
-  slug: z.string(),
-  description: z
-    .string()
-    .min(10, {
-      message: "Description must be at least 10 characters.",
-    })
-    .max(140, {
-      message: "Description can maximum be 140 characters.",
-    })
-    .optional(),
-})
+import { ContentCreationValidator } from "@/lib/validators/content"
 
 export default function CreateContentSheet() {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<z.infer<typeof ContentCreationValidator>>({
+    resolver: zodResolver(ContentCreationValidator),
   })
 
   const createContent = useCreateContent()
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("data", data)
-
+  function onSubmit(data: z.infer<typeof ContentCreationValidator>) {
     const payload = {
       contentId: data.contentId,
       title: data.title,
