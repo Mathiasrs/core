@@ -1,10 +1,13 @@
 "use client"
 
+import { useState } from "react"
+
 // Next
 import Link from "next/link"
 
 // Mutations
-import { useUpdateLabel } from "@/app/actions/mutations/content/useUpdateLabel"
+import { useUpdateLabel } from "@/actions/mutations/content/useUpdateLabel"
+import { useDeleteContent } from "@/actions/mutations/content/useDeleteContent"
 
 // Libraries
 import { labels } from "@/lib/data"
@@ -34,16 +37,27 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
+  const [isModelOpen, setIsModelOpen] = useState(false)
   const content = contentSchema.parse(row.original)
 
   const updateContentLabel = useUpdateLabel()
+  const deleteContent = useDeleteContent(setIsModelOpen)
 
   const handleUpdateLabel = async (label: string) => {
     const payload = {
       id: content.id,
       label: label,
     }
+
     updateContentLabel.mutate(payload)
+  }
+
+  const handleDeleteContent = async () => {
+    const payload = {
+      id: content.id,
+    }
+
+    deleteContent.mutate(payload)
   }
 
   return (
@@ -63,8 +77,6 @@ export function DataTableRowActions<TData>({
             Edit
           </Link>
         </DropdownMenuItem>
-        {/* <DropdownMenuItem>Make a copy</DropdownMenuItem>
-        <DropdownMenuItem>Favorite</DropdownMenuItem> */}
         <DropdownMenuSeparator />
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
@@ -85,7 +97,11 @@ export function DataTableRowActions<TData>({
           </DropdownMenuSubContent>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            handleDeleteContent()
+          }}
+        >
           Delete
           <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
         </DropdownMenuItem>
