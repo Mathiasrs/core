@@ -72,12 +72,10 @@ export default function Page({ params }: pageProps) {
   useEffect(() => {
     if (content?.content) {
       setInitialContent(content?.content)
-    } else {
-      setInitialContent(" ")
     }
   }, [content])
 
-  if (isLoading || !initialContent) return <EditorSkeleton />
+  if (isLoading) return <EditorSkeleton />
 
   return (
     <div className="grid grid-cols-6 items-start gap-6">
