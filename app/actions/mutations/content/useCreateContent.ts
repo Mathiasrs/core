@@ -19,7 +19,7 @@ export function useCreateContent() {
         slug,
       }
 
-      const { data } = await axios.post("/api/update/content/createContent", {
+      const { data } = await axios.post("/api/create/content/createContent", {
         payload,
       })
 

@@ -12,7 +12,7 @@ export const ContentCreationValidator = z.object({
     .max(60, {
       message: "Description can maximum be 60 characters.",
     }),
-  slug: z.string(),
+  slug: z.string().optional(),
   description: z
     .string()
     .min(10, {
