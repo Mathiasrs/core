@@ -15,22 +15,19 @@ export async function GET(): Promise<NextResponse> {
   }
 
   try {
-    const readUser = await prisma.user.findUnique({
-      where: {
-        id: session?.user?.id,
-      },
-      include: {
-        permission: true,
+    const readContent = await prisma.content.findMany({
+      orderBy: {
+        createdAt: "desc",
       },
     })
 
-    return NextResponse.json(readUser)
+    return NextResponse.json(readContent)
   } catch (error) {
-    console.error("Error reading profile:", error)
+    console.error("Error reading content:", error)
 
     return NextResponse.json(
-      { message: "An error occurred while reading the profile" },
-      { status: 500 }
+      { message: "An error occurred while reading content" },
+      { status: 500 },
     )
   }
 }
