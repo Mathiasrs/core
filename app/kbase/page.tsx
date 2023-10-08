@@ -26,7 +26,7 @@ export default async function Kbase() {
         </div>
       </div>
 
-      <KnowledgeBase />
+      <KnowledgeBase session={session} />
     </div>
   )
 }
