@@ -10,7 +10,7 @@ import { useUpdateLabel } from "@/actions/mutations/content/useUpdateLabel"
 import { useDeleteContent } from "@/actions/mutations/content/useDeleteContent"
 
 // Libraries
-import { labels } from "@/lib/data"
+import { labels } from "@/components/data"
 import { contentSchema } from "@/lib/schema"
 
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"

@@ -13,15 +13,29 @@ import {
   CardHeader,
 } from "@/components/ui/card"
 import { Badge } from "./ui/badge"
+import { cn } from "@/lib/utils"
+
+import { labels } from "@/components/data"
 
 export default function ContentCard({ data }: any) {
+  const matchedLabel = labels.find(
+    (label) => label.label.toLowerCase() === data?.label.toLowerCase(),
+  )
+
+  const badgeClassNames = matchedLabel ? matchedLabel.classNames : ""
+
+  console.log(badgeClassNames)
+
   return (
     <Link href={`kbase/${data?.contentId}`}>
       <Card className="flex h-full flex-col justify-between">
         <div className="flex-grow">
           <CardHeader>{data?.title}</CardHeader>
           <CardContent>
-            <Badge className="mb-2 uppercase" variant="outline">
+            <Badge
+              className={cn("mb-2 uppercase", badgeClassNames)}
+              variant="outline"
+            >
               {data?.label}
             </Badge>
             <CardDescription>{data?.description}</CardDescription>

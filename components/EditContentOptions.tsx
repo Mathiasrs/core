@@ -36,7 +36,7 @@ import {
 
 import { Label } from "@radix-ui/react-label"
 import { Input, InputDescription } from "@/components/ui/input"
-import { priorities, statuses } from "@/lib/data"
+import { priorities, statuses } from "@/components/data"
 import { Textarea } from "@/components/ui/textarea"
 
 export default function EditContentOptions({ content, setSaveStatus }: any) {
