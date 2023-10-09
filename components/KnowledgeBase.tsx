@@ -8,6 +8,10 @@ import ContentList from "@/components/ContentList"
 export default function KnowledgeBase({ session }: any) {
   const { data, isLoading, error } = useContent(session)
 
+  //temporary isLoading and error handling. Implement Skeletons for loading
+  if (isLoading) return "Loading"
+  if (error) return "There was an error"
+
   return (
     <div className="grid gap-12">
       <FeaturedList data={data} />
