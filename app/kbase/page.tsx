@@ -5,6 +5,7 @@ import { redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
 import { authOptions } from "../api/auth/[...nextauth]/route"
 import KnowledgeBase from "@/components/KnowledgeBase"
+import getPhrase from "@/lib/helpers/phrases"
 
 export default async function Kbase() {
   const session = (await getServerSession(authOptions)) as any
@@ -20,9 +21,7 @@ export default async function Kbase() {
           <h2 className="text-2xl font-bold tracking-tight">
             Welcome back, {session.user?.name.split(" ")[0]}!
           </h2>
-          <p className="text-muted-foreground">
-            Explore new content and knowledge everyday will make you stronger!
-          </p>
+          <p className="text-muted-foreground">{getPhrase()}</p>
         </div>
       </div>
 
