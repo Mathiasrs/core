@@ -6,6 +6,7 @@ import {
   CircleIcon,
   CrossCircledIcon,
   QuestionMarkCircledIcon,
+  EyeOpenIcon,
   StopwatchIcon,
 } from "@radix-ui/react-icons"
 
@@ -39,6 +40,11 @@ export const statuses = [
     value: "in progress",
     label: "In Progress",
     icon: StopwatchIcon,
+  },
+  {
+    value: "in review",
+    label: "In Review",
+    icon: EyeOpenIcon,
   },
   {
     value: "done",
