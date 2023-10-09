@@ -13,7 +13,7 @@ export default function FeaturedList({ data, type }: any) {
         .sort((a: any, b: any) => Number(b.count) - Number(a.count))
         .slice(0, 3)
         .map((view: any) => {
-          const article = data?.find(
+          const article = data.find(
             (article: any) => article.slug === view.slug,
           )
 
