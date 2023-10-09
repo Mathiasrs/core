@@ -26,31 +26,16 @@ export default function FeaturedList({ data, type }: any) {
   if (error) return <div>failed to load</div>
 
   return (
-    <div className="grid gap-12">
-      <div className="grid gap-6">
-        <SectionIntro
-          title="Most viewed"
-          decription="Read the most viewed articles and discover what others are working on."
-        />
+    <div className="grid gap-6">
+      <SectionIntro
+        title="Most viewed"
+        decription="Read the most viewed articles and discover what others are working on."
+      />
 
-        <div className="grid gap-6 lg:grid-cols-3">
-          {mostViewedContent?.map((content: any) => {
-            return <ContentCard key={content?.id} data={content} />
-          })}
-        </div>
-      </div>
-
-      <div className="grid gap-6">
-        <SectionIntro
-          title="All content"
-          decription="Here is a list of all the content available. Consider searching or sort by label for quicker access to the specific content you seek."
-        />
-
-        <div className="grid gap-6">
-          {data?.map((content: any) => {
-            return <ContentCard key={content?.id} data={content} />
-          })}
-        </div>
+      <div className="grid gap-6 lg:grid-cols-3">
+        {mostViewedContent?.map((content: any) => {
+          return <ContentCard key={content?.id} data={content} />
+        })}
       </div>
     </div>
   )
