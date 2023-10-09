@@ -4,11 +4,11 @@ import { NextResponse } from "next/server"
 import prisma from "@/lib/prisma"
 
 export async function POST(request: Request) {
-  const { contentType } = await request.json()
+  const { type } = await request.json()
 
   try {
     const readViews = await prisma.view.findMany({
-      where: { contentType: contentType },
+      where: { type: type },
     })
 
     return NextResponse.json(readViews)
