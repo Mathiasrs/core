@@ -32,7 +32,7 @@ export default function FeaturedList({ data, type }: any) {
         decription="Read the most viewed articles and discover what others are working on."
       />
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+      <div className="grid gap-6 lg:grid-cols-3">
         {mostViewedContent.map((content: any) => {
           return <ContentCard key={content?.id} data={content} />
         })}
