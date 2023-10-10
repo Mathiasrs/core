@@ -6,24 +6,29 @@ import SectionIntro from "@/components/SectionIntro"
 import ContentCard from "@/components/ContentCard"
 
 export default function FeaturedList({ data, type }: any) {
-  const { data: views, isLoading, error } = useViews(type)
+  const {
+    data: views,
+    isLoading: isLoadingViews,
+    error: viewsError,
+  } = useViews(type)
 
-  const mostViewedContent = views
-    ? views
-        .sort((a: any, b: any) => Number(b.count) - Number(a.count))
-        .slice(0, 3)
-        .map((view: any) => {
-          const article = data.find(
-            (article: any) => article.slug === view.slug,
-          )
+  const mostViewedContent =
+    Array.isArray(views) && Array.isArray(data)
+      ? views
+          .sort((a: any, b: any) => Number(b.count) - Number(a.count))
+          .slice(0, 3)
+          .map((view: any) => {
+            const article = data.find(
+              (article: any) => article.slug === view.slug,
+            )
+            return article
+          })
+      : []
 
-          return article
-        })
-    : []
-
-  if (isLoading)
+  if (isLoadingViews)
     return <div className="grid gap-12 lg:grid-cols-3 lg:gap-6"></div>
-  if (error) return <div>failed to load</div>
+
+  if (viewsError) return <div>Failed to load</div>
 
   return (
     <div className="grid gap-6">
