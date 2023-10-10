@@ -111,6 +111,7 @@ export default function Page({ params }: pageProps) {
           />
         </div>
         <Editor
+          key={initialContent}
           onDebouncedUpdate={handleEditorUpdate}
           debounceDuration={750}
           disableLocalStorage

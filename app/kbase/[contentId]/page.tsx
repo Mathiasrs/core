@@ -72,6 +72,7 @@ export default function ContentPage({ params }: pageProps) {
         </div>
 
         <Editor
+          key={initialContent}
           defaultValue={initialContent ? initialContent : ""}
           editorProps={{ editable: () => false }}
           className="-mt-10"
