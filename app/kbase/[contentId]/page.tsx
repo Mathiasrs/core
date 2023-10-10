@@ -11,6 +11,7 @@ import useContentByContentId from "@/actions/queries/content/useContentByContent
 // Libraries
 import { Editor } from "novel"
 import { FaArrowCircleLeft } from "react-icons/fa"
+import { cn } from "@/lib/utils"
 
 // Components
 import {
@@ -22,9 +23,10 @@ import {
 } from "@/components/ui/card"
 import { Label } from "@radix-ui/react-label"
 import { Textarea } from "@/components/ui/textarea"
-
+import { labels } from "@/components/data"
 import { Input, InputDescription } from "@/components/ui/input"
 import ContentViewerSkeleton from "@/components/ui/skeletons/ContentViewerSkeleton"
+import { Badge } from "@/components/ui/badge"
 
 type pageProps = {
   params: {
@@ -43,6 +45,12 @@ export default function ContentPage({ params }: pageProps) {
       setInitialContent(content?.content)
     }
   }, [content])
+
+  const matchedLabel = labels.find(
+    (label) => label?.label?.toLowerCase() === content?.label?.toLowerCase(),
+  )
+
+  const badgeClassNames = matchedLabel ? matchedLabel.classNames : ""
 
   if (isLoading) return <ContentViewerSkeleton />
 
@@ -69,10 +77,17 @@ export default function ContentPage({ params }: pageProps) {
           <h2 className="w-full place-items-center bg-transparent text-2xl font-bold lg:text-3xl xl:text-4xl">
             {content?.title}
           </h2>
+          <Badge
+            className={cn("mb-2 uppercase", badgeClassNames)}
+            variant="outline"
+          >
+            {content?.label}
+          </Badge>
         </div>
 
         <Editor
           key={initialContent}
+          disableLocalStorage
           defaultValue={initialContent ? initialContent : ""}
           editorProps={{ editable: () => false }}
           className="-mt-10"
