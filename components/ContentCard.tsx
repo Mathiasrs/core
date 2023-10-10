@@ -24,8 +24,6 @@ export default function ContentCard({ data }: any) {
 
   const badgeClassNames = matchedLabel ? matchedLabel.classNames : ""
 
-  console.log(badgeClassNames)
-
   return (
     <Link href={`kbase/${data?.contentId}`}>
       <Card className="flex h-full flex-col justify-between">

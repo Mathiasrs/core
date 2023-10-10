@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 
 export default function useContentBySlug({ session, slug }: any) {
-
   return useQuery({
     queryKey: ["content"],
     queryFn: async () => {
@@ -11,8 +10,8 @@ export default function useContentBySlug({ session, slug }: any) {
         return null
       }
 
-      const { data } = await axios.post("/api/read/readContentBySlug", { 
-        slug 
+      const { data } = await axios.post("/api/read/content/readContentBySlug", {
+        slug,
       })
 
       return data
