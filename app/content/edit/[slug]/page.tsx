@@ -107,7 +107,7 @@ export default function Page({ params }: pageProps) {
             onChange={(e) => {
               debouncedSetTitle(e.target.value)
             }}
-            className="w-full resize-none appearance-none place-items-center overflow-hidden bg-transparent text-3xl font-bold focus:outline-none lg:text-4xl xl:text-5xl"
+            className="w-full resize-none appearance-none place-items-center overflow-hidden bg-transparent text-2xl font-bold focus:outline-none lg:text-3xl xl:text-4xl"
           />
         </div>
         <Editor
