@@ -13,6 +13,17 @@ import { Editor } from "novel"
 import { FaArrowCircleLeft } from "react-icons/fa"
 
 // Components
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Label } from "@radix-ui/react-label"
+import { Textarea } from "@/components/ui/textarea"
+
+import { Input, InputDescription } from "@/components/ui/input"
 import ContentViewerSkeleton from "@/components/ui/skeletons/ContentViewerSkeleton"
 
 type pageProps = {
@@ -67,7 +78,32 @@ export default function ContentPage({ params }: pageProps) {
         />
       </div>
 
-      <div className="order-1 col-span-6 grid gap-4 lg:order-2 lg:col-span-2"></div>
+      <div className="order-1 col-span-6 grid gap-4 lg:order-2 lg:col-span-2">
+        <Card>
+          <CardHeader>
+            <CardTitle>Content details</CardTitle>
+            <CardDescription>
+              Provide additional details for extra context.
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent className="grid gap-6">
+            <div className="grid w-full items-center gap-1.5">
+              <Label htmlFor="picture">Content ID</Label>
+              <Input type="text" disabled defaultValue={content.contentId} />
+              <InputDescription>
+                Content ID gives you a quick way of finding your content during
+                search.
+              </InputDescription>
+            </div>
+
+            <div className="grid w-full items-center gap-1.5">
+              <Label htmlFor="picture">Description</Label>
+              <Textarea defaultValue={content.description} disabled />
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }

@@ -11,17 +11,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
-import { Switch } from "@/components/ui/switch"
-
-import { Select, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@radix-ui/react-label"
 import { Input, InputDescription } from "@/components/ui/input"
 
 import { FaArrowCircleLeft } from "react-icons/fa"
-import { Textarea } from "../textarea"
-import { Skeleton } from "../skeleton"
-import { RocketIcon } from "@radix-ui/react-icons"
+import { Textarea } from "@/components/ui/textarea"
+import { Skeleton } from "@/components/ui/skeleton"
 
 export default function ContentViewerSkeleton() {
   return (
