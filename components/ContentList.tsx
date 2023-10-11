@@ -10,9 +10,9 @@ export default function ContentList({ data }: any) {
       />
 
       <div className="grid gap-6">
-        {data.map((content: any) => {
-          return <ContentCard key={content?.id} data={content} />
-        })}
+        {Array.isArray(data) && data.map((content: any) => (
+          <ContentCard key={content?.id} data={content} />
+        ))}
       </div>
     </div>
   )
