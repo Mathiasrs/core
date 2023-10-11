@@ -5,11 +5,8 @@ import { useEffect, useState } from "react"
 // Next
 import Link from "next/link"
 
-// Auth
-import { useSession } from "next-auth/react"
-
 // Queries
-import useContentBySlug from "@/actions/queries/content/useContentBySlug"
+import useContentByContentId from "@/actions/queries/content/useContentByContentId"
 
 // Mutations
 import { useUpdateTitle } from "@/app/actions/mutations/content/useUpdateTitle"
@@ -30,7 +27,7 @@ import EditContentOptions from "@/components/EditContentOptions"
 
 type pageProps = {
   params: {
-    slug: string
+    contentId: string
   }
 }
 
@@ -38,16 +35,16 @@ export default function Page({ params }: pageProps) {
   const [initialContent, setInitialContent] = useState("")
   const [saveStatus, setSaveStatus] = useState("")
 
-  const { data: session } = useSession()
-  const slug = params.slug
-  const { data: content, isLoading } = useContentBySlug({ session, slug })
+  const contentId = params.contentId
+  const { data: content, isLoading } = useContentByContentId(contentId)
+
 
   const debouncedSetTitle = useDebouncedCallback((title) => {
     handleUpdateTitle(title)
   }, 750)
 
-  const updateTitleMutation = useUpdateTitle(slug, setSaveStatus)
-  const updateContentMutation = useUpdateContent(slug, setSaveStatus)
+  const updateTitleMutation = useUpdateTitle(setSaveStatus)
+  const updateContentMutation = useUpdateContent(setSaveStatus)
 
   const handleUpdateTitle = async (title: string) => {
     setSaveStatus("Saving...")

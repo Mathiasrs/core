@@ -1,5 +1,8 @@
 "use client"
 
+// Next 
+import { useRouter } from 'next/navigation'
+
 // Libraries
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
@@ -12,6 +15,8 @@ export function useUpdateContentId() {
   const queryClient = useQueryClient()
   const { toast } = useToast()
 
+  const router = useRouter()
+
   const mutation = useMutation(
     async ({ id, contentId }: ContentIdUpdateRequest) => {
       const payload: ContentIdUpdateRequest = {
@@ -22,6 +27,8 @@ export function useUpdateContentId() {
       const { data } = await axios.post("/api/update/content/updateContentId", {
         payload,
       })
+
+      router.push(`/content/edit/${contentId}`)
 
       return data
     },

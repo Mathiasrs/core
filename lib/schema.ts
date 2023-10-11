@@ -7,6 +7,7 @@ export const contentSchema = z.object({
   status: z.string(),
   label: z.string(),
   priority: z.string(),
+  contentId: z.string(),
 })
 
 export type Content = z.infer<typeof contentSchema>

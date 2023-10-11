@@ -7,7 +7,7 @@ import axios from "axios"
 // Types
 import { TitleUpdateRequest } from "@/lib/validators/content"
 
-export function useUpdateTitle(slug: string, setSaveStatus: any) {
+export function useUpdateTitle(setSaveStatus: any) {
   const queryClient = useQueryClient()
 
   const mutation = useMutation(
@@ -32,7 +32,7 @@ export function useUpdateTitle(slug: string, setSaveStatus: any) {
         setSaveStatus("Failed to save")
       },
       onSuccess: () => {
-        queryClient.invalidateQueries(["content", slug])
+        queryClient.invalidateQueries(["content"])
 
         setSaveStatus("Saved")
       },
