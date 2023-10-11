@@ -16,6 +16,7 @@ import { motion } from "framer-motion"
 import { navigation } from "@/components/AppShell/MenuItems"
 import { Logo } from "@/components/Logo"
 import CustomLink from "@/components/AppShell/CustomLink"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 export default function Active({ user, session, children }: any) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -164,11 +165,12 @@ export default function Active({ user, session, children }: any) {
         </div>
       </aside>
 
-      <main className="relative mb-20 flex h-full w-full flex-col overflow-hidden bg-white shadow-lg ring-1 ring-zinc-100 dark:bg-zinc-950 dark:ring-zinc-900 md:mt-4 md:rounded-tl-xl">
-        <div className="flex-grow overflow-y-auto p-4 pb-20 sm:p-6 md:p-8">
-          {children}
-        </div>
-      </main>
+   
+
+<ScrollArea className="h-full w-full bg-white shadow-lg ring-1 ring-zinc-100 dark:bg-zinc-950 dark:ring-zinc-900 md:mt-4 md:rounded-tl-xl">
+  <div className="mb-20 md:mb-0 py-8 px-8">
+  {children}</div>
+  </ScrollArea>
 
       {/* Small screens*/}
       <aside className="absolute inset-x-0 bottom-0 z-40 m-4 rounded-md bg-white shadow-lg ring-1 ring-zinc-100 dark:bg-zinc-950 dark:ring-zinc-900 md:hidden">
