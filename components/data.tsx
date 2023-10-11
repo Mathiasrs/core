@@ -12,9 +12,14 @@ import {
 
 export const labels = [
   {
-    value: "documentation",
-    label: "Documentation",
-    classNames: "bg-gray-300 text-gray-900 dark:text-white dark:bg-gray-500",
+    value: "api-issues",
+    label: "API Issues",
+    classNames: "bg-pink-300 text-pink-900 dark:text-white dark:bg-pink-500",
+  },
+  {
+    value: "billing",
+    label: "Billing",
+    classNames: "bg-orange-300 text-orange-900 dark:text-white dark:bg-orange-500",
   },
   {
     value: "emerging",
@@ -25,6 +30,11 @@ export const labels = [
     value: "how-to",
     label: "How-to",
     classNames: "bg-green-300 text-gray-900 dark:text-white dark:bg-green-500",
+  },
+  {
+    value: "integrations",
+    label: "Integrations",
+    classNames: "bg-lime-300 text-lime-900 dark:text-white dark:bg-lime-500",
   },
   {
     value: "new",
