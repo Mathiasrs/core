@@ -6,27 +6,27 @@ import { usePathname } from "next/navigation"
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 
-export default function useViewsBySlug(slug: string, contentType: string) {
+export default function useViewsByContentId(contentId: string, type: string) {
   const pathname = usePathname()
 
   const getEndOfPath = pathname ? pathname.split("/").pop() : ""
 
   return useQuery({
-    queryKey: ["view", slug],
+    queryKey: ["view", contentId],
     queryFn: async () => {
-      if (slug === getEndOfPath) {
+      if (contentId === getEndOfPath) {
         const { data } = await axios.post(
           "/api/create/view/createOrUpdateView",
           {
-            slug,
-            contentType,
+            contentId,
+            type,
           },
         )
 
         return data
       } else {
-        const { data } = await axios.post("/api/read/view/readViewBySlug", {
-          slug,
+        const { data } = await axios.post("/api/read/view/readViewByContentId", {
+          contentId,
         })
 
         return data

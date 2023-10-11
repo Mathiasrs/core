@@ -4,12 +4,9 @@ import { NextResponse } from "next/server"
 import prisma from "@/lib/prisma"
 
 export async function POST(request: Request) {
-  const { type } = await request.json()
 
   try {
-    const readViews = await prisma.view.findMany({
-      where: { type: type },
-    })
+    const readViews = await prisma.view.findMany()
 
     return NextResponse.json(readViews)
   } catch (error) {

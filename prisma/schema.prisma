@@ -138,9 +138,9 @@ model Comment {
 }
 
 model View {
-  slug  String  @id @db.VarChar(128)
-  count Int     @default(1)
-  type  String? @db.VarChar(128)
+  contentId String  @id @db.VarChar(128)
+  count     Int     @default(1)
+  type      String? @db.VarChar(128)
 }
 
 model Vote {

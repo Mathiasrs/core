@@ -5,12 +5,14 @@ import useViews from "@/actions/queries/view/useViews"
 import SectionIntro from "@/components/SectionIntro"
 import ContentCard from "@/components/ContentCard"
 
-export default function FeaturedList({ data, type }: any) {
+export default function FeaturedList({ data }: any) {
   const {
     data: views,
     isLoading: isLoadingViews,
     error: viewsError,
-  } = useViews(type)
+  } = useViews()
+
+  console.log(views)
 
   const mostViewedContent =
     Array.isArray(views) && Array.isArray(data)
@@ -18,10 +20,10 @@ export default function FeaturedList({ data, type }: any) {
           .sort((a: any, b: any) => Number(b.count) - Number(a.count))
           .slice(0, 3)
           .map((view: any) => {
-            const article = data.find(
-              (article: any) => article.slug === view.slug,
+            const content = data.find(
+              (content: any) => content.contentId === view.contentId,
             )
-            return article
+            return content
           })
       : []
 
