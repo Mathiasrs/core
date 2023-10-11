@@ -5,10 +5,11 @@ import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 
-import { labels, priorities, statuses } from "@/lib/data"
+import { labels, priorities, statuses } from "@/components/data"
 import { Content } from "@/lib/schema"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
+import { cn } from "@/lib/utils"
 
 export const columns: ColumnDef<Content>[] = [
   {
@@ -53,7 +54,10 @@ export const columns: ColumnDef<Content>[] = [
 
       return (
         <div className="flex space-x-2">
-          {label && <Badge variant="outline">{label.label}</Badge>}
+          {label && <Badge
+              className={cn("mb-2 uppercase", label.classNames)}
+              variant="outline"
+            >{label.label}</Badge>}
           <span className="max-w-[500px] truncate font-medium">
             {row.getValue("title")}
           </span>

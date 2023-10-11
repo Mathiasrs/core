@@ -1,10 +1,15 @@
 "use client"
 
+import { useEffect, useState } from "react"
+
 // Next
 import Link from "next/link"
 
 // Auth
 import { useSession } from "next-auth/react"
+
+// Queries
+import useContentBySlug from "@/actions/queries/content/useContentBySlug"
 
 // Mutations
 import { useUpdateTitle } from "@/app/actions/mutations/content/useUpdateTitle"
@@ -12,18 +17,16 @@ import { useUpdateContent } from "@/app/actions/mutations/content/useUpdateConte
 
 // Libraries
 import { Editor } from "novel"
-import { useEffect, useState } from "react"
 import { useDebouncedCallback } from "use-debounce"
+import { FaArrowCircleLeft } from "react-icons/fa"
 
 // Helpers
 import { generateSlug } from "@/lib/helpers/generateSlug"
 import { Badge } from "@/components/ui/badge"
 
 // Components
-import useContentBySlug from "@/app/actions/queries/content/useContentBySlug"
 import EditorSkeleton from "@/components/ui/skeletons/EditorSkeleton"
 import EditContentOptions from "@/components/EditContentOptions"
-import { FaArrowCircleLeft } from "react-icons/fa"
 
 type pageProps = {
   params: {
@@ -104,10 +107,11 @@ export default function Page({ params }: pageProps) {
             onChange={(e) => {
               debouncedSetTitle(e.target.value)
             }}
-            className="w-full resize-none appearance-none place-items-center overflow-hidden bg-transparent text-3xl font-bold focus:outline-none lg:text-4xl xl:text-5xl"
+            className="w-full resize-none appearance-none place-items-center overflow-hidden bg-transparent text-2xl font-bold focus:outline-none lg:text-3xl xl:text-4xl"
           />
         </div>
         <Editor
+          key={initialContent}
           onDebouncedUpdate={handleEditorUpdate}
           debounceDuration={750}
           disableLocalStorage

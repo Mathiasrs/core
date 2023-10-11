@@ -77,6 +77,8 @@ export function DataTable<TData, TValue>({
   if (isLoading)
     return <DataTableSkeleton data={skeletonData} columns={columns} />
 
+  if (error) return "An error occurred"
+
   return (
     <div className="space-y-4">
       <DataTableToolbar table={table} />

@@ -1,4 +1,4 @@
-import { FaSlack, FaPen } from "react-icons/fa6"
+import { FaSlack, FaPen, FaBookOpen } from "react-icons/fa6"
 import { MdSpaceDashboard } from "react-icons/md"
 
 const navigationItems = [
@@ -14,6 +14,16 @@ const navigationItems = [
   },
   {
     index: 2,
+    href: "/kbase",
+    name: "Knowledge Base",
+    icon: FaBookOpen,
+    roles: ["admin", "manager"],
+    isMobile: true,
+    isInMoreMenu: false,
+    isNewTap: false,
+  },
+  {
+    index: 3,
     href: "/content",
     name: "Content",
     icon: FaPen,
@@ -23,7 +33,7 @@ const navigationItems = [
     isNewTap: false,
   },
   {
-    index: 3,
+    index: 4,
     href: "https://ordrestyring.slack.com",
     name: "Slack",
     icon: FaSlack,

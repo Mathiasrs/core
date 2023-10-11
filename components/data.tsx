@@ -6,6 +6,7 @@ import {
   CircleIcon,
   CrossCircledIcon,
   QuestionMarkCircledIcon,
+  EyeOpenIcon,
   StopwatchIcon,
 } from "@radix-ui/react-icons"
 
@@ -13,14 +14,27 @@ export const labels = [
   {
     value: "documentation",
     label: "Documentation",
+    classNames: "bg-gray-300 text-gray-900 dark:text-white dark:bg-gray-500",
+  },
+  {
+    value: "emerging",
+    label: "Emerging",
+    classNames: "bg-red-300 text-red-900 dark:text-white dark:bg-red-500",
   },
   {
     value: "how-to",
     label: "How-to",
+    classNames: "bg-green-300 text-gray-900 dark:text-white dark:bg-green-500",
+  },
+  {
+    value: "new",
+    label: "New",
+    classNames: "bg-gray-300 text-gray-900 dark:text-white dark:bg-gray-500",
   },
   {
     value: "sop",
     label: "SOP",
+    classNames: "bg-sky-300 text-gray-900 dark:text-white dark:bg-sky-500",
   },
 ]
 
@@ -39,6 +53,11 @@ export const statuses = [
     value: "in progress",
     label: "In Progress",
     icon: StopwatchIcon,
+  },
+  {
+    value: "in review",
+    label: "In Review",
+    icon: EyeOpenIcon,
   },
   {
     value: "done",

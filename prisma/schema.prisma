@@ -95,7 +95,7 @@ model Content {
   slug        String   @unique
   description String?
   content     Json?
-  type        String?
+  type        String?  @default("article")
   status      String   @default("backlog")
   label       String   @default("new")
   priority    String   @default("low")
@@ -135,6 +135,12 @@ model Comment {
   @@index([replyToId])
   @@index([contentId])
   @@index([authorId])
+}
+
+model View {
+  slug  String  @id @db.VarChar(128)
+  count Int     @default(1)
+  type  String? @db.VarChar(128)
 }
 
 model Vote {

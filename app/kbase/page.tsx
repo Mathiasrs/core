@@ -4,14 +4,10 @@ import { redirect } from "next/navigation"
 // Auth
 import { getServerSession } from "next-auth"
 import { authOptions } from "../api/auth/[...nextauth]/route"
+import KnowledgeBase from "@/components/KnowledgeBase"
+import getPhrase from "@/lib/helpers/phrases"
 
-// Libraries
-
-// Components
-import ContentTable from "@/components/ContentTable"
-import CreateContentSheet from "@/components/CreateContentSheet"
-
-export default async function Content() {
+export default async function Kbase() {
   const session = (await getServerSession(authOptions)) as any
 
   if (!session) {
@@ -23,18 +19,13 @@ export default async function Content() {
       <div className="flex items-center justify-between space-y-2">
         <div>
           <h2 className="text-2xl font-bold tracking-tight">
-            {" "}
             Welcome back, {session.user?.name.split(" ")[0]}!
           </h2>
-          <p className="text-muted-foreground">
-            Here&apos;s a list of your content!
-          </p>
+          <p className="text-muted-foreground">{getPhrase()}</p>
         </div>
-
-        <CreateContentSheet />
       </div>
 
-      <ContentTable session={session} />
+      <KnowledgeBase session={session} />
     </div>
   )
 }

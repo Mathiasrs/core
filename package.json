@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "npx prisma generate && next dev",
+    "dev": "next dev --experimental-https",
     "build": "npx prisma generate && next build",
-    "start": "npx prisma generate && next start",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {

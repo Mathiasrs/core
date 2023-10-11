@@ -10,7 +10,7 @@ export default function useContent(session: any) {
         return null
       }
 
-      const { data } = await axios.get("/api/read/readContent")
+      const { data } = await axios.get("/api/read/content/readContent")
 
       return data
     },
