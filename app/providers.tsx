@@ -3,6 +3,7 @@
 // Libraries
 import { SessionProvider } from "next-auth/react"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 
 // Components
 import { ThemeProvider } from "@/components/ThemeProvider"
@@ -25,6 +26,8 @@ export const Providers = ({ children }: Props) => {
         >
           {children}
         </ThemeProvider>
+
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </SessionProvider>
   )
