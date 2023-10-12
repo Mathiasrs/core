@@ -34,7 +34,7 @@ export default async function Content() {
         <CreateContentSheet />
       </div>
 
-      <ContentTable session={session} />
+      <ContentTable />
     </div>
   )
 }

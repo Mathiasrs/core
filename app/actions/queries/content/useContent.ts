@@ -2,14 +2,11 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 
-export default function useContent(session: any) {
+export default function useContent() {
   return useQuery({
     queryKey: ["content"],
-    queryFn: async () => {
-      if (!session) {
-        return null
-      }
 
+    queryFn: async () => {
       const { data } = await axios.get("/api/read/content/readContent")
 
       return data

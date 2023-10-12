@@ -7,8 +7,8 @@ import useContent from "@/app/actions/queries/content/useContent"
 import { DataTable } from "@/components/ui/data-table"
 import { columns } from "@/components/ui/columns"
 
-export default function ContentTable(session: any) {
-  const { data, isLoading, error } = useContent(session)
+export default function ContentTable() {
+  const { data, isLoading, error } = useContent()
 
   return (
     <DataTable
