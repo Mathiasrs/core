@@ -1,18 +1,19 @@
 // Queries
+import useContent from "@/actions/queries/content/useContent"
 import useViews from "@/actions/queries/view/useViews"
 
 // Components
 import SectionIntro from "@/components/SectionIntro"
 import ContentCard from "@/components/ContentCard"
 
-export default function FeaturedList({ data }: any) {
+export default function FeaturedList() {
+  const { data, isLoading, error } = useContent()
+
   const {
     data: views,
     isLoading: isLoadingViews,
     error: viewsError,
   } = useViews()
-
-  console.log(views)
 
   const mostViewedContent =
     Array.isArray(views) && Array.isArray(data)
@@ -20,11 +21,14 @@ export default function FeaturedList({ data }: any) {
           .sort((a: any, b: any) => Number(b.count) - Number(a.count))
           .slice(0, 3)
           .map((view: any) => {
+            const trimmedContentId = view.contentId.trim() // Trim the contentId value
             const content = data.find(
-              (content: any) => content.contentId === view.contentId,
+              (content: any) => content.contentId === trimmedContentId,
             )
+
             return content
           })
+          .filter(Boolean)
       : []
 
   if (isLoadingViews)
