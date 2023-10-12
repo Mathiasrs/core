@@ -17,7 +17,8 @@ export async function POST(request: Request) {
   }
 
   try {
-    const readContent = await prisma.content.findMany({
+    const readPaginatedContent = await prisma.content.findMany({
+      where: { isPublished: true },
       skip: (pageParam - 1) * pageSize,
       take: pageSize,
       orderBy: {
@@ -25,7 +26,7 @@ export async function POST(request: Request) {
       },
     })
 
-    return NextResponse.json(readContent)
+    return NextResponse.json(readPaginatedContent)
   } catch (error) {
     console.error("Error reading content:", error)
 
