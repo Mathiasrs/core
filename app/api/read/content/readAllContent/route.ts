@@ -16,7 +16,6 @@ export async function GET(): Promise<NextResponse> {
 
   try {
     const readContent = await prisma.content.findMany({
-      where: { isPublished: true },
       orderBy: {
         createdAt: "desc",
       },

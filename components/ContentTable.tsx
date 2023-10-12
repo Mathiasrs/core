@@ -1,14 +1,14 @@
 "use client"
 
 // Queries
-import useContent from "@/app/actions/queries/content/useContent"
+import useAllContent from "@/app/actions/queries/content/useAllContent"
 
 // Components
 import { DataTable } from "@/components/ui/data-table"
 import { columns } from "@/components/ui/columns"
 
 export default function ContentTable() {
-  const { data, isLoading, error } = useContent()
+  const { data, isLoading, error } = useAllContent()
 
   return (
     <DataTable
