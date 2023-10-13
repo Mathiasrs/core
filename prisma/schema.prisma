@@ -47,10 +47,10 @@ model Session {
 }
 
 model Tenant {
-  id        String    @id @default(cuid())
-  name      String
-  domain    String    @unique
-  users     User[]
+  id     String @id @default(cuid())
+  name   String
+  domain String @unique
+  users  User[]
 }
 
 model User {
@@ -73,8 +73,8 @@ model User {
   votes       Vote[]
   commentVote CommentVote[]
 
-  tenantId  String
-  tenant    Tenant    @relation(fields: [tenantId], references: [id])
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
 
   @@index([id])
   @@index([tenantId])
