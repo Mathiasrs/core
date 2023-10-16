@@ -33,7 +33,7 @@ type pageProps = {
 
 export default function Page({ params }: pageProps) {
   const [initialContent, setInitialContent] = useState("")
-  const [saveStatus, setSaveStatus] = useState("")
+  const [saveStatus, setSaveStatus] = useState("Saved")
 
   const contentId = params.contentId
   const { data: content, isLoading } = useContentByContentId(contentId)
@@ -96,17 +96,24 @@ export default function Page({ params }: pageProps) {
             onChange={(e) => {
               debouncedSetTitle(e.target.value)
             }}
-            className="w-full resize-none appearance-none place-items-center overflow-hidden bg-transparent text-2xl font-bold focus:outline-none lg:text-3xl xl:text-4xl"
+            className="mt-4 w-full resize-none appearance-none place-items-center overflow-hidden bg-transparent text-2xl font-bold focus:outline-none lg:text-3xl xl:text-4xl"
           />
+
+          <div className="absolute right-5 top-5 z-10 mb-5 rounded-lg bg-zinc-100 px-2 py-1 text-sm text-zinc-400 dark:bg-zinc-800">
+            {saveStatus}
+          </div>
         </div>
-        <Editor
-          key={initialContent}
-          onDebouncedUpdate={handleEditorUpdate}
-          debounceDuration={750}
-          disableLocalStorage
-          defaultValue={initialContent ? initialContent : ""}
-          className="-mt-10"
-        />
+
+        <div className="relative w-full">
+          <Editor
+            key={initialContent}
+            onDebouncedUpdate={handleEditorUpdate}
+            debounceDuration={750}
+            disableLocalStorage
+            defaultValue={initialContent ? initialContent : ""}
+            className="-mt-10"
+          />{" "}
+        </div>
       </div>
 
       <div className="order-1 col-span-6 grid gap-4 lg:order-2 lg:col-span-2">
