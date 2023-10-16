@@ -73,12 +73,12 @@ export default function ContentPage({ params }: pageProps) {
       </div>
 
       <div className="prose prose-stone dark:prose-invert relative order-2 col-span-6 rounded-xl border border-zinc-200 bg-white text-zinc-950 shadow dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 lg:order-1 lg:col-span-4">
-        <div className="flex items-center justify-between px-8 pt-10 sm:px-10 lg:px-12">
+        <div className="grid items-center justify-between px-8 pt-10 sm:px-10 lg:px-12">
           <h2 className="w-full place-items-center bg-transparent text-2xl font-bold lg:text-3xl xl:text-4xl">
             {content?.title}
           </h2>
           <Badge
-            className={cn("mb-2 uppercase", badgeClassNames)}
+            className={cn("mt-2 w-fit uppercase", badgeClassNames)}
             variant="outline"
           >
             {content?.label}
