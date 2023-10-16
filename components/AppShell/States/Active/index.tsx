@@ -165,11 +165,11 @@ export default function Active({ user, session, children }: any) {
         </div>
       </aside>
 
-      <main className="relative mb-[5rem] flex h-full w-full flex-col overflow-x-hidden bg-white py-5 shadow-lg ring-1 ring-zinc-100 dark:bg-zinc-950 dark:ring-zinc-900 md:mb-0 md:mt-4 md:rounded-tl-xl">
-        <div className="overflow-y-auto px-4 pb-[5rem] sm:px-6 md:pb-4 lg:px-8">
+      <ScrollArea className="relative flex h-full w-full flex-col space-y-4 overflow-x-hidden bg-white py-5 shadow-lg ring-1 ring-zinc-100 dark:bg-zinc-950 dark:ring-zinc-900 md:mt-4 md:rounded-tl-xl">
+        <div className="flex-grow overflow-y-auto px-4 pb-20 sm:px-6 md:pb-10 lg:px-8">
           {children}
         </div>
-      </main>
+      </ScrollArea>
 
       {/* Small screens*/}
       <aside className="sticky bottom-0 left-0 z-20 w-full bg-zinc-200/20 pt-1 ring ring-zinc-100 backdrop-blur-lg dark:bg-zinc-800/30 dark:ring-zinc-800 md:hidden">
