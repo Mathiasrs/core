@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 // Queries
 import usePaginatedContent from "@/app/actions/queries/content/usePaginatedContent"
@@ -10,6 +10,7 @@ import { useIntersection } from "@mantine/hooks"
 import ContentCard from "@/components/ContentCard"
 import SectionIntro from "@/components/SectionIntro"
 import LoadingSpinner from "@/components/LoadingSpinner"
+import { DataContentToolbar } from "./ui/data-content-toolbar"
 
 export default function ContentList() {
   const {
@@ -24,11 +25,17 @@ export default function ContentList() {
     threshold: 1,
   })
 
+  const [labelsFilter, setLabelsFilter] = useState<string[]>([])
+
   useEffect(() => {
     if (entry?.isIntersecting) fetchNextPage()
   }, [entry, fetchNextPage])
 
   const content = infiniteData?.pages.flatMap((page) => page)
+
+  const filteredContent = labelsFilter.length
+    ? content?.filter((item) => labelsFilter.includes(item.label))
+    : content
 
   return (
     <div className="grid gap-6">
@@ -37,15 +44,20 @@ export default function ContentList() {
         decription="Here is a list of all the content available. Consider searching or sort by label for quicker access to the specific content you seek."
       />
 
+      <DataContentToolbar
+        labelsFilter={labelsFilter}
+        setLabelsFilter={setLabelsFilter}
+      />
+
       <div className="grid gap-6">
-        {content?.map((item, i) => {
-          if (i === content.length - 1)
-            return (
-              <div key={item.id} ref={ref}>
-                <ContentCard key={item?.id} data={item} />
-              </div>
-            )
-          return <ContentCard key={item?.id} data={item} />
+        {filteredContent?.map((item, i) => {
+          return i === filteredContent.length - 1 ? (
+            <div key={item.id} ref={ref}>
+              <ContentCard key={item?.id} data={item} />
+            </div>
+          ) : (
+            <ContentCard key={item?.id} data={item} />
+          )
         })}
       </div>
 
