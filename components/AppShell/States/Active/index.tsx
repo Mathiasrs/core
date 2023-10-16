@@ -236,7 +236,7 @@ export default function Active({ user, session, children }: any) {
               <h3 className="pb-2 pl-5 text-xl font-bold">More</h3>
             </div>
 
-            <div className="flex flex-col gap-y-2">
+            <div className="flex flex-col gap-y-4">
               <Link
                 href="/profile"
                 className="flex items-center justify-between border-b border-zinc-300 p-4 hover:opacity-80 dark:border-zinc-700"
@@ -285,8 +285,8 @@ export default function Active({ user, session, children }: any) {
                       <CustomLink
                         key={item.index}
                         href={item.href}
-                        className={clsx("flex items-center gap-2 p-4 text-sm", {
-                          "border-l-2 border-blue-500 dark:border-secondary":
+                        className={clsx("text-md flex items-center gap-2 p-4", {
+                          "border-l-2 border-green-500":
                             pathname &&
                             (item.href === "/"
                               ? pathname === item.href
