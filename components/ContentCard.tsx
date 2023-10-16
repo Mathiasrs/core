@@ -28,14 +28,17 @@ export default function ContentCard({ data }: any) {
     <Link href={`kbase/${data?.contentId}`}>
       <Card className="flex h-full flex-col justify-between">
         <div className="flex-grow">
-          <CardHeader>{data?.title}</CardHeader>
-          <CardContent>
+          <CardHeader className="font-semibold">
+            {data?.title}
+
             <Badge
-              className={cn("mb-2 uppercase", badgeClassNames)}
+              className={cn("mt-2 w-fit uppercase", badgeClassNames)}
               variant="outline"
             >
               {data?.label}
             </Badge>
+          </CardHeader>
+          <CardContent>
             <CardDescription>{data?.description}</CardDescription>
           </CardContent>
         </div>
