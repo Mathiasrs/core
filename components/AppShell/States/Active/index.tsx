@@ -172,7 +172,7 @@ export default function Active({ user, session, children }: any) {
       </div>
 
       {/* Small screens*/}
-      <aside className="sticky bottom-0 left-0 z-20 w-full bg-zinc-200/20 pt-1 ring ring-zinc-100 backdrop-blur-lg dark:bg-zinc-800/30 dark:ring-zinc-800 md:hidden">
+      <aside className="fixed bottom-0 left-0 z-20 w-full bg-zinc-200/20 pt-1 ring ring-zinc-100 backdrop-blur-lg dark:bg-zinc-800/30 dark:ring-zinc-800 md:hidden">
         <div className="flex justify-between gap-4 px-8">
           {navigation(user)
             .filter((item: any) => item.isMobile)
