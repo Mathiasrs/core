@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
 function CustomCodeRenderer({ data }: any) {
-  (data)
+  data
 
   return (
-    <pre className='bg-gray-800 rounded-md p-4'>
-      <code className='text-gray-100 text-sm'>{data.code}</code>
+    <pre className="rounded-md bg-zinc-800 p-4">
+      <code className="text-sm text-zinc-100">{data.code}</code>
     </pre>
   )
 }

@@ -25,13 +25,13 @@ export default function ContentViewerSkeleton() {
         <div className="flex items-center gap-2">
           <Link
             href="/kbase"
-            className="flex items-center gap-2 text-gray-900 hover:opacity-80 dark:text-white"
+            className="flex items-center gap-2 text-zinc-900 hover:opacity-80 dark:text-white"
           >
             <FaArrowCircleLeft className="h-4 w-4" />
             <span>Go back</span>
           </Link>
           -{" "}
-          <h3 className="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+          <h3 className="text-base font-semibold leading-6 text-zinc-900 dark:text-white">
             Content viewer
           </h3>
         </div>

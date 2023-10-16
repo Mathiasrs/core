@@ -19,7 +19,8 @@ export const labels = [
   {
     value: "billing",
     label: "Billing",
-    classNames: "bg-orange-300 text-orange-900 dark:text-white dark:bg-orange-500",
+    classNames:
+      "bg-orange-300 text-orange-900 dark:text-white dark:bg-orange-500",
   },
   {
     value: "emerging",
@@ -29,7 +30,7 @@ export const labels = [
   {
     value: "how-to",
     label: "How-to",
-    classNames: "bg-green-300 text-gray-900 dark:text-white dark:bg-green-500",
+    classNames: "bg-green-300 text-zinc-900 dark:text-white dark:bg-green-500",
   },
   {
     value: "integrations",
@@ -39,12 +40,12 @@ export const labels = [
   {
     value: "new",
     label: "New",
-    classNames: "bg-gray-300 text-gray-900 dark:text-white dark:bg-gray-500",
+    classNames: "bg-zinc-300 text-zinc-900 dark:text-white dark:bg-zinc-500",
   },
   {
     value: "sop",
     label: "SOP",
-    classNames: "bg-sky-300 text-gray-900 dark:text-white dark:bg-sky-500",
+    classNames: "bg-sky-300 text-zinc-900 dark:text-white dark:bg-sky-500",
   },
 ]
 
