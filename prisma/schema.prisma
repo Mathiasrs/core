@@ -46,10 +46,11 @@ model Session {
   @@index([userId])
 }
 
+// Temporary until flow is ready
 model Tenant {
   id     String @id @default(cuid())
-  name   String
-  domain String @unique
+  name   String @default("default")
+  domain String @unique @default("default")
   users  User[]
 }
 
@@ -73,7 +74,7 @@ model User {
   votes       Vote[]
   commentVote CommentVote[]
 
-  tenantId String
+  tenantId String @default("clnoifvo50000b5qus1ailtzy")
   tenant   Tenant @relation(fields: [tenantId], references: [id])
 
   @@index([id])
