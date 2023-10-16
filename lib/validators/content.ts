@@ -1,8 +1,8 @@
 import { z } from "zod"
 
 export const ContentCreationValidator = z.object({
-  contentId: z.string().max(10, {
-    message: "Content ID can maximum be 10 characters.",
+  contentId: z.string().max(12, {
+    message: "Content ID can maximum be 12 characters.",
   }),
   title: z
     .string()
