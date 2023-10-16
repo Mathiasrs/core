@@ -56,20 +56,14 @@ export default function ContentPage({ params }: pageProps) {
 
   return (
     <div className="grid grid-cols-6 items-start gap-6">
-      <div className="col-span-6 border-b border-zinc-200 pb-5 dark:border-zinc-800">
-        <div className="flex items-center gap-2">
-          <Link
-            href="/kbase"
-            className="flex items-center gap-2 text-zinc-900 hover:opacity-80 dark:text-white"
-          >
-            <FaArrowCircleLeft className="h-4 w-4" />
-            <span>Go back</span>
-          </Link>
-          -{" "}
-          <h3 className="text-base font-semibold leading-6 text-zinc-900 dark:text-white">
-            Content viewer
-          </h3>
-        </div>
+      <div className="col-span-6">
+        <Link
+          href="/kbase"
+          className="flex w-fit items-center gap-2 pl-4 text-zinc-900 hover:opacity-80 dark:text-white"
+        >
+          <FaArrowCircleLeft className="h-4 w-4" />
+          <span>Go back</span>
+        </Link>
       </div>
 
       <div className="prose prose-stone dark:prose-invert relative order-2 col-span-6 rounded-xl border border-zinc-200 bg-white text-zinc-950 shadow dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 lg:order-1 lg:col-span-4">
