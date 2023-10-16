@@ -165,8 +165,8 @@ export default function Active({ user, session, children }: any) {
         </div>
       </aside>
 
-      <main className="relative mb-20 flex h-full w-full flex-col overflow-hidden bg-white shadow-lg ring-1 ring-zinc-100 dark:bg-zinc-950 dark:ring-zinc-900 md:mt-4 md:rounded-tl-xl">
-        <div className="flex-grow overflow-y-auto p-4 pb-20 sm:p-6 md:p-8">
+      <main className="relative flex h-full w-full flex-col overflow-hidden bg-white shadow-lg ring-1 ring-zinc-100 dark:bg-zinc-950 dark:ring-zinc-900 md:mt-4 md:rounded-tl-xl">
+        <div className="mb-20 flex-grow overflow-y-auto p-4 sm:p-6 md:mb-0 md:p-8">
           {children}
         </div>
       </main>
