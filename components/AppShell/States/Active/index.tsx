@@ -165,14 +165,14 @@ export default function Active({ user, session, children }: any) {
         </div>
       </aside>
 
-      <main className="relative flex h-full w-full flex-col overflow-hidden bg-white shadow-lg ring-1 ring-zinc-100 dark:bg-zinc-950 dark:ring-zinc-900 md:mt-4 md:rounded-tl-xl">
-        <div className="mb-20 flex-grow overflow-y-auto p-4 sm:p-6 md:mb-0 md:p-8">
+      <main className="relative mb-[5rem] flex h-full w-full flex-col overflow-x-hidden bg-white py-5 shadow-lg ring-1 ring-zinc-100 dark:bg-zinc-950 dark:ring-zinc-900 md:mb-0 md:mt-4 md:rounded-tl-xl">
+        <div className="overflow-y-auto px-4 pb-[5rem] sm:px-6 md:pb-4 lg:px-8">
           {children}
         </div>
       </main>
 
       {/* Small screens*/}
-      <aside className="fixed bottom-0 left-0 z-20 w-full bg-zinc-200/20 pt-1 ring ring-zinc-100 backdrop-blur-lg dark:bg-zinc-800/30 dark:ring-zinc-800 md:hidden">
+      <aside className="sticky bottom-0 left-0 z-20 w-full bg-zinc-200/20 pt-1 ring ring-zinc-100 backdrop-blur-lg dark:bg-zinc-800/30 dark:ring-zinc-800 md:hidden">
         <div className="flex justify-between gap-4 px-8">
           {navigation(user)
             .filter((item: any) => item.isMobile)
