@@ -227,7 +227,7 @@ export default function Active({ user, session, children }: any) {
           initial={{ y: "100%", zIndex: 0 }}
           animate={isMenuOpen ? "open" : "closed"}
           variants={variants}
-          className="fixed inset-x-0 bottom-0 z-10 mb-16 flex justify-between rounded-t-2xl bg-zinc-200/20 py-2 ring ring-zinc-200 backdrop-blur-lg dark:bg-zinc-900/60 dark:ring-zinc-800 lg:hidden"
+          className="fixed inset-x-0 bottom-0 z-10 mb-16 flex justify-between rounded-t-2xl bg-zinc-200/20 py-2 ring ring-zinc-200 backdrop-blur-lg dark:bg-zinc-900/60 dark:ring-zinc-800 md:hidden"
         >
           <nav className="h-full w-full p-2 text-zinc-900 dark:text-white">
             <div className="b flex items-center justify-between border-b border-zinc-300 dark:border-zinc-700">
