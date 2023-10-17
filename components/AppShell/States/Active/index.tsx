@@ -16,7 +16,7 @@ import { motion } from "framer-motion"
 import { navigation } from "@/components/AppShell/MenuItems"
 import { Logo } from "@/components/Logo"
 import CustomLink from "@/components/AppShell/CustomLink"
-import { ScrollArea } from "@/components/ui/scroll-area"
+import { CommandMenu } from "@/components/ui/command-menu"
 
 export default function Active({ user, session, children }: any) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -52,7 +52,7 @@ export default function Active({ user, session, children }: any) {
   return (
     <div className="h-screen w-full overflow-hidden md:flex">
       {/* Large screens */}
-      <aside className="hidden w-fit overflow-hidden pr-14 md:grid">
+      <aside className="hidden w-80 overflow-hidden md:grid">
         <div className="mt-10 flex flex-col justify-between">
           <div className="flex flex-col gap-8">
             <div className="mb-4 flex pl-6 text-left">
@@ -101,13 +101,15 @@ export default function Active({ user, session, children }: any) {
               </div>
             ))}
           </div>
-          <div>
-            {session ? (
+
+          <div className="grid gap-6 p-4">
+             <CommandMenu />
+
               <Link
                 href="/profile"
-                className="flex items-center justify-between p-4 hover:opacity-80"
+                className="flex items-center justify-between hover:opacity-80 w-full"
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 w-full">
                   <Image
                     src={
                       session?.user?.image
@@ -120,7 +122,7 @@ export default function Active({ user, session, children }: any) {
                     className="h-8 w-8 rounded-3xl object-cover ring-2 ring-white ring-opacity-40 focus:outline-none focus:ring-opacity-100 xl:h-10 xl:w-10"
                   />
 
-                  <div className="flex items-center gap-4 pl-2 text-left text-xs xl:text-sm">
+                  <div className="flex items-center justify-between gap-4 pl-2 text-left text-xs xl:text-sm w-full">
                     <div className="flex flex-col gap-1">
                       <h3 className="font-semibold text-zinc-900 dark:text-white">
                         {user?.name.split(" ")[0]}
@@ -132,35 +134,7 @@ export default function Active({ user, session, children }: any) {
                     <FaArrowRight className="text-xs text-zinc-950 dark:text-white" />
                   </div>
                 </div>
-              </Link>
-            ) : (
-              <Link
-                href="/settings"
-                className="flex items-center justify-between p-4 hover:opacity-80"
-              >
-                <div className="flex items-center gap-2">
-                  <Image
-                    src="https://res.cloudinary.com/dwh5z8lp5/image/upload/v1687339586/za4mqfois45pscl4xfk5.png"
-                    alt="Profile"
-                    width={32}
-                    height={32}
-                    className="h-8 w-8 rounded-3xl object-cover ring-2 ring-white ring-opacity-40 focus:outline-none focus:ring-opacity-100 xl:h-10 xl:w-10"
-                  />
-
-                  <div className="flex items-center gap-4 text-left text-xs xl:text-sm">
-                    <div className="flex flex-col gap-2">
-                      <h3 className="font-semibold text-zinc-900 dark:text-white">
-                        {user?.name.split(" ")[0]}
-                      </h3>
-                      <p className="text-zinc-500 dark:text-zinc-300">
-                        {session?.user?.email}
-                      </p>
-                    </div>
-                    <FaArrowRight className="text-xs text-zinc-950 dark:text-white" />
-                  </div>
-                </div>
-              </Link>
-            )}
+              </Link>   
           </div>
         </div>
       </aside>
