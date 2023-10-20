@@ -10,7 +10,7 @@ import { useUpdateLabel } from "@/actions/mutations/content/useUpdateLabel"
 import { useDeleteContent } from "@/actions/mutations/content/useDeleteContent"
 
 // Libraries
-import { labels } from "@/components/data"
+import { labels, statuses } from "@/components/data"
 import { contentSchema } from "@/lib/schema"
 
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
@@ -29,6 +29,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useUpdateStatus } from "@/app/actions/mutations/content/useUpdateStatus"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -41,6 +42,7 @@ export function DataTableRowActions<TData>({
   const content = contentSchema.parse(row.original)
 
   const updateContentLabel = useUpdateLabel()
+  const updateContentStatus = useUpdateStatus()
   const deleteContent = useDeleteContent(setIsModelOpen)
 
   const handleUpdateLabel = async (label: string) => {
@@ -50,6 +52,15 @@ export function DataTableRowActions<TData>({
     }
 
     updateContentLabel.mutate(payload)
+  }
+
+  const handleUpdateStatus = async (status: string) => {
+    const payload = {
+      id: content.id,
+      status: status,
+    }
+
+    updateContentStatus.mutate(payload)
   }
 
   const handleDeleteContent = async () => {
@@ -91,6 +102,24 @@ export function DataTableRowActions<TData>({
                   }}
                 >
                   {label.label}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            <DropdownMenuRadioGroup value={content.status}>
+              {statuses.map((status) => (
+                <DropdownMenuRadioItem
+                  key={status.value}
+                  value={status.value}
+                  onClick={() => {
+                    handleUpdateStatus(status.value)
+                  }}
+                >
+                  {status.label}
                 </DropdownMenuRadioItem>
               ))}
             </DropdownMenuRadioGroup>
