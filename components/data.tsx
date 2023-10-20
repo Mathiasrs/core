@@ -99,3 +99,16 @@ export const priorities = [
     icon: ArrowUpIcon,
   },
 ]
+
+export const publish = [
+  {
+    label: "No",
+    value: false,
+    icon: CrossCircledIcon,
+  },
+  {
+    label: "Yes",
+    value: true,
+    icon: CheckCircledIcon,
+  },
+]
