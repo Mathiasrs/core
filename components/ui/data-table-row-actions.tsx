@@ -7,10 +7,12 @@ import Link from "next/link"
 
 // Mutations
 import { useUpdateLabel } from "@/actions/mutations/content/useUpdateLabel"
+import { useUpdateStatus } from "@/app/actions/mutations/content/useUpdateStatus"
+import { useUpdatePriority } from "@/app/actions/mutations/content/useUpdatePriority"
 import { useDeleteContent } from "@/actions/mutations/content/useDeleteContent"
 
 // Libraries
-import { labels, statuses } from "@/components/data"
+import { labels, statuses, priorities } from "@/components/data"
 import { contentSchema } from "@/lib/schema"
 
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
@@ -29,7 +31,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useUpdateStatus } from "@/app/actions/mutations/content/useUpdateStatus"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -43,6 +44,7 @@ export function DataTableRowActions<TData>({
 
   const updateContentLabel = useUpdateLabel()
   const updateContentStatus = useUpdateStatus()
+  const updateContentPriority = useUpdatePriority()
   const deleteContent = useDeleteContent(setIsModelOpen)
 
   const handleUpdateLabel = async (label: string) => {
@@ -61,6 +63,15 @@ export function DataTableRowActions<TData>({
     }
 
     updateContentStatus.mutate(payload)
+  }
+
+  const handleUpdatePriority = async (priority: string) => {
+    const payload = {
+      id: content.id,
+      priority: priority,
+    }
+
+    updateContentPriority.mutate(payload)
   }
 
   const handleDeleteContent = async () => {
@@ -120,6 +131,24 @@ export function DataTableRowActions<TData>({
                   }}
                 >
                   {status.label}
+                </DropdownMenuRadioItem>
+              ))}
+            </DropdownMenuRadioGroup>
+          </DropdownMenuSubContent>
+        </DropdownMenuSub>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>Priority</DropdownMenuSubTrigger>
+          <DropdownMenuSubContent>
+            <DropdownMenuRadioGroup value={content.priority}>
+              {priorities.map((priority) => (
+                <DropdownMenuRadioItem
+                  key={priority.value}
+                  value={priority.value}
+                  onClick={() => {
+                    handleUpdatePriority(priority.value)
+                  }}
+                >
+                  {priority.label}
                 </DropdownMenuRadioItem>
               ))}
             </DropdownMenuRadioGroup>
