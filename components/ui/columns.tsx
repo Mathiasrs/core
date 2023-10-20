@@ -5,7 +5,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { Badge } from "@/components/ui/badge"
 import { Checkbox } from "@/components/ui/checkbox"
 
-import { labels, priorities, statuses } from "@/components/data"
+import { labels, priorities, statuses, publish } from "@/components/data"
 import { Content } from "@/lib/schema"
 import { DataTableColumnHeader } from "./data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
@@ -54,10 +54,14 @@ export const columns: ColumnDef<Content>[] = [
 
       return (
         <div className="flex space-x-2">
-          {label && <Badge
+          {label && (
+            <Badge
               className={cn("mb-2 uppercase", label.classNames)}
               variant="outline"
-            >{label.label}</Badge>}
+            >
+              {label.label}
+            </Badge>
+          )}
           <span className="max-w-[500px] truncate font-medium">
             {row.getValue("title")}
           </span>
@@ -112,6 +116,33 @@ export const columns: ColumnDef<Content>[] = [
             <priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
           )}
           <span>{priority.label}</span>
+        </div>
+      )
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
+  },
+  {
+    accessorKey: "isPublished",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Published" />
+    ),
+    cell: ({ row }) => {
+      const isPublished = publish.find(
+        (publish) => publish.value === row.getValue("isPublished"),
+      )
+
+      if (!isPublished) {
+        return null
+      }
+
+      return (
+        <div className="flex items-center">
+          {isPublished.icon && (
+            <isPublished.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+          )}
+          <span>{isPublished.label}</span>
         </div>
       )
     },
