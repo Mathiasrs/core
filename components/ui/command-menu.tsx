@@ -1,7 +1,14 @@
 "use client"
 
 import * as React from "react"
+
+//Next
 import { useRouter } from "next/navigation"
+
+// Queries
+import useContent from "@/actions/queries/content/useContent"
+
+// Libraries
 import { DialogProps } from "@radix-ui/react-alert-dialog"
 import {
   CircleIcon,
@@ -11,9 +18,12 @@ import {
   SunIcon,
 } from "@radix-ui/react-icons"
 import { useTheme } from "next-themes"
-
-import { docsConfig } from "@/config/docs"
 import { cn } from "@/lib/utils"
+
+// Config
+import { docsConfig } from "@/config/docs"
+
+// Components
 import { Button } from "@/components/ui/button"
 import {
   CommandDialog,
@@ -28,7 +38,9 @@ import {
 export function CommandMenu({ ...props }: DialogProps) {
   const router = useRouter()
   const [open, setOpen] = React.useState(false)
+  const [inputValue, setInputValue] = React.useState("")
   const { setTheme } = useTheme()
+  const { data: contentData, isLoading, error } = useContent()
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -47,28 +59,57 @@ export function CommandMenu({ ...props }: DialogProps) {
     command()
   }, [])
 
-  const isMac = window.navigator.userAgent.includes('Mac');
+  const isMac = window.navigator.userAgent.includes("Mac")
 
   return (
     <>
       <Button
         variant="outline"
         className={cn(
-          "relative justify-start text-sm text-muted-foreground sm:pr-12 w-full"
+          "relative w-full justify-start text-sm text-muted-foreground sm:pr-12",
         )}
         onClick={() => setOpen(true)}
         {...props}
       >
-   
         <span className="inline-flex">Search...</span>
         <kbd className="pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[12px] font-medium opacity-100 sm:flex">
-        <span className="text-xs">{isMac ? '⌘' : 'CTRL'}</span> + K
+          <span className="text-xs">{isMac ? "⌘" : "CTRL"}</span> + K
         </kbd>
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Type a command or search..." />
+        <CommandInput
+          placeholder="Type a command or search..."
+          onInputChange={setInputValue}
+        />
         <CommandList>
           <CommandEmpty>No results found.</CommandEmpty>
+
+          {inputValue && (
+            <CommandGroup heading="Content">
+              {isLoading ? (
+                <CommandEmpty>Loading...</CommandEmpty>
+              ) : error ? (
+                <CommandEmpty>An error occurred</CommandEmpty>
+              ) : (
+                contentData.length > 0 &&
+                contentData.map((item: any) => (
+                  <CommandItem
+                    key={item.href}
+                    value={item.title}
+                    onSelect={() => {
+                      runCommand(() => router.push(item.href as string))
+                    }}
+                  >
+                    <FileIcon className="mr-2 h-4 w-4" />
+                    {item.title}
+                  </CommandItem>
+                ))
+              )}
+            </CommandGroup>
+          )}
+
+          <CommandSeparator />
+
           <CommandGroup heading="Links">
             {docsConfig.mainNav
               .filter((navitem) => !navitem.external)
@@ -85,6 +126,9 @@ export function CommandMenu({ ...props }: DialogProps) {
                 </CommandItem>
               ))}
           </CommandGroup>
+
+          <CommandSeparator />
+
           {docsConfig.sidebarNav.map((group) => (
             <CommandGroup key={group.title} heading={group.title}>
               {group.items.map((navItem) => (
@@ -103,7 +147,9 @@ export function CommandMenu({ ...props }: DialogProps) {
               ))}
             </CommandGroup>
           ))}
+
           <CommandSeparator />
+
           <CommandGroup heading="Theme">
             <CommandItem onSelect={() => runCommand(() => setTheme("light"))}>
               <SunIcon className="mr-2 h-4 w-4" />
