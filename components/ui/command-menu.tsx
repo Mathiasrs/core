@@ -6,7 +6,7 @@ import * as React from "react"
 import { useRouter } from "next/navigation"
 
 // Queries
-import useContent from "@/actions/queries/content/useAllContent"
+import useContent from "@/actions/queries/content/useContent"
 
 // Libraries
 import { DialogProps } from "@radix-ui/react-alert-dialog"
