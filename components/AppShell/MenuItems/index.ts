@@ -1,4 +1,4 @@
-import { FaSlack, FaPen, FaBookOpen } from "react-icons/fa6"
+import { FaSlack, FaPen, FaBookOpen, FaUsers } from "react-icons/fa6"
 import { MdSpaceDashboard } from "react-icons/md"
 
 const navigationItems = [
@@ -41,6 +41,16 @@ const navigationItems = [
     isMobile: false,
     isInMoreMenu: true,
     isNewTap: true,
+  },
+  {
+    index: 5,
+    href: "/users",
+    name: "Users",
+    icon: FaUsers,
+    roles: ["admin", "manager"],
+    isMobile: true,
+    isInMoreMenu: false,
+    isNewTap: false,
   },
 ]
 

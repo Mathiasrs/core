@@ -23,16 +23,16 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table/table"
 
 import { DataTablePagination } from "@/components/ui/table/data-table-pagination"
-import { DataTableToolbar } from "@/components/ui/content/table/data-table-toolbar"
 import { DataTableSkeleton } from "@/components/ui/skeletons/DataTableSkeleton"
 
 import skeletonData from "@/lib/skeletonData.json"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
+  DataTableToolbar: any
   data: TData[]
   isLoading: boolean
   error: any
@@ -40,6 +40,7 @@ interface DataTableProps<TData, TValue> {
 
 export function DataTable<TData, TValue>({
   columns,
+  DataTableToolbar,
   data,
   isLoading,
   error,
@@ -75,7 +76,13 @@ export function DataTable<TData, TValue>({
   })
 
   if (isLoading)
-    return <DataTableSkeleton data={skeletonData} columns={columns} />
+    return (
+      <DataTableSkeleton
+        data={skeletonData}
+        columns={columns}
+        DataTableToolbar={DataTableToolbar}
+      />
+    )
 
   if (error) {
     console.error("DataTable error: ", error)

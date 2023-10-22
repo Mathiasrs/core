@@ -23,20 +23,21 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table/table"
 
 import { DataTablePagination } from "@/components/ui/table/data-table-pagination"
-import { DataTableToolbar } from "@/components/ui/content/table/data-table-toolbar"
 import { Skeleton } from "../skeleton"
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
   data: any
+  columns: ColumnDef<TData, TValue>[]
+  DataTableToolbar: any
 }
 
 export function DataTableSkeleton<TData, TValue>({
   data,
   columns,
+  DataTableToolbar,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] =
