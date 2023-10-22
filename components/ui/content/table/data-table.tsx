@@ -25,8 +25,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-import { DataTablePagination } from "@/components/ui/data-table-pagination"
-import { DataTableToolbar } from "@/components/ui/data-table-toolbar"
+import { DataTablePagination } from "@/components/ui/table/data-table-pagination"
+import { DataTableToolbar } from "@/components/ui/content/table/data-table-toolbar"
 import { DataTableSkeleton } from "@/components/ui/skeletons/DataTableSkeleton"
 
 import skeletonData from "@/lib/skeletonData.json"

@@ -10,7 +10,7 @@ import { useIntersection } from "@mantine/hooks"
 import ContentCard from "@/components/ContentCard"
 import SectionIntro from "@/components/SectionIntro"
 import LoadingSpinner from "@/components/LoadingSpinner"
-import { DataContentToolbar } from "./ui/data-content-toolbar"
+import { DataContentToolbar } from "@/components/ui/content/data-content-toolbar"
 
 export default function ContentList() {
   const {

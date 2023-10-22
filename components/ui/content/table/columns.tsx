@@ -7,7 +7,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 
 import { labels, priorities, statuses, publish } from "@/components/data"
 import { Content } from "@/lib/schema"
-import { DataTableColumnHeader } from "./data-table-column-header"
+import { DataTableColumnHeader } from "../../table/data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
 import { cn } from "@/lib/utils"
 
