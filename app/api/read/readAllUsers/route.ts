@@ -15,13 +15,13 @@ export async function GET(): Promise<NextResponse> {
   }
 
   try {
-    const readUser = await prisma.user.findMany({
+    const readAllUsers = await prisma.user.findMany({
       include: {
         permission: true,
       },
     })
 
-    return NextResponse.json(readUser)
+    return NextResponse.json(readAllUsers)
   } catch (error) {
     console.error("Error reading profile:", error)
 

@@ -11,3 +11,11 @@ export const contentSchema = z.object({
 })
 
 export type Content = z.infer<typeof contentSchema>
+
+export const userSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  status: z.string(),
+})
+
+export type User = z.infer<typeof userSchema>

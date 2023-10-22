@@ -48,8 +48,8 @@ const navigationItems = [
     name: "Users",
     icon: FaUsers,
     roles: ["admin", "manager"],
-    isMobile: true,
-    isInMoreMenu: false,
+    isMobile: false,
+    isInMoreMenu: true,
     isNewTap: false,
   },
 ]

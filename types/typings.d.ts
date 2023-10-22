@@ -34,6 +34,7 @@ interface User {
   about?: string
   image?: string
   url?: string
+  status?: string
   userId?: string
   theme?: string
 }

@@ -1,19 +1,15 @@
 "use client"
 
-import { useState } from "react"
-
 // Next
 import Link from "next/link"
 
 // Mutations
-import { useUpdateLabel } from "@/actions/mutations/content/useUpdateLabel"
-import { useUpdateStatus } from "@/app/actions/mutations/content/useUpdateStatus"
-import { useUpdatePriority } from "@/app/actions/mutations/content/useUpdatePriority"
-import { useDeleteContent } from "@/actions/mutations/content/useDeleteContent"
+import { useUpdateStatus } from "@/actions/mutations/user/useUpdateStatus"
+import { useDeleteUser } from "@/actions/mutations/user/useDeleteUser"
 
 // Libraries
-import { labels, statuses, priorities } from "@/components/data"
-import { contentSchema } from "@/lib/schema"
+import { userStatuses } from "@/components/data"
+import { userSchema } from "@/lib/schema"
 
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { Row } from "@tanstack/react-table"
@@ -39,44 +35,23 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const [isModelOpen, setIsModelOpen] = useState(false)
-  const content = contentSchema.parse(row.original)
+  const user = userSchema.parse(row.original)
 
-  const updateContentLabel = useUpdateLabel()
-  const updateContentStatus = useUpdateStatus()
-  const updateContentPriority = useUpdatePriority()
-  const deleteContent = useDeleteContent(setIsModelOpen)
-
-  const handleUpdateLabel = async (label: string) => {
-    const payload = {
-      id: content.id,
-      label: label,
-    }
-
-    updateContentLabel.mutate(payload)
-  }
+  const updateUserStatus = useUpdateStatus()
+  const deleteContent = useDeleteUser()
 
   const handleUpdateStatus = async (status: string) => {
     const payload = {
-      id: content.id,
+      id: user.id,
       status: status,
     }
 
-    updateContentStatus.mutate(payload)
+    updateUserStatus.mutate(payload)
   }
 
-  const handleUpdatePriority = async (priority: string) => {
+  const handleDeleteUser = async () => {
     const payload = {
-      id: content.id,
-      priority: priority,
-    }
-
-    updateContentPriority.mutate(payload)
-  }
-
-  const handleDeleteContent = async () => {
-    const payload = {
-      id: content.id,
+      id: user.id,
     }
 
     deleteContent.mutate(payload)
@@ -95,34 +70,16 @@ export function DataTableRowActions<TData>({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         <DropdownMenuItem>
-          <Link className="w-full" href={`/content/edit/${content.contentId}`}>
+          <Link className="w-full" href="">
             Edit
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
-          <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={content.label}>
-              {labels.map((label) => (
-                <DropdownMenuRadioItem
-                  key={label.value}
-                  value={label.value}
-                  onClick={() => {
-                    handleUpdateLabel(label.value)
-                  }}
-                >
-                  {label.label}
-                </DropdownMenuRadioItem>
-              ))}
-            </DropdownMenuRadioGroup>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
-        <DropdownMenuSub>
           <DropdownMenuSubTrigger>Status</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={content.status}>
-              {statuses.map((status) => (
+            <DropdownMenuRadioGroup value={user.name}>
+              {userStatuses.map((status) => (
                 <DropdownMenuRadioItem
                   key={status.value}
                   value={status.value}
@@ -136,28 +93,10 @@ export function DataTableRowActions<TData>({
             </DropdownMenuRadioGroup>
           </DropdownMenuSubContent>
         </DropdownMenuSub>
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Priority</DropdownMenuSubTrigger>
-          <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={content.priority}>
-              {priorities.map((priority) => (
-                <DropdownMenuRadioItem
-                  key={priority.value}
-                  value={priority.value}
-                  onClick={() => {
-                    handleUpdatePriority(priority.value)
-                  }}
-                >
-                  {priority.label}
-                </DropdownMenuRadioItem>
-              ))}
-            </DropdownMenuRadioGroup>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           onClick={() => {
-            handleDeleteContent()
+            handleDeleteUser()
           }}
         >
           Delete
