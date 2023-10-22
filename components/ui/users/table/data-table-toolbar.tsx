@@ -5,10 +5,10 @@ import { Table } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { DataTableViewOptions } from "@/components/ui/data-table-view-options"
+import { DataTableViewOptions } from "@/components/ui/table/data-table-view-options"
 
-import { priorities, statuses } from "@/components/data"
-import { DataTableFacetedFilter } from "@/components/ui/data-table-faceted-filter"
+import { userStatuses } from "@/components/data"
+import { DataTableFacetedFilter } from "@/components/ui/table/data-table-faceted-filter"
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -34,16 +34,10 @@ export function DataTableToolbar<TData>({
           <DataTableFacetedFilter
             column={table.getColumn("status")}
             title="Status"
-            options={statuses}
+            options={userStatuses}
           />
         )}
-        {table.getColumn("priority") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("priority")}
-            title="Priority"
-            options={priorities}
-          />
-        )}
+
         {isFiltered && (
           <Button
             variant="ghost"

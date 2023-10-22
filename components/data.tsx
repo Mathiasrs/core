@@ -8,6 +8,7 @@ import {
   QuestionMarkCircledIcon,
   EyeOpenIcon,
   StopwatchIcon,
+  CircleBackslashIcon,
 } from "@radix-ui/react-icons"
 
 export const labels = [
@@ -110,5 +111,17 @@ export const publish = [
     label: "Yes",
     value: true,
     icon: CheckCircledIcon,
+  },
+]
+export const userStatuses = [
+  {
+    label: "Active",
+    value: "active",
+    icon: CheckCircledIcon,
+  },
+  {
+    label: "Deactivated",
+    value: "deactivated",
+    icon: CircleBackslashIcon,
   },
 ]
