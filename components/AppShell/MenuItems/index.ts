@@ -7,7 +7,9 @@ const navigationItems = [
     href: "/dashboard",
     name: "Dashboard",
     icon: MdSpaceDashboard,
-    roles: ["admin", "support"],
+    permissions: {
+      userCanViewDashboard: true,
+    },
     isMobile: true,
     isInMoreMenu: false,
     isNewTap: false,
@@ -17,7 +19,9 @@ const navigationItems = [
     href: "/kbase",
     name: "Knowledge Base",
     icon: FaBookOpen,
-    roles: ["admin", "manager"],
+    permissions: {
+      userCanViewContent: true,
+    },
     isMobile: true,
     isInMoreMenu: false,
     isNewTap: false,
@@ -27,7 +31,9 @@ const navigationItems = [
     href: "/content",
     name: "Content",
     icon: FaPen,
-    roles: ["admin", "manager"],
+    permissions: {
+      userCanEditContent: true,
+    },
     isMobile: true,
     isInMoreMenu: false,
     isNewTap: false,
@@ -37,17 +43,29 @@ const navigationItems = [
     href: "https://ordrestyring.slack.com",
     name: "Slack",
     icon: FaSlack,
-    roles: ["admin", "support"],
+    permissions: {
+      userCanViewSlack: true,
+    },
     isMobile: false,
     isInMoreMenu: true,
     isNewTap: true,
   },
 ]
 
+function checkPermissions(userPermissions: any, itemPermissions: any) {
+  if (!userPermissions) return false
+
+  return Object.keys(itemPermissions).every(
+    (permission) => itemPermissions[permission] === userPermissions[permission],
+  )
+}
+
 export const navigation = (user: any) => {
-  const filteredItems = navigationItems.filter((item) => {
-    return item.roles.includes(user?.role)
-  })
+  const userPermissions = user.permission ? user.permission[0] : null
+
+  const filteredItems = navigationItems.filter((item) =>
+    checkPermissions(userPermissions, item.permissions),
+  )
 
   return filteredItems
 }
