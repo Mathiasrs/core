@@ -87,6 +87,8 @@ model Permission {
   userCanEditContent   Boolean @default(false)
   userCanCreateContent Boolean @default(false)
   userCanViewSlack     Boolean @default(false)
+  userCanViewUsers     Boolean @default(false)
+  userCanEditUsers     Boolean @default(false)
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)

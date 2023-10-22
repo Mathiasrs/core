@@ -55,7 +55,9 @@ const navigationItems = [
     href: "/users",
     name: "Users",
     icon: FaUsers,
-    roles: ["admin", "manager"],
+    permissions: {
+      userCanViewUsers: true,
+    },
     isMobile: false,
     isInMoreMenu: true,
     isNewTap: false,
