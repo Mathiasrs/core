@@ -5,7 +5,7 @@ import Image from "next/image"
 
 // Libraries
 import { ColumnDef } from "@tanstack/react-table"
-import { Content } from "@/lib/schema"
+import { User } from "@/lib/schema"
 
 // Components
 import { Checkbox } from "@/components/ui/checkbox"
@@ -13,7 +13,7 @@ import { userStatuses } from "@/components/data"
 import { DataTableColumnHeader } from "@/components/ui/table/data-table-column-header"
 import { DataTableRowActions } from "./data-table-row-actions"
 
-export const columns: ColumnDef<Content>[] = [
+export const columns: ColumnDef<User>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -36,7 +36,7 @@ export const columns: ColumnDef<Content>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "name",
+    accessorKey: "image",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Name" />
     ),
@@ -49,11 +49,24 @@ export const columns: ColumnDef<Content>[] = [
               : "https://res.cloudinary.com/dwh5z8lp5/image/upload/v1687339586/za4mqfois45pscl4xfk5.png"
           }
           alt={row.getValue("name")}
-          width={12}
-          height={12}
-          className="h-8 w-8 rounded-3xl object-cover ring-2 ring-white ring-opacity-40 focus:outline-none focus:ring-opacity-100 xl:h-10 xl:w-10"
+          width={32}
+          height={32}
+          className="h-6 w-6 rounded-3xl object-cover ring-2 ring-white ring-opacity-40 focus:outline-none focus:ring-opacity-100 xl:h-10 xl:w-10"
         />
-        <span>{row.getValue("name")}</span>
+        {row.getValue("name")}
+      </div>
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: "name",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="" className="sr-only" />
+    ),
+    cell: ({ row }) => (
+      <div className="sr-only flex w-fit items-center gap-4">
+        {row.getValue("name")}
       </div>
     ),
     enableSorting: false,
@@ -74,7 +87,7 @@ export const columns: ColumnDef<Content>[] = [
       }
 
       return (
-        <div className="flex w-[100px] items-center">
+        <div className="flex w-fit items-center">
           {status.icon && (
             <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
           )}
