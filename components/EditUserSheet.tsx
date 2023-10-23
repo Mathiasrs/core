@@ -1,5 +1,9 @@
 "use client"
 
+// States
+import { useToggleEditUserSheet } from "@/app/actions/states/useToggleEditUserSheet"
+import { useIdState } from "@/app/actions/states/useIdState"
+
 // Components
 import {
   Sheet,
@@ -9,10 +13,9 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 
-import { useToggleEditUserSheet } from "@/app/actions/states/useToggleEditUserSheet"
-
 export default function EditUserSheet() {
   const { isOpen, setIsOpen } = useToggleEditUserSheet()
+  const { id } = useIdState()
 
   return (
     <Sheet open={isOpen?.isOpen} onOpenChange={() => setIsOpen()}>

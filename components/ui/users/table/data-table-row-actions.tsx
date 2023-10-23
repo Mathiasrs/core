@@ -7,6 +7,10 @@ import Link from "next/link"
 import { useUpdateStatus } from "@/actions/mutations/user/useUpdateStatus"
 import { useDeleteUser } from "@/actions/mutations/user/useDeleteUser"
 
+// States
+import { useToggleEditUserSheet } from "@/actions/states/useToggleEditUserSheet"
+import { useIdState } from "@/actions/states/useIdState"
+
 // Libraries
 import { userStatuses } from "@/components/data"
 import { userSchema } from "@/lib/schema"
@@ -27,7 +31,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useToggleEditUserSheet } from "@/app/actions/states/useToggleEditUserSheet"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -36,12 +39,13 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const { isOpen, setIsOpen } = useToggleEditUserSheet()
+  const { setIsOpen } = useToggleEditUserSheet()
+  const { setId } = useIdState()
 
   const user = userSchema.parse(row.original)
 
   const updateUserStatus = useUpdateStatus()
-  const deleteContent = useDeleteUser()
+  const deleteUser = useDeleteUser()
 
   const handleUpdateStatus = async (status: string) => {
     const payload = {
@@ -57,7 +61,7 @@ export function DataTableRowActions<TData>({
       id: user.id,
     }
 
-    deleteContent.mutate(payload)
+    deleteUser.mutate(payload)
   }
 
   return (
@@ -73,7 +77,13 @@ export function DataTableRowActions<TData>({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         <DropdownMenuItem>
-          <button onClick={setIsOpen} className="w-full text-left">
+          <button
+            onClick={() => {
+              setIsOpen()
+              setId(user.id)
+            }}
+            className="w-full text-left"
+          >
             Edit
           </button>
         </DropdownMenuItem>
