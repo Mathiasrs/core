@@ -27,6 +27,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useToggleEditUserSheet } from "@/app/actions/states/useToggleEditUserSheet"
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -35,6 +36,8 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
+  const { isOpen, setIsOpen } = useToggleEditUserSheet()
+
   const user = userSchema.parse(row.original)
 
   const updateUserStatus = useUpdateStatus()
@@ -70,9 +73,9 @@ export function DataTableRowActions<TData>({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         <DropdownMenuItem>
-          <Link className="w-full" href="">
+          <button onClick={setIsOpen} className="w-full text-left">
             Edit
-          </Link>
+          </button>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuSub>

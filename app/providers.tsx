@@ -8,7 +8,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 // Components
 import { ThemeProvider } from "@/components/ThemeProvider"
 
-const queryClient = new QueryClient()
+export const queryClient = new QueryClient()
 
 type Props = {
   children?: React.ReactNode
