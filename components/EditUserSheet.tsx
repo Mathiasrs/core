@@ -118,7 +118,7 @@ export default function EditUserSheet() {
           <div className="mb-4 flex flex-col">
             <Label className="text-md font-semibold">Active permissions</Label>
             <p className="text-sm text-zinc-500 dark:text-zinc-400">
-              Here you can view the user`&apos;`s current permissions. If you
+              Here you can view the user&apos;s current permissions. If you
               click on one of them, they will be disabled, and you can add them
               again from the menu above.
             </p>
