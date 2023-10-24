@@ -39,6 +39,12 @@ interface User {
   theme?: string
 }
 
+interface Permission {
+  id: string
+  permissionKey: string
+  value: boolean
+}
+
 interface Image {
   secure_url?: any
   id: string
