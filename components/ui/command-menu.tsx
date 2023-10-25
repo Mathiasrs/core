@@ -97,7 +97,7 @@ export function CommandMenu({ ...props }: DialogProps) {
                     key={item.href}
                     value={item.title}
                     onSelect={() => {
-                      runCommand(() => router.push(item.href as string))
+                      runCommand(() => router.push(`/kbase/${item.contentId}`))
                     }}
                   >
                     <FileIcon className="mr-2 h-4 w-4" />
