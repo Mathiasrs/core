@@ -12,7 +12,7 @@ export default function useViewsByContentId(contentId: string, type: string) {
   const getEndOfPath = pathname ? pathname.split("/").pop() : ""
 
   return useQuery({
-    queryKey: ["view", contentId],
+    queryKey: ["views", contentId],
     queryFn: async () => {
       if (contentId === getEndOfPath) {
         const { data } = await axios.post(
@@ -25,9 +25,12 @@ export default function useViewsByContentId(contentId: string, type: string) {
 
         return data
       } else {
-        const { data } = await axios.post("/api/read/view/readViewByContentId", {
-          contentId,
-        })
+        const { data } = await axios.post(
+          "/api/read/view/readViewsByContentId",
+          {
+            contentId,
+          },
+        )
 
         return data
       }

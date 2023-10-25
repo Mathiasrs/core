@@ -27,6 +27,7 @@ import { labels } from "@/components/data"
 import { Input, InputDescription } from "@/components/ui/input"
 import ContentViewerSkeleton from "@/components/ui/skeletons/ContentViewerSkeleton"
 import { Badge } from "@/components/ui/badge"
+import Views from "@/components/Views"
 
 type pageProps = {
   params: {
@@ -110,6 +111,15 @@ export default function ContentPage({ params }: pageProps) {
             <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="picture">Description</Label>
               <Textarea defaultValue={content.description} disabled />
+            </div>
+
+            <div className="grid w-full items-center gap-1.5">
+              <Label htmlFor="picture">Views</Label>
+              <Views contentId={content.contentId} type="article" isInInput />
+              <InputDescription>
+                The amount of views often provide an indicator of how frequently
+                the content is used and the importance of the content.
+              </InputDescription>
             </div>
           </CardContent>
         </Card>
