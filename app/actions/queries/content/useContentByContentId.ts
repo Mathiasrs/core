@@ -4,7 +4,7 @@ import axios from "axios"
 
 export default function useContentByContentId(contentId: any) {
   return useQuery({
-    queryKey: ["content"],
+    queryKey: ["content", contentId],
     queryFn: async () => {
       const { data } = await axios.post(
         "/api/read/content/readContentByContentId",
