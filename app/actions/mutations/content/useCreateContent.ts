@@ -29,7 +29,7 @@ export function useCreateContent(setIsSheetOpen: any, setIsMutating: any) {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["content", "contentAll"])
+        queryClient.invalidateQueries(["contentAll"])
 
         setIsSheetOpen(false)
 

@@ -30,7 +30,7 @@ export function useUpdatePriority() {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["content", "contentAll"])
+        queryClient.invalidateQueries(["contentAll"])
 
         toast({
           title: "Priority is now updated!",

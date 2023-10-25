@@ -34,7 +34,7 @@ export function useUpdateContentId() {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["content", "contentAll"])
+        queryClient.invalidateQueries(["contentAll"])
 
         toast({
           title: "Content ID is now updated!",
