@@ -16,6 +16,7 @@ import { Badge } from "./ui/badge"
 import { cn } from "@/lib/utils"
 
 import { labels } from "@/components/data"
+import Views from "./Views"
 
 export default function ContentCard({ data }: any) {
   const matchedLabel = labels.find(
@@ -46,7 +47,8 @@ export default function ContentCard({ data }: any) {
         <CardFooter>
           <CardDescription>
             {data?.updatedAt ? format(new Date(data?.updatedAt), "PPP") : ""} -{" "}
-            <span className="uppercase">{data?.contentId}</span>
+            <span className="uppercase">{data?.contentId}</span> -{" "}
+            <Views contentId={data.contentId} type="article" />
           </CardDescription>
         </CardFooter>
       </Card>
