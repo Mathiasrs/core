@@ -7,7 +7,7 @@ import axios from "axios"
 // Types
 import { IsPublishedUpdateRequest } from "@/lib/validators/content"
 
-export function useUpdateIsPublished(slug: string, setSaveStatus: any) {
+export function useUpdateIsPublished(setSaveStatus: any) {
   const queryClient = useQueryClient()
 
   const mutation = useMutation(
@@ -29,7 +29,7 @@ export function useUpdateIsPublished(slug: string, setSaveStatus: any) {
         setSaveStatus("Failed to save")
       },
       onSuccess: () => {
-        queryClient.invalidateQueries(["content", slug])
+        queryClient.invalidateQueries(["content", "contentAll"])
 
         setSaveStatus("Saved")
       },

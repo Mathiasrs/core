@@ -1,7 +1,7 @@
 "use client"
 
-// Next 
-import { useRouter } from 'next/navigation'
+// Next
+import { useRouter } from "next/navigation"
 
 // Libraries
 import { useMutation, useQueryClient } from "@tanstack/react-query"
@@ -34,7 +34,7 @@ export function useUpdateContentId() {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["content"])
+        queryClient.invalidateQueries(["content", "contentAll"])
 
         toast({
           title: "Content ID is now updated!",

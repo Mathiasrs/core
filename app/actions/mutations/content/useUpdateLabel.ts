@@ -30,7 +30,7 @@ export function useUpdateLabel() {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["content"])
+        queryClient.invalidateQueries(["content", "contentAll"])
 
         toast({
           title: "Label is now updated!",

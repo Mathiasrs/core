@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react"
 
-
-
 // Mutations
 import { useUpdateIsPublished } from "@/actions/mutations/content/useUpdateIsPublished"
 import { useUpdateContentId } from "@/app/actions/mutations/content/useUpdateContentId"
@@ -45,13 +43,11 @@ export default function EditContentOptions({ content, setSaveStatus }: any) {
   const [isChecked, setIsChecked] = useState(false)
   const [priority, setPriority] = useState("")
   const [status, setStatus] = useState("")
-  const updateIsPublished = useUpdateIsPublished(content?.slug, setSaveStatus)
+  const updateIsPublished = useUpdateIsPublished(setSaveStatus)
   const updateContentId = useUpdateContentId()
   const updatePriority = useUpdatePriority()
   const updateStatus = useUpdateStatus()
   const updateDescription = useUpdateDescription()
-
-
 
   const debouncedUpdateContentId = useDebouncedCallback((contentId) => {
     handleUpdateContentId(contentId)

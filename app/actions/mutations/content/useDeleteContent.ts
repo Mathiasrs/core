@@ -26,7 +26,7 @@ export function useDeleteContent(setIsModalOpen: any) {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["content"])
+        queryClient.invalidateQueries(["content", "contentAll"])
 
         setIsModalOpen(false)
 
