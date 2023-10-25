@@ -30,7 +30,7 @@ export function useUpdateDescription() {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["content", "contentAll"])
+        queryClient.invalidateQueries(["contentAll"])
 
         toast({
           title: "Description is now updated!",
