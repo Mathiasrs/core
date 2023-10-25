@@ -30,7 +30,7 @@ export function useUpdateStatus() {
     },
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["content"])
+        queryClient.invalidateQueries(["content", "contentAll"])
 
         toast({
           title: "Status is now updated!",

@@ -32,7 +32,7 @@ export function useUpdateTitle(setSaveStatus: any) {
         setSaveStatus("Failed to save")
       },
       onSuccess: () => {
-        queryClient.invalidateQueries(["content"])
+        queryClient.invalidateQueries(["content", "contentAll"])
 
         setSaveStatus("Saved")
       },
