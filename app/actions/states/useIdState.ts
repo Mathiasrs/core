@@ -6,20 +6,24 @@ interface IdState {
 }
 
 export function useIdState() {
-  const { data: id } = useQuery(["idState"], () => ({
-    id: "",
-  }))
+  const { data: id } = useQuery({
+    queryKey: ["idState"],
+    queryFn: () => ({ id: "" }),
+  })
 
   const setId = (newId: string) => {
-    queryClient.setQueryData(["idState"], (prev: IdState | undefined) => {
-      if (!prev) {
-        return { id: newId }
-      }
-      return {
-        ...prev,
-        id: newId,
-      }
-    })
+    queryClient.setQueriesData(
+      { queryKey: ["idState"] },
+      (prev: IdState | undefined) => {
+        if (!prev) {
+          return { id: newId }
+        }
+        return {
+          ...prev,
+          id: newId,
+        }
+      },
+    )
   }
 
   return { id, setId }

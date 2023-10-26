@@ -6,13 +6,14 @@ interface ToggleState {
 }
 
 export function useToggleEditUserSheet() {
-  const { data: isOpen } = useQuery(["isEditUserSheetOpen"], () => ({
-    isOpen: false,
-  }))
+  const { data: isOpen } = useQuery({
+    queryKey: ["isEditUserSheetOpen"],
+    queryFn: () => ({ isOpen: false }),
+  })
 
   const setIsOpen = () => {
-    queryClient.setQueryData(
-      ["isEditUserSheetOpen"],
+    queryClient.setQueriesData(
+      { queryKey: ["isEditUserSheetOpen"] },
       (prev: ToggleState | undefined) => {
         if (!prev) {
           return { isOpen: false }
