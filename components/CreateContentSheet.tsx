@@ -40,13 +40,12 @@ import { ContentCreationValidator } from "@/lib/validators/content"
 
 export default function CreateContentSheet() {
   const [isSheetOpen, setIsSheetOpen] = useState(false)
-  const [isMutating, setIsMutating] = useState(false)
 
   const form = useForm<z.infer<typeof ContentCreationValidator>>({
     resolver: zodResolver(ContentCreationValidator),
   })
 
-  const createContent = useCreateContent(setIsSheetOpen, setIsMutating)
+  const createContent = useCreateContent(setIsSheetOpen)
 
   function onSubmit(data: z.infer<typeof ContentCreationValidator>) {
     const payload = {

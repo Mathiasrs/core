@@ -20,7 +20,7 @@ const deleteContentMutation = async ({ id }: ContentDeleteRequest) => {
   return data
 }
 
-export function useDeleteContent(setIsModalOpen: any) {
+export function useDeleteContent() {
   const queryClient = useQueryClient()
   const { toast } = useToast()
 
@@ -29,8 +29,6 @@ export function useDeleteContent(setIsModalOpen: any) {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["contentAll"] })
-
-      setIsModalOpen(false)
 
       toast({
         title: "You succesfully deleted your content!",
