@@ -16,6 +16,7 @@ export default function ContentList() {
   const {
     data: infiniteData,
     fetchNextPage,
+    hasNextPage,
     isFetchingNextPage,
   } = usePaginatedContent()
 
@@ -28,8 +29,10 @@ export default function ContentList() {
   const [labelsFilter, setLabelsFilter] = useState<string[]>([])
 
   useEffect(() => {
-    if (entry?.isIntersecting) fetchNextPage()
-  }, [entry, fetchNextPage])
+    if (entry?.isIntersecting) {
+      fetchNextPage()
+    }
+  }, [entry?.isIntersecting, fetchNextPage])
 
   const content = infiniteData?.pages.flatMap((page) => page)
 
@@ -61,17 +64,20 @@ export default function ContentList() {
         })}
       </div>
 
-      <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage}>
+      <button
+        onClick={() => fetchNextPage()}
+        disabled={!hasNextPage || isFetchingNextPage}
+      >
         {isFetchingNextPage ? (
           <LoadingSpinner
             fillColor={"fill-green-500"}
             textColor={"text-zinc-200 dark:text-zinc-600"}
             className="h-8 w-8"
           />
-        ) : (infiniteData?.pages.length ?? 0) < 3 ? (
-          "Load more"
+        ) : hasNextPage ? (
+          "Load More"
         ) : (
-          "No more content to load"
+          "Nothing more to load"
         )}
       </button>
     </div>
