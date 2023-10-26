@@ -26,6 +26,7 @@ import { Button } from "@/components/ui/button"
 import { ComboBox } from "./ui/combobox"
 import { useUpdatePermission } from "@/app/actions/mutations/user/useUpdatePermission"
 import { Label } from "./ui/label"
+import { cn } from "@/lib/utils"
 
 const permissionNames = {
   userCanViewDashboard: "View Dashboard",
@@ -40,6 +41,9 @@ const permissionNames = {
 export default function EditUserSheet() {
   const { isOpen, setIsOpen } = useToggleEditUserSheet()
   const { id } = useIdState()
+  const [isAdding, setIsAdding] = useState(false)
+  const [isRemoving, setIsRemoving] = useState(false)
+  const [removingKey, setRemovingKey] = useState<string | null>(null)
   const { data } = useUserById(id)
 
   const permissions = data?.permission[0]
@@ -71,6 +75,9 @@ export default function EditUserSheet() {
   const mutation = useUpdatePermission()
 
   const handleDisablePermission = async (key: string) => {
+    setIsAdding(false)
+    setIsRemoving(true)
+    setRemovingKey(key)
     mutation.mutate({
       id: permissions?.id,
       permissionKey: key,
@@ -79,6 +86,7 @@ export default function EditUserSheet() {
   }
 
   const handleAddPermission = async (key: string) => {
+    setIsAdding(true)
     mutation.mutate({
       id: permissions?.id,
       permissionKey: key,
@@ -129,13 +137,29 @@ export default function EditUserSheet() {
               <Button
                 variant="outline"
                 key={index}
-                className="flex gap-1" // This class makes each button take up equal width
+                className={cn(
+                  "flex gap-1",
+                  isRemoving && removingKey === key ? "animate-pulse" : "",
+                )}
                 onClick={() => handleDisablePermission(key)}
               >
                 <span>{displayName}</span>
                 <Cross1Icon />
               </Button>
             ))}
+
+            {mutation.isPending && isAdding && (
+              <Button variant="outline" className="flex animate-pulse gap-1">
+                <span>
+                  {
+                    (permissionNames as Record<string, string>)[
+                      mutation.variables.permissionKey
+                    ]
+                  }
+                </span>
+                <Cross1Icon />
+              </Button>
+            )}
           </div>
         </ScrollArea>
       </SheetContent>

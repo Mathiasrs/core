@@ -38,6 +38,7 @@ import { Label } from "@radix-ui/react-label"
 import { Input, InputDescription } from "@/components/ui/input"
 import { priorities, statuses } from "@/components/data"
 import { Textarea } from "@/components/ui/textarea"
+import { cn } from "@/lib/utils"
 
 export default function EditContentOptions({ content }: any) {
   const [isChecked, setIsChecked] = useState(false)
@@ -152,6 +153,7 @@ export default function EditContentOptions({ content }: any) {
             placeholder="HT202020"
             defaultValue={content?.contentId}
             onChange={(e) => debouncedUpdateContentId(e.target.value)}
+            className={cn(updateContentId.isPending ? "animate-pulse" : "")}
           />
           <InputDescription>
             Provide an ID for better handling and finding content.
@@ -160,75 +162,79 @@ export default function EditContentOptions({ content }: any) {
 
         <div className="grid w-full items-center gap-1.5">
           <Label htmlFor="picture">Priority</Label>
-          <Select
-            onValueChange={(value) => {
-              handleUpdatePriority(value)
-            }}
-            value={priority}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select a priority" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Priorities</SelectLabel>
-                {priorities.map((item: any) => (
-                  <SelectItem
-                    key={item?.value}
-                    value={item?.value}
-                    className="flex items-center"
-                  >
-                    <div className="flex items-center justify-center">
-                      {item.icon && (
-                        <item.icon className="mr-2 inline-flex h-4 w-4 text-muted-foreground" />
-                      )}
-                      <span className="inline-flex items-center">
-                        {item?.label}
-                      </span>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <div className={cn(updatePriority.isPending ? "animate-pulse" : "")}>
+            <Select
+              onValueChange={(value) => {
+                handleUpdatePriority(value)
+              }}
+              value={priority}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a priority" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Priorities</SelectLabel>
+                  {priorities.map((item: any) => (
+                    <SelectItem
+                      key={item?.value}
+                      value={item?.value}
+                      className="flex items-center"
+                    >
+                      <div className="flex items-center justify-center">
+                        {item.icon && (
+                          <item.icon className="mr-2 inline-flex h-4 w-4 text-muted-foreground" />
+                        )}
+                        <span className="inline-flex items-center">
+                          {item?.label}
+                        </span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         <div className="grid w-full items-center gap-1.5">
           <Label htmlFor="picture">Status</Label>
-          <Select
-            onValueChange={(value) => {
-              handleUpdateStatus(value)
-            }}
-            value={status}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select a status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Statuses</SelectLabel>
-                {statuses.map((item: any) => (
-                  <SelectItem
-                    key={item?.value}
-                    value={item?.value}
-                    onClick={() => {
-                      handleUpdateStatus(item?.value)
-                    }}
-                    className="flex items-center"
-                  >
-                    <div className="flex items-center justify-center">
-                      {item.icon && (
-                        <item.icon className="mr-2 inline-flex h-4 w-4 text-muted-foreground" />
-                      )}
-                      <span className="inline-flex items-center">
-                        {item?.label}
-                      </span>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <div className={cn(updateStatus.isPending ? "animate-pulse" : "")}>
+            <Select
+              onValueChange={(value) => {
+                handleUpdateStatus(value)
+              }}
+              value={status}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Statuses</SelectLabel>
+                  {statuses.map((item: any) => (
+                    <SelectItem
+                      key={item?.value}
+                      value={item?.value}
+                      onClick={() => {
+                        handleUpdateStatus(item?.value)
+                      }}
+                      className="flex items-center"
+                    >
+                      <div className="flex items-center justify-center">
+                        {item.icon && (
+                          <item.icon className="mr-2 inline-flex h-4 w-4 text-muted-foreground" />
+                        )}
+                        <span className="inline-flex items-center">
+                          {item?.label}
+                        </span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         <div className="grid w-full items-center gap-1.5">
@@ -237,6 +243,7 @@ export default function EditContentOptions({ content }: any) {
             placeholder="Provide a short description of the content."
             defaultValue={content?.description}
             onChange={(e) => debouncedUpdateDescription(e.target.value)}
+            className={cn(updateDescription.isPending ? "animate-pulse" : "")}
           />
         </div>
       </CardContent>
