@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 
 // Queries
-import useContentByContentId from "@/actions/queries/content/useContentByContentId"
+import useContentByContentIdEdit from "@/actions/queries/content/useContentByContentIdEdit"
 
 // Mutations
 import { useUpdateTitle } from "@/app/actions/mutations/content/useUpdateTitle"
@@ -19,7 +19,6 @@ import { FaArrowCircleLeft } from "react-icons/fa"
 
 // Helpers
 import { generateSlug } from "@/lib/helpers/generateSlug"
-import { Badge } from "@/components/ui/badge"
 
 // Components
 import EditorSkeleton from "@/components/ui/skeletons/EditorSkeleton"
@@ -36,7 +35,7 @@ export default function Page({ params }: pageProps) {
   const [saveStatus, setSaveStatus] = useState("Saved")
 
   const contentId = params.contentId
-  const { data: content, isLoading } = useContentByContentId(contentId)
+  const { data: content, isLoading } = useContentByContentIdEdit(contentId)
 
   const debouncedSetTitle = useDebouncedCallback((title) => {
     handleUpdateTitle(title)
@@ -117,7 +116,7 @@ export default function Page({ params }: pageProps) {
       </div>
 
       <div className="order-1 col-span-6 grid gap-4 lg:order-2 lg:col-span-2">
-        <EditContentOptions content={content} setSaveStatus={setSaveStatus} />
+        <EditContentOptions content={content} />
       </div>
     </div>
   )

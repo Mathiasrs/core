@@ -8,44 +8,48 @@ import { useToast } from "@/components/ui/use-toast"
 // Types
 import { PriorityUpdateRequest } from "@/lib/validators/content"
 
-export function useUpdatePriority() {
+const updatePriorityMutation = async ({
+  id,
+  priority,
+}: PriorityUpdateRequest) => {
+  const payload: PriorityUpdateRequest = {
+    id,
+    priority,
+  }
+
+  const { data } = await axios.post(
+    "/api/update/content/updateContentPriority",
+    {
+      payload,
+    },
+  )
+
+  return data
+}
+
+export function useUpdatePriority(contentId: string) {
   const queryClient = useQueryClient()
   const { toast } = useToast()
 
-  const mutation = useMutation(
-    async ({ id, priority }: PriorityUpdateRequest) => {
-      const payload: PriorityUpdateRequest = {
-        id,
-        priority,
-      }
+  const mutation = useMutation({
+    mutationFn: updatePriorityMutation,
 
-      const { data } = await axios.post(
-        "/api/update/content/updateContentPriority",
-        {
-          payload,
-        },
-      )
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["contentAll", contentId] })
 
-      return data
+      toast({
+        title: "Priority is now updated!",
+      })
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["contentAll"])
 
-        toast({
-          title: "Priority is now updated!",
-        })
-      },
-
-      onError: () => {
-        toast({
-          variant: "destructive",
-          title: "Uh oh! Something went wrong.",
-          description: "There was a problem with your request.",
-        })
-      },
+    onError: () => {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      })
     },
-  )
+  })
 
   return mutation
 }
