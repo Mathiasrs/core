@@ -8,37 +8,42 @@ import { useToast } from "@/components/ui/use-toast"
 // Types
 import { Permission } from "@/types/typings"
 
+const updatePermissionMutatation = async ({
+  id,
+  permissionKey,
+  value,
+}: Permission) => {
+  return axios.post("/api/update/user/updatePermission", {
+    id,
+    permissionKey,
+    value,
+  })
+}
+
 export function useUpdatePermission() {
   const queryClient = useQueryClient()
   const { toast } = useToast()
 
-  const mutation = useMutation(
-    async ({ id, permissionKey, value }: Permission) => {
-      return axios.post("/api/update/user/updatePermission", {
-        id,
-        permissionKey,
-        value,
+  const mutation = useMutation({
+    mutationFn: updatePermissionMutatation,
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["userById"] })
+
+      toast({
+        title: "User permission is now updated!",
       })
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["userById"])
+    onError: (error) => {
+      console.error("Mutation error with useUpdatePermission:", error)
 
-        toast({
-          title: "User permission is now updated!",
-        })
-      },
-      onError: (error) => {
-        console.error("Mutation error with useUpdatePermission:", error)
-
-        toast({
-          variant: "destructive",
-          title: "Uh oh! Something went wrong.",
-          description: "There was a problem with your request.",
-        })
-      },
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      })
     },
-  )
+  })
 
   return mutation
 }

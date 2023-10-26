@@ -8,35 +8,36 @@ import { useToast } from "@/components/ui/use-toast"
 // Types
 import { User } from "@/types/typings"
 
+const deleteUserMutation = async ({ id }: User) => {
+  return axios.post("/api/delete/user/deleteUser", {
+    id,
+  })
+}
+
 export function useDeleteUser() {
   const queryClient = useQueryClient()
   const { toast } = useToast()
 
-  const mutation = useMutation(
-    async ({ id }: User) => {
-      return axios.post("/api/delete/user/deleteUser", {
-        id,
+  const mutation = useMutation({
+    mutationFn: deleteUserMutation,
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["users"] })
+
+      toast({
+        title: "User is now deleted!",
       })
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["users"])
+    onError: (error) => {
+      console.error("Mutation error with useDeleteUser:", error)
 
-        toast({
-          title: "User is now deleted!",
-        })
-      },
-      onError: (error) => {
-        console.error("Mutation error with useDeleteUser:", error)
-
-        toast({
-          variant: "destructive",
-          title: "Uh oh! Something went wrong.",
-          description: "There was a problem with your request.",
-        })
-      },
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      })
     },
-  )
+  })
 
   return mutation
 }

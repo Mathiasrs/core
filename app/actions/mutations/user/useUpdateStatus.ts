@@ -8,36 +8,37 @@ import { useToast } from "@/components/ui/use-toast"
 // Types
 import { User } from "@/types/typings"
 
+const updateStatusMutation = async ({ id, status }: User) => {
+  return axios.post("/api/update/user/updateStatus", {
+    id,
+    status,
+  })
+}
+
 export function useUpdateStatus() {
   const queryClient = useQueryClient()
   const { toast } = useToast()
 
-  const mutation = useMutation(
-    async ({ id, status }: User) => {
-      return axios.post("/api/update/user/updateStatus", {
-        id,
-        status,
+  const mutation = useMutation({
+    mutationFn: updateStatusMutation,
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["users"] })
+
+      toast({
+        title: "Status is now updated!",
       })
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries(["users"])
+    onError: (error) => {
+      console.error("Mutation error with useUpdateUser:", error)
 
-        toast({
-          title: "Status is now updated!",
-        })
-      },
-      onError: (error) => {
-        console.error("Mutation error with useUpdateUser:", error)
-
-        toast({
-          variant: "destructive",
-          title: "Uh oh! Something went wrong.",
-          description: "There was a problem with your request.",
-        })
-      },
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      })
     },
-  )
+  })
 
   return mutation
 }
