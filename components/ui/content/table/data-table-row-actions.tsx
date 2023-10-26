@@ -39,13 +39,12 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
-  const [isModelOpen, setIsModelOpen] = useState(false)
   const content = contentSchema.parse(row.original)
 
   const updateContentLabel = useUpdateLabel()
-  const updateContentStatus = useUpdateStatus()
-  const updateContentPriority = useUpdatePriority()
-  const deleteContent = useDeleteContent(setIsModelOpen)
+  const updateContentStatus = useUpdateStatus(content.contentId)
+  const updateContentPriority = useUpdatePriority(content.contentId)
+  const deleteContent = useDeleteContent()
 
   const handleUpdateLabel = async (label: string) => {
     const payload = {
