@@ -10,33 +10,34 @@ import axios from "axios"
 // Types
 import { ContentUpdateRequest } from "@/lib/validators/content"
 
+const updateContentMutation = async ({ id, content }: ContentUpdateRequest) => {
+  const payload: ContentUpdateRequest = {
+    id,
+    content,
+  }
+
+  const { data } = await axios.post("/api/update/content/updateContent", {
+    payload,
+  })
+
+  return data
+}
+
 export function useUpdateContent(setSaveStatus: any) {
   const queryClient = useQueryClient()
 
-  const mutation = useMutation(
-    async ({ id, content }: ContentUpdateRequest) => {
-      const payload: ContentUpdateRequest = {
-        id,
-        content,
-      }
+  const mutation = useMutation({
+    mutationFn: updateContentMutation,
 
-      const { data } = await axios.post("/api/update/content/updateContent", {
-        payload,
-      })
-
-      return data
+    onError: () => {
+      setSaveStatus("Failed to save")
     },
-    {
-      onError: () => {
-        setSaveStatus("Failed to save")
-      },
-      onSuccess: () => {
-        queryClient.invalidateQueries(["contentAll"])
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["contentAll"] })
 
-        setSaveStatus("Saved")
-      },
+      setSaveStatus("Saved")
     },
-  )
+  })
 
   return mutation
 }

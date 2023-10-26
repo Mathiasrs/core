@@ -39,17 +39,19 @@ import { Input, InputDescription } from "@/components/ui/input"
 import { priorities, statuses } from "@/components/data"
 import { Textarea } from "@/components/ui/textarea"
 
-export default function EditContentOptions({ content, setSaveStatus }: any) {
+export default function EditContentOptions({ content }: any) {
   const [isChecked, setIsChecked] = useState(false)
   const [priority, setPriority] = useState("")
   const [status, setStatus] = useState("")
-  const updateIsPublished = useUpdateIsPublished(setSaveStatus)
-  const updateContentId = useUpdateContentId()
-  const updatePriority = useUpdatePriority()
-  const updateStatus = useUpdateStatus()
-  const updateDescription = useUpdateDescription()
+  const [contentId, setContentId] = useState(content?.contentId)
+  const updateIsPublished = useUpdateIsPublished(contentId)
+  const updateContentId = useUpdateContentId(contentId)
+  const updatePriority = useUpdatePriority(contentId)
+  const updateStatus = useUpdateStatus(contentId)
+  const updateDescription = useUpdateDescription(contentId)
 
   const debouncedUpdateContentId = useDebouncedCallback((contentId) => {
+    setContentId(contentId)
     handleUpdateContentId(contentId)
   }, 750)
 
