@@ -153,6 +153,7 @@ export default function EditContentOptions({ content }: any) {
             placeholder="HT202020"
             defaultValue={content?.contentId}
             onChange={(e) => debouncedUpdateContentId(e.target.value)}
+            className={cn(updateContentId.isPending ? "animate-pulse" : "")}
           />
           <InputDescription>
             Provide an ID for better handling and finding content.
