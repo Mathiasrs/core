@@ -73,8 +73,8 @@ model User {
   votes       Vote[]
   commentVote CommentVote[]
 
-  tenantId String @default("clnsu126g0000b52xex2dlfmn")
-  tenant   Tenant @relation(fields: [tenantId], references: [id])
+  tenantId String? @default("clnoifvo50000b5qus1ailtzy")
+  tenant   Tenant? @relation(fields: [tenantId], references: [id])
 
   @@index([id])
   @@index([tenantId])
