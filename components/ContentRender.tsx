@@ -121,7 +121,6 @@ export default function ContentRender({ data }: any) {
   }
 
   const blockquote: NodeHandler = (props) => {
-    console.log("blockQuote props:", props)
     return (
       <blockquote className="border-l-4 border-zinc-200 pl-4 dark:border-zinc-800">
         {props.children}
