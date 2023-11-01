@@ -38,11 +38,12 @@ export default function ContentRender({ data }: any) {
 
     const bgColor = bgColorMark?.attrs?.color
     const textColor = textColorMark?.attrs?.color
+    const strike = props.node.marks?.find((mark) => mark.type === "strike")
 
     return (
       <span
         style={{ backgroundColor: bgColor, color: textColor }}
-        className="rounded-md p-0.5"
+        className={(cn("rounded-md p-0.5"), strike ? "line-through" : "")}
       >
         {props.node.text}
       </span>
@@ -95,9 +96,7 @@ export default function ContentRender({ data }: any) {
 
         <span
           className={cn(
-            isChecked
-              ? "line-through-2 text-gray-400 line-through dark:text-gray-300"
-              : "",
+            isChecked ? "text-gray-400 line-through dark:text-gray-300" : "",
             "transition duration-500 ease-in-out",
           )}
         >
