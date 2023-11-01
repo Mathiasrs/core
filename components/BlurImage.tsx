@@ -15,7 +15,7 @@ export default function BlurImage({ data }: { data: any }) {
     <div className="relative">
       <Image
         src={data.src}
-        alt={data.alt}
+        alt={data.alt || "content image"}
         width={600}
         height={300}
         className={cn(
