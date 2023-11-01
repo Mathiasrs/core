@@ -100,13 +100,13 @@ export default function ContentRender({ data }: any) {
             type="checkbox"
             checked={isChecked}
             readOnly
-            className="checkbox-style relative grid h-5 w-5 cursor-not-allowed place-content-center border-2 border-black active:bg-gray-200"
+            className="checkbox-style relative grid h-5 w-5 cursor-not-allowed place-content-center border-2 border-black active:bg-zinc-200"
           />
         </label>
 
         <span
           className={cn(
-            isChecked ? "text-gray-400 line-through dark:text-gray-300" : "",
+            isChecked ? "text-zinc-400 line-through dark:text-zinc-300" : "",
             "transition duration-500 ease-in-out",
           )}
         >
@@ -120,9 +120,10 @@ export default function ContentRender({ data }: any) {
     return <div>{props.children}</div>
   }
 
-  const blockQuote: NodeHandler = (props) => {
+  const blockquote: NodeHandler = (props) => {
+    console.log("blockQuote props:", props)
     return (
-      <blockquote className="ml-4 border-l-4 border-gray-200 pl-4">
+      <blockquote className="border-l-4 border-zinc-200 pl-4 dark:border-zinc-800">
         {props.children}
       </blockquote>
     )
@@ -168,7 +169,7 @@ export default function ContentRender({ data }: any) {
     orderedList,
     taskItem,
     taskList,
-    blockQuote,
+    blockquote,
     codeBlock,
     image,
   }
