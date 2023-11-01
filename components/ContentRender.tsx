@@ -41,13 +41,16 @@ export default function ContentRender({ data }: any) {
     const strike = props.node.marks?.find((mark) => mark.type === "strike")
     const bold = props.node.marks?.find((mark) => mark.type === "bold")
     const italic = props.node.marks?.find((mark) => mark.type === "italic")
+    const underline = props.node.marks?.find(
+      (mark) => mark.type === "underline",
+    )
 
     return (
       <span
         style={{ backgroundColor: bgColor, color: textColor }}
         className={`${strike ? "line-through" : ""} ${
           bold ? "font-bold" : ""
-        } ${italic ? "italic" : ""}`}
+        } ${italic ? "italic" : ""} ${underline ? "underline" : ""}`}
       >
         {props.node.text}
       </span>
