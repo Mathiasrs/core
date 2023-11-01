@@ -6,6 +6,8 @@ interface Logo {
 }
 
 interface Photo {
+  alt: string
+  src: string | StaticImport
   id: string
   caption: string
   media_url: string
