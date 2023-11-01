@@ -48,6 +48,7 @@ interface Permission {
 }
 
 interface Image {
-  src: string
-  alt: string
+  secure_url?: any
+  id: string
+  image: string
 }
