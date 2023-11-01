@@ -19,12 +19,13 @@ import {
   oneDark,
   oneLight,
 } from "react-syntax-highlighter/dist/cjs/styles/prism"
+import BlurImage from "./BlurImage"
 
 export default function ContentRender({ data }: any) {
   const theme = useTheme().resolvedTheme
 
   const doc: NodeHandler = (props) => (
-    <div className="grid gap-2">{props.children}</div>
+    <div className="grid gap-6">{props.children}</div>
   )
 
   const text: NodeHandler = (props) => {
@@ -152,6 +153,11 @@ export default function ContentRender({ data }: any) {
       return <span {...props}> </span>
     }
   }
+
+  const image: NodeHandler = (props) => {
+    return <BlurImage data={props.node.attrs} />
+  }
+
   const handlers: NodeHandlers = {
     doc,
     text,
@@ -164,6 +170,7 @@ export default function ContentRender({ data }: any) {
     taskList,
     blockQuote,
     codeBlock,
+    image,
   }
 
   return <TipTapRender node={data} handlers={handlers} />

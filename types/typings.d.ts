@@ -6,6 +6,8 @@ interface Logo {
 }
 
 interface Photo {
+  alt: string
+  src: string | StaticImport
   id: string
   caption: string
   media_url: string
@@ -46,7 +48,6 @@ interface Permission {
 }
 
 interface Image {
-  secure_url?: any
-  id: string
-  image: string
+  src: string
+  alt: string
 }
