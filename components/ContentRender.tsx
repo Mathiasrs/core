@@ -39,11 +39,12 @@ export default function ContentRender({ data }: any) {
     const bgColor = bgColorMark?.attrs?.color
     const textColor = textColorMark?.attrs?.color
     const strike = props.node.marks?.find((mark) => mark.type === "strike")
+    const bold = props.node.marks?.find((mark) => mark.type === "bold")
 
     return (
       <span
         style={{ backgroundColor: bgColor, color: textColor }}
-        className={(cn("rounded-md p-0.5"), strike ? "line-through" : "")}
+        className={`${strike ? "line-through" : ""} ${bold ? "font-bold" : ""}`}
       >
         {props.node.text}
       </span>
