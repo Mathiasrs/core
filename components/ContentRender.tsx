@@ -50,7 +50,9 @@ export default function ContentRender({ data }: any) {
         style={{ backgroundColor: bgColor, color: textColor }}
         className={`${strike ? "line-through" : ""} ${
           bold ? "font-bold" : ""
-        } ${italic ? "italic" : ""} ${underline ? "underline" : ""}`}
+        } ${italic ? "italic" : ""} ${italic ? "italic" : ""} ${
+          underline ? "underline" : ""
+        }`}
       >
         {props.node.text}
       </span>
