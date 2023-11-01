@@ -61,7 +61,7 @@ export default function ContentRender({ data }: any) {
   }
 
   const paragraph: NodeHandler = (props) => {
-    return <p>{props.children}</p>
+    return <p className="text-lg">{props.children}</p>
   }
 
   const heading: NodeHandler = (props) => {
