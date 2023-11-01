@@ -1,4 +1,4 @@
-import "./globals.css"
+import "./styles/globals.css"
 
 import { Providers } from "./providers"
 
@@ -17,7 +17,11 @@ export const metadata: Metadata = {
   description: "Core - Knowledge and Learning",
 }
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const session = (await getServerSession(authOptions)) as any
 
   return (
