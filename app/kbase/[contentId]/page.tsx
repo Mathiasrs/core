@@ -67,57 +67,83 @@ export default function ContentPage({ params }: pageProps) {
         </Link>
       </div>
 
-      <div className="prose prose-stone dark:prose-invert relative order-2 col-span-6 rounded-xl border border-zinc-200 bg-white p-4 text-zinc-950 shadow dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 md:p-6 lg:order-1 lg:col-span-4 lg:p-8">
-        <div className="mb-6 grid items-center justify-between">
-          <h2 className="w-full place-items-center bg-transparent text-3xl font-bold lg:text-4xl xl:text-5xl">
-            {content?.title}
+      {content.isPublished ? (
+        <>
+          <div className="prose prose-stone dark:prose-invert relative order-2 col-span-6 rounded-xl border border-zinc-200 bg-white p-4 text-zinc-950 shadow dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 md:p-6 lg:order-1 lg:col-span-4 lg:p-8">
+            <div className="mb-6 grid items-center justify-between">
+              <h2 className="w-full place-items-center bg-transparent text-3xl font-bold lg:text-4xl xl:text-5xl">
+                {content?.title}
+              </h2>
+              <Badge
+                className={cn("mt-4 w-fit uppercase", badgeClassNames)}
+                variant="outline"
+              >
+                {content?.label}
+              </Badge>
+            </div>
+
+            <ContentRender data={initialContent} />
+          </div>
+
+          <div className="order-1 col-span-6 grid gap-4 lg:order-2 lg:col-span-2">
+            <Card>
+              <CardHeader>
+                <CardTitle>Content details</CardTitle>
+                <CardDescription>
+                  Provide additional details for extra context.
+                </CardDescription>
+              </CardHeader>
+
+              <CardContent className="grid gap-6">
+                <div className="grid w-full items-center gap-1.5">
+                  <Label htmlFor="picture">Content ID</Label>
+                  <Input
+                    type="text"
+                    disabled
+                    defaultValue={content.contentId}
+                  />
+                  <InputDescription>
+                    Content ID gives you a quick way of finding your content
+                    during search.
+                  </InputDescription>
+                </div>
+
+                <div className="grid w-full items-center gap-1.5">
+                  <Label htmlFor="picture">Description</Label>
+                  <Textarea defaultValue={content.description} disabled />
+                </div>
+
+                <div className="grid w-full items-center gap-1.5">
+                  <Label htmlFor="picture">Views</Label>
+                  <Views
+                    contentId={content.contentId}
+                    type="article"
+                    isInInput
+                  />
+                  <InputDescription>
+                    The amount of views often provide an indicator of how
+                    frequently the content is used and the importance of the
+                    content.
+                  </InputDescription>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </>
+      ) : (
+        <div className="col-span-6 mt-20 text-center">
+          <h2 className="text-base font-semibold uppercase tracking-wide text-green-600">
+            Content
           </h2>
-          <Badge
-            className={cn("mt-4 w-fit uppercase", badgeClassNames)}
-            variant="outline"
-          >
-            {content?.label}
-          </Badge>
+          <p className="mt-1 text-4xl font-extrabold text-zinc-900 dark:text-white sm:text-5xl sm:tracking-tight lg:text-6xl">
+            Content not available yet.
+          </p>
+          <p className="mx-auto mt-5 max-w-xl text-xl text-zinc-500 dark:text-zinc-400">
+            You are trying to view content that are not available yet. If that
+            is a mistake, please contact the content owner or administrator.
+          </p>
         </div>
-
-        <ContentRender data={initialContent} />
-      </div>
-
-      <div className="order-1 col-span-6 grid gap-4 lg:order-2 lg:col-span-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Content details</CardTitle>
-            <CardDescription>
-              Provide additional details for extra context.
-            </CardDescription>
-          </CardHeader>
-
-          <CardContent className="grid gap-6">
-            <div className="grid w-full items-center gap-1.5">
-              <Label htmlFor="picture">Content ID</Label>
-              <Input type="text" disabled defaultValue={content.contentId} />
-              <InputDescription>
-                Content ID gives you a quick way of finding your content during
-                search.
-              </InputDescription>
-            </div>
-
-            <div className="grid w-full items-center gap-1.5">
-              <Label htmlFor="picture">Description</Label>
-              <Textarea defaultValue={content.description} disabled />
-            </div>
-
-            <div className="grid w-full items-center gap-1.5">
-              <Label htmlFor="picture">Views</Label>
-              <Views contentId={content.contentId} type="article" isInInput />
-              <InputDescription>
-                The amount of views often provide an indicator of how frequently
-                the content is used and the importance of the content.
-              </InputDescription>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      )}
     </div>
   )
 }
