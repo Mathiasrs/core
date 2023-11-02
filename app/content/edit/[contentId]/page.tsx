@@ -3,7 +3,11 @@
 import { useEffect, useState } from "react"
 
 // Next
+import { redirect } from "next/navigation"
 import Link from "next/link"
+
+// Auth
+import { useSession } from "next-auth/react"
 
 // Queries
 import useContentByContentIdEdit from "@/actions/queries/content/useContentByContentIdEdit"
@@ -31,6 +35,12 @@ type pageProps = {
 }
 
 export default function Page({ params }: pageProps) {
+  const session = useSession()
+
+  if (!session) {
+    redirect("/")
+  }
+
   const [initialContent, setInitialContent] = useState("")
   const [saveStatus, setSaveStatus] = useState("Saved")
 
