@@ -20,9 +20,7 @@ export default function BlurImage({ data }: { data: any }) {
         height={300}
         className={cn(
           "w-full rounded-xl object-contain shadow-md ring ring-zinc-100 duration-700 ease-in-out group-hover:opacity-75 dark:ring-zinc-900",
-          isLoading
-            ? "scale-110 blur-xl grayscale"
-            : "scale-100 blur-0 grayscale-0",
+          isLoading ? "blur-xl" : "blur-0",
         )}
         onLoadingComplete={() => setLoading(false)}
       />
