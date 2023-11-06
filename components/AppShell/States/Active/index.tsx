@@ -13,12 +13,12 @@ import { FaBars, FaArrowRight } from "react-icons/fa6"
 import { motion } from "framer-motion"
 
 // Components
-import { navigation } from "@/components/AppShell/MenuItems"
+import navigation from "@/components/AppShell/MenuItems"
 import { Logo } from "@/components/Logo"
 import CustomLink from "@/components/AppShell/CustomLink"
 import { CommandMenu } from "@/components/ui/command-menu"
 
-export default function Active({ user, session, children }: any) {
+export default function Active({ user, permissions, session, children }: any) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const pathname = usePathname()
@@ -58,7 +58,7 @@ export default function Active({ user, session, children }: any) {
             <div className="mb-4 flex pl-6 text-left">
               <Logo />
             </div>
-            {navigation().map((item: any) => (
+            {navigation(permissions).map((item: any) => (
               <div key={`desktop-${item.index}`}>
                 <CustomLink
                   href={item.href}
@@ -148,7 +148,7 @@ export default function Active({ user, session, children }: any) {
       {/* Small screens*/}
       <aside className="fixed bottom-0 left-0 z-20 w-full bg-zinc-200/20 pt-1 ring ring-zinc-100 backdrop-blur-lg dark:bg-zinc-800/30 dark:ring-zinc-800 md:hidden">
         <div className="flex justify-between gap-4 px-8">
-          {navigation()
+          {navigation(permissions)
             .filter((item: any) => item.isMobile)
             .map((item: any) => (
               <CustomLink
@@ -243,7 +243,7 @@ export default function Active({ user, session, children }: any) {
               </Link>
 
               <div>
-                {navigation()
+                {navigation(permissions)
                   .filter((item: any) => item.isInMoreMenu)
                   .map((item: any, index: any) => (
                     <motion.div

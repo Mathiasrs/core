@@ -2,6 +2,7 @@
 
 // Queries
 import useProfile from "@/app/actions/queries/user/useUser"
+import usePermissions from "@/actions/queries/user/usePermissions"
 
 // Libraries
 import { Toaster } from "@/components/ui/toaster"
@@ -13,12 +14,14 @@ import Active from "@/components/AppShell/States/Active"
 
 export default function AppShell({ children, session }: any) {
   const { data: user, isLoading } = useProfile()
+  const { data: permissions, isLoading: isLoadingPermissions } =
+    usePermissions()
 
   const States = () => {
     const deactivated = <Deactivated />
     const awaitingApproval = <AwaitingApproval />
     const active = (
-      <Active user={user} session={session}>
+      <Active user={user} permissions={permissions} session={session}>
         {children}
       </Active>
     )
