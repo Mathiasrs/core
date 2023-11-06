@@ -13,7 +13,7 @@ export default function Dashboard() {
   if (error) return <div>Error...</div>
 
   return (
-    <div className="m-20 grid items-center justify-center gap-4 text-4xl">
+    <div className="grid items-center justify-center gap-4 text-4xl">
       {data.userCanViewDashboard ? (
         <h1>Dashboard</h1>
       ) : (
