@@ -34,11 +34,11 @@ interface IFormInput {
   url: string
 }
 
-export default function EditUser({ session }: any) {
+export default function EditUser() {
   const router = useRouter()
   const [isSigningOut, setIsSigningOut] = useState(false)
 
-  const { data: user, isLoading, error } = useUser(session)
+  const { data: user, isLoading, error } = useUser()
 
   const mutation = useUpdateUser()
 

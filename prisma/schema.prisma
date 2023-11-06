@@ -90,7 +90,7 @@ model Permission {
   userCanViewUsers     Boolean @default(false)
   userCanEditUsers     Boolean @default(false)
 
-  userId String
+  userId String @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])

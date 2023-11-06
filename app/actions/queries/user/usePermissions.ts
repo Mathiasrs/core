@@ -2,11 +2,11 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 
-export default function useUser() {
+export default function usePermissions() {
   return useQuery({
-    queryKey: ["profile"],
+    queryKey: ["permissions"],
     queryFn: async () => {
-      const { data } = await axios.get("/api/read/user/readUser")
+      const { data } = await axios.get("/api/read/user/readPermissions")
 
       return data
     },

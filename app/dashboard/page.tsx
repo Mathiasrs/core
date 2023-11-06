@@ -4,17 +4,14 @@ import { authOptions } from "../api/auth/[...nextauth]/route"
 
 // Components
 import { redirect } from "next/navigation"
+import Dashboard from "@/components/Dashboard"
 
-export default async function Dashboard() {
+export default async function DashboardPage() {
   const session = await getServerSession(authOptions)
 
   if (!session) {
     redirect("/")
   }
 
-  return (
-    <div className="grid gap-4 items-center justify-center m-20 text-4xl">
-      <h1>Dashboard</h1>
-    </div>
-  )
+  return <Dashboard />
 }

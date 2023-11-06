@@ -12,7 +12,7 @@ import AwaitingApproval from "@/components/AppShell/States/AwaitingApproval"
 import Active from "@/components/AppShell/States/Active"
 
 export default function AppShell({ children, session }: any) {
-  const { data: user, isLoading } = useProfile(session)
+  const { data: user, isLoading } = useProfile()
 
   const States = () => {
     const deactivated = <Deactivated />
