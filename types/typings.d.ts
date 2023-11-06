@@ -52,3 +52,9 @@ interface Image {
   id: string
   image: string
 }
+
+interface MessageProps {
+  category: string
+  title: string
+  description: string
+}

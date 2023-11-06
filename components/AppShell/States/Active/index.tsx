@@ -13,12 +13,12 @@ import { FaBars, FaArrowRight } from "react-icons/fa6"
 import { motion } from "framer-motion"
 
 // Components
-import { navigation } from "@/components/AppShell/MenuItems"
+import navigation from "@/components/AppShell/MenuItems"
 import { Logo } from "@/components/Logo"
 import CustomLink from "@/components/AppShell/CustomLink"
 import { CommandMenu } from "@/components/ui/command-menu"
 
-export default function Active({ user, session, children }: any) {
+export default function Active({ user, permissions, session, children }: any) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const pathname = usePathname()
@@ -58,7 +58,7 @@ export default function Active({ user, session, children }: any) {
             <div className="mb-4 flex pl-6 text-left">
               <Logo />
             </div>
-            {navigation(user).map((item: any) => (
+            {navigation(permissions).map((item: any) => (
               <div key={`desktop-${item.index}`}>
                 <CustomLink
                   href={item.href}
@@ -103,38 +103,38 @@ export default function Active({ user, session, children }: any) {
           </div>
 
           <div className="grid gap-6 p-4">
-             <CommandMenu />
+            <CommandMenu />
 
-              <Link
-                href="/profile"
-                className="flex items-center justify-between hover:opacity-80 w-full"
-              >
-                <div className="flex items-center gap-2 w-full">
-                  <Image
-                    src={
-                      session?.user?.image
-                        ? session?.user?.image || user.image
-                        : "https://res.cloudinary.com/dwh5z8lp5/image/upload/v1687339586/za4mqfois45pscl4xfk5.png"
-                    }
-                    alt={user?.name}
-                    width={32}
-                    height={32}
-                    className="h-8 w-8 rounded-3xl object-cover ring-2 ring-white ring-opacity-40 focus:outline-none focus:ring-opacity-100 xl:h-10 xl:w-10"
-                  />
+            <Link
+              href="/profile"
+              className="flex w-full items-center justify-between hover:opacity-80"
+            >
+              <div className="flex w-full items-center gap-2">
+                <Image
+                  src={
+                    session?.user?.image
+                      ? session?.user?.image || user.image
+                      : "https://res.cloudinary.com/dwh5z8lp5/image/upload/v1687339586/za4mqfois45pscl4xfk5.png"
+                  }
+                  alt={user?.name}
+                  width={32}
+                  height={32}
+                  className="h-8 w-8 rounded-3xl object-cover ring-2 ring-white ring-opacity-40 focus:outline-none focus:ring-opacity-100 xl:h-10 xl:w-10"
+                />
 
-                  <div className="flex items-center justify-between gap-4 pl-2 text-left text-xs xl:text-sm w-full">
-                    <div className="flex flex-col gap-1">
-                      <h3 className="font-semibold text-zinc-900 dark:text-white">
-                        {user?.name.split(" ")[0]}
-                      </h3>
-                      <p className="text-zinc-500 dark:text-zinc-300">
-                        {session?.user?.email}
-                      </p>
-                    </div>
-                    <FaArrowRight className="text-xs text-zinc-950 dark:text-white" />
+                <div className="flex w-full items-center justify-between gap-4 pl-2 text-left text-xs xl:text-sm">
+                  <div className="flex flex-col gap-1">
+                    <h3 className="font-semibold text-zinc-900 dark:text-white">
+                      {user?.name.split(" ")[0]}
+                    </h3>
+                    <p className="text-zinc-500 dark:text-zinc-300">
+                      {session?.user?.email}
+                    </p>
                   </div>
+                  <FaArrowRight className="text-xs text-zinc-950 dark:text-white" />
                 </div>
-              </Link>   
+              </div>
+            </Link>
           </div>
         </div>
       </aside>
@@ -148,7 +148,7 @@ export default function Active({ user, session, children }: any) {
       {/* Small screens*/}
       <aside className="fixed bottom-0 left-0 z-20 w-full bg-zinc-200/20 pt-1 ring ring-zinc-100 backdrop-blur-lg dark:bg-zinc-800/30 dark:ring-zinc-800 md:hidden">
         <div className="flex justify-between gap-4 px-8">
-          {navigation(user)
+          {navigation(permissions)
             .filter((item: any) => item.isMobile)
             .map((item: any) => (
               <CustomLink
@@ -243,7 +243,7 @@ export default function Active({ user, session, children }: any) {
               </Link>
 
               <div>
-                {navigation(user)
+                {navigation(permissions)
                   .filter((item: any) => item.isInMoreMenu)
                   .map((item: any, index: any) => (
                     <motion.div

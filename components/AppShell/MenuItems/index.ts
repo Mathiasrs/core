@@ -1,3 +1,4 @@
+import usePermissions from "@/app/actions/queries/user/usePermissions"
 import { FaSlack, FaPen, FaBookOpen, FaUsers } from "react-icons/fa6"
 import { MdSpaceDashboard } from "react-icons/md"
 
@@ -40,7 +41,7 @@ const navigationItems = [
   },
   {
     index: 4,
-    href: "https://ordrestyring.slack.com",
+    href: "https://ordrestyringdk.slack.com",
     name: "Slack",
     icon: FaSlack,
     permissions: {
@@ -64,19 +65,17 @@ const navigationItems = [
   },
 ]
 
-function checkPermissions(userPermissions: any, itemPermissions: any) {
-  if (!userPermissions) return false
+function checkPermissions(permissions: any, itemPermissions: any) {
+  if (!permissions) return false
 
   return Object.keys(itemPermissions).every(
-    (permission) => itemPermissions[permission] === userPermissions[permission],
+    (permission) => itemPermissions[permission] === permissions[permission],
   )
 }
 
-export const navigation = (user: any) => {
-  const userPermissions = user.permission ? user.permission[0] : null
-
+export default function navigation(permissions: any) {
   const filteredItems = navigationItems.filter((item) =>
-    checkPermissions(userPermissions, item.permissions),
+    checkPermissions(permissions, item.permissions),
   )
 
   return filteredItems

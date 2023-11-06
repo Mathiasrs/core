@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react"
 
 // Queries
 import useContentByContentIdEdit from "@/actions/queries/content/useContentByContentIdEdit"
+import usePermissions from "@/actions/queries/user/usePermissions"
 
 // Mutations
 import { useUpdateTitle } from "@/app/actions/mutations/content/useUpdateTitle"
@@ -27,6 +28,7 @@ import { generateSlug } from "@/lib/helpers/generateSlug"
 // Components
 import EditorSkeleton from "@/components/ui/skeletons/EditorSkeleton"
 import EditContentOptions from "@/components/EditContentOptions"
+import Message from "@/components/Message"
 
 type pageProps = {
   params: {
@@ -40,6 +42,8 @@ export default function Page({ params }: pageProps) {
   if (!session) {
     redirect("/")
   }
+
+  const { data: permissions } = usePermissions()
 
   const [initialContent, setInitialContent] = useState("")
   const [saveStatus, setSaveStatus] = useState("Saved")
@@ -86,48 +90,58 @@ export default function Page({ params }: pageProps) {
   if (isLoading) return <EditorSkeleton />
 
   return (
-    <div className="grid grid-cols-6 items-start gap-6">
-      <div className="col-span-6">
-        <Link
-          href="/content"
-          className="flex w-fit items-center gap-2 pl-4 text-zinc-900 hover:opacity-80 dark:text-white"
-        >
-          <FaArrowCircleLeft className="h-4 w-4" />
-          <span>Go back</span>
-        </Link>
-      </div>
+    <>
+      {permissions?.userCanEditContent ? (
+        <div className="grid grid-cols-6 items-start gap-6">
+          <div className="col-span-6">
+            <Link
+              href="/content"
+              className="flex w-fit items-center gap-2 pl-4 text-zinc-900 hover:opacity-80 dark:text-white"
+            >
+              <FaArrowCircleLeft className="h-4 w-4" />
+              <span>Go back</span>
+            </Link>
+          </div>
 
-      <div className="prose prose-stone dark:prose-invert relative order-2 col-span-6 rounded-xl border border-zinc-200 bg-white text-zinc-950 shadow dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 lg:order-1 lg:col-span-4">
-        <div className="flex items-center justify-between px-8 pt-10 sm:px-10 lg:px-12">
-          <textarea
-            placeholder="Title"
-            defaultValue={content?.title}
-            onChange={(e) => {
-              debouncedSetTitle(e.target.value)
-            }}
-            className="mt-4 w-full resize-none appearance-none place-items-center overflow-hidden bg-transparent text-2xl font-bold focus:outline-none lg:text-3xl xl:text-4xl"
-          />
+          <div className="prose prose-stone dark:prose-invert relative order-2 col-span-6 rounded-xl border border-zinc-200 bg-white text-zinc-950 shadow dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 lg:order-1 lg:col-span-4">
+            <div className="flex items-center justify-between px-8 pt-10 sm:px-10 lg:px-12">
+              <textarea
+                placeholder="Title"
+                defaultValue={content?.title}
+                onChange={(e) => {
+                  debouncedSetTitle(e.target.value)
+                }}
+                className="mt-4 w-full resize-none appearance-none place-items-center overflow-hidden bg-transparent text-2xl font-bold focus:outline-none lg:text-3xl xl:text-4xl"
+              />
 
-          <div className="absolute right-5 top-5 z-10 mb-5 rounded-lg bg-zinc-100 px-2 py-1 text-sm text-zinc-400 dark:bg-zinc-800">
-            {saveStatus}
+              <div className="absolute right-5 top-5 z-10 mb-5 rounded-lg bg-zinc-100 px-2 py-1 text-sm text-zinc-400 dark:bg-zinc-800">
+                {saveStatus}
+              </div>
+            </div>
+
+            <div className="relative w-full">
+              <Editor
+                key={initialContent}
+                onDebouncedUpdate={handleEditorUpdate}
+                debounceDuration={750}
+                disableLocalStorage
+                defaultValue={initialContent ? initialContent : ""}
+                className="-mt-10"
+              />{" "}
+            </div>
+          </div>
+
+          <div className="order-1 col-span-6 grid gap-4 lg:order-2 lg:col-span-2">
+            <EditContentOptions content={content} />
           </div>
         </div>
-
-        <div className="relative w-full">
-          <Editor
-            key={initialContent}
-            onDebouncedUpdate={handleEditorUpdate}
-            debounceDuration={750}
-            disableLocalStorage
-            defaultValue={initialContent ? initialContent : ""}
-            className="-mt-10"
-          />{" "}
-        </div>
-      </div>
-
-      <div className="order-1 col-span-6 grid gap-4 lg:order-2 lg:col-span-2">
-        <EditContentOptions content={content} />
-      </div>
-    </div>
+      ) : (
+        <Message
+          category="Access denied"
+          title="You do not have access to this page."
+          description="If you believe you should have access to this page, please contact your manager."
+        />
+      )}
+    </>
   )
 }

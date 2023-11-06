@@ -3,15 +3,12 @@
 // Queries
 import usePermissions from "@/actions/queries/user/usePermissions"
 
-// Libraries
-import getPhrase from "@/lib/helpers/phrases"
-
 // Components
-import FeaturedList from "@/components/FeaturedList"
-import ContentList from "@/components/ContentList"
+import ContentTable from "@/components/ContentTable"
+import CreateContentSheet from "@/components/CreateContentSheet"
 import Message from "@/components/Message"
 
-export default function KnowledgeBase({ session }: any) {
+export default function Content({ session }: any) {
   const { data, isLoading, error } = usePermissions()
 
   if (isLoading) return <div>Loading...</div>
@@ -19,21 +16,21 @@ export default function KnowledgeBase({ session }: any) {
 
   return (
     <div className="flex h-full flex-1 flex-col gap-6 space-y-8 p-2 lg:p-8">
-      {data.userCanViewContent ? (
+      {data.userCanEditContent ? (
         <>
           <div className="flex items-center justify-between space-y-2">
             <div>
               <h2 className="text-2xl font-bold tracking-tight">
                 Welcome back, {session.user?.name.split(" ")[0]}!
               </h2>
-              <p className="text-muted-foreground">{getPhrase()}</p>
+              <p className="text-muted-foreground">
+                Here&apos;s a list of your content!
+              </p>
             </div>
-          </div>
-          <div className="grid gap-12">
-            <FeaturedList />
 
-            <ContentList />
+            <CreateContentSheet />
           </div>
+          <ContentTable />
         </>
       ) : (
         <Message
