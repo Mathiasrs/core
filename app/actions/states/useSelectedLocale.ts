@@ -13,16 +13,27 @@ const fallbackLocale: Locale = {
 }
 
 export function useSelectedLocale(locales: Locale[]) {
-  const defaultLocale =
-    locales.find((locale) => locale.default) || fallbackLocale
+  const getStoredLocale = (): Locale => {
+    const storedLocaleCode =
+      typeof window !== "undefined"
+        ? localStorage.getItem("selectedLocale")
+        : null
+    const storedLocale = storedLocaleCode
+      ? locales.find((locale) => locale.code === storedLocaleCode)
+      : null
+    return (
+      storedLocale || locales.find((locale) => locale.default) || fallbackLocale
+    )
+  }
 
   const { data: selectedLocale } = useQuery<Locale>({
     queryKey: ["selectedLocale"],
-    queryFn: () => defaultLocale,
-    initialData: defaultLocale,
+    queryFn: getStoredLocale,
+    initialData: getStoredLocale,
   })
 
   const setSelectedLocale = (newLocale: Locale) => {
+    localStorage.setItem("selectedLocale", newLocale.code)
     queryClient.setQueryData<Locale>(["selectedLocale"], newLocale)
   }
 
