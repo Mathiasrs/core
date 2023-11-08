@@ -58,3 +58,11 @@ interface MessageProps {
   title: string
   description: string
 }
+
+interface Locale {
+  id: string
+  code: string
+  name: string
+  default: boolean
+  tenantId: string
+}

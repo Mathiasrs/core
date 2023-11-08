@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react"
 
-// Queries
-import useLocales from "@/actions/queries/tenant/useLocales"
+// States
+import { useSelectedLocale } from "@/actions/states/useSelectedLocale"
 
 // Mutations
 import { useUpdateIsPublished } from "@/actions/mutations/content/useUpdateIsPublished"
@@ -12,9 +12,13 @@ import { useUpdatePriority } from "@/app/actions/mutations/content/useUpdatePrio
 import { useUpdateStatus } from "@/app/actions/mutations/content/useUpdateStatus"
 import { useUpdateDescription } from "@/app/actions/mutations/content/useUpdateDescription"
 
+// Types
+import { Locale } from "types/typings"
+
 // Libraries
 import { RocketIcon } from "@radix-ui/react-icons"
 import { useDebouncedCallback } from "use-debounce"
+import { Label } from "@radix-ui/react-label"
 
 // Components
 import {
@@ -37,7 +41,6 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-import { Label } from "@radix-ui/react-label"
 import { Input, InputDescription } from "@/components/ui/input"
 import { priorities, statuses } from "@/components/data"
 import { Textarea } from "@/components/ui/textarea"
@@ -48,6 +51,8 @@ export default function EditContentOptions({ content, locales }: any) {
   const [priority, setPriority] = useState("")
   const [status, setStatus] = useState("")
   const [contentId, setContentId] = useState(content?.contentId)
+
+  const { selectedLocale, setSelectedLocale } = useSelectedLocale(locales)
 
   const updateIsPublished = useUpdateIsPublished(contentId)
   const updateContentId = useUpdateContentId(contentId)
@@ -165,6 +170,16 @@ export default function EditContentOptions({ content, locales }: any) {
         </div>
 
         <div className="grid w-full items-center gap-1.5">
+          <Label htmlFor="picture">Description</Label>
+          <Textarea
+            placeholder="Provide a short description of the content."
+            defaultValue={content?.description}
+            onChange={(e) => debouncedUpdateDescription(e.target.value)}
+            className={cn(updateDescription.isPending ? "animate-pulse" : "")}
+          />
+        </div>
+
+        <div className="grid w-full items-center gap-1.5">
           <Label htmlFor="picture">Priority</Label>
           <div className={cn(updatePriority.isPending ? "animate-pulse" : "")}>
             <Select
@@ -243,22 +258,33 @@ export default function EditContentOptions({ content, locales }: any) {
 
         <div className="grid w-full items-center gap-1.5">
           <Label htmlFor="picture">Language</Label>
-          <Select value={locales}>
+          <Select
+            onValueChange={(value) => {
+              const newLocale = locales.find(
+                (locale: Locale) => locale.code === value,
+              )
+              if (newLocale) {
+                setSelectedLocale(newLocale)
+              }
+            }}
+            value={selectedLocale?.code || ""}
+          >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Select language" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
                 <SelectLabel>Locales</SelectLabel>
-                {locales.map((locale: any) => (
+                {locales.map((locale: Locale) => (
                   <SelectItem
-                    key={locale?.value}
-                    value={locale?.value}
+                    key={locale.id}
+                    value={locale.code || ""}
                     className="flex items-center"
+                    onClick={() => setSelectedLocale(locale)}
                   >
                     <div className="flex items-center justify-center">
                       <span className="inline-flex items-center">
-                        {locale?.name}
+                        {locale.name}
                       </span>
                     </div>
                   </SelectItem>
@@ -266,16 +292,6 @@ export default function EditContentOptions({ content, locales }: any) {
               </SelectGroup>
             </SelectContent>
           </Select>
-        </div>
-
-        <div className="grid w-full items-center gap-1.5">
-          <Label htmlFor="picture">Description</Label>
-          <Textarea
-            placeholder="Provide a short description of the content."
-            defaultValue={content?.description}
-            onChange={(e) => debouncedUpdateDescription(e.target.value)}
-            className={cn(updateDescription.isPending ? "animate-pulse" : "")}
-          />
         </div>
       </CardContent>
     </Card>
