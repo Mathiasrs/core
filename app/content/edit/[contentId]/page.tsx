@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react"
 // Queries
 import useContentByContentIdEdit from "@/actions/queries/content/useContentByContentIdEdit"
 import usePermissions from "@/actions/queries/user/usePermissions"
+import useLocales from "@/actions/queries/tenant/useLocales"
 
 // Mutations
 import { useUpdateTitle } from "@/app/actions/mutations/content/useUpdateTitle"
@@ -42,6 +43,8 @@ export default function Page({ params }: pageProps) {
   if (!session) {
     redirect("/")
   }
+
+  const { data: locales } = useLocales()
 
   const { data: permissions } = usePermissions()
 
@@ -132,7 +135,7 @@ export default function Page({ params }: pageProps) {
           </div>
 
           <div className="order-1 col-span-6 grid gap-4 lg:order-2 lg:col-span-2">
-            <EditContentOptions content={content} />
+            <EditContentOptions content={content} locales={locales} />
           </div>
         </div>
       ) : (

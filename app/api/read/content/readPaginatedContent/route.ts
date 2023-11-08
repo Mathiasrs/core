@@ -23,6 +23,9 @@ export async function POST(request: Request) {
       orderBy: {
         createdAt: "desc",
       },
+      include: {
+        localizations: true,
+      },
     })
 
     return NextResponse.json(readPaginatedContent)

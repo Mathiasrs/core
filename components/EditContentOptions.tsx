@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react"
 
+// Queries
+import useLocales from "@/actions/queries/tenant/useLocales"
+
 // Mutations
 import { useUpdateIsPublished } from "@/actions/mutations/content/useUpdateIsPublished"
 import { useUpdateContentId } from "@/app/actions/mutations/content/useUpdateContentId"
@@ -40,11 +43,12 @@ import { priorities, statuses } from "@/components/data"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 
-export default function EditContentOptions({ content }: any) {
+export default function EditContentOptions({ content, locales }: any) {
   const [isChecked, setIsChecked] = useState(false)
   const [priority, setPriority] = useState("")
   const [status, setStatus] = useState("")
   const [contentId, setContentId] = useState(content?.contentId)
+
   const updateIsPublished = useUpdateIsPublished(contentId)
   const updateContentId = useUpdateContentId(contentId)
   const updatePriority = useUpdatePriority(contentId)
@@ -235,6 +239,33 @@ export default function EditContentOptions({ content }: any) {
               </SelectContent>
             </Select>
           </div>
+        </div>
+
+        <div className="grid w-full items-center gap-1.5">
+          <Label htmlFor="picture">Language</Label>
+          <Select value={locales}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select language" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Locales</SelectLabel>
+                {locales.map((locale: any) => (
+                  <SelectItem
+                    key={locale?.value}
+                    value={locale?.value}
+                    className="flex items-center"
+                  >
+                    <div className="flex items-center justify-center">
+                      <span className="inline-flex items-center">
+                        {locale?.name}
+                      </span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="grid w-full items-center gap-1.5">

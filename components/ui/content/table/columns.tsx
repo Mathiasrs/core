@@ -47,10 +47,14 @@ export const columns: ColumnDef<Content>[] = [
   {
     accessorKey: "title",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Title" />
+      <DataTableColumnHeader column={column} title="Title & Label" />
     ),
     cell: ({ row }) => {
-      const label = labels.find((label) => label.value === row.original.label)
+      const englishLocalization = row.original.localizations.find(
+        (localization) => localization.locale === "en-US",
+      )
+
+      const label = labels.find((lbl) => lbl.value === row.original.label)
 
       return (
         <div className="flex space-x-2">
@@ -62,8 +66,15 @@ export const columns: ColumnDef<Content>[] = [
               {label.label}
             </Badge>
           )}
-          <span className="max-w-[500px] truncate font-medium">
-            {row.getValue("title")}
+          <span
+            className={cn(
+              "max-w-[500px] truncate font-medium",
+              englishLocalization?.title ? "" : "text-red-500",
+            )}
+          >
+            {englishLocalization
+              ? englishLocalization.title
+              : "No title for en-US locale"}
           </span>
         </div>
       )
