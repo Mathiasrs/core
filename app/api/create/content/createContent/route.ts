@@ -13,7 +13,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const { payload }: any = JSON.parse(await request.text())
 
-    const { contentId, title, slug, description } = payload
+    const { contentId, title, description } = payload
 
     if (!session) {
       return NextResponse.next({
@@ -24,12 +24,16 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     await prisma.content.create({
       data: {
         contentId,
-        title,
-        slug,
-        description,
         author: {
           connect: {
             id: session.user.id,
+          },
+        },
+        localizations: {
+          create: {
+            locale: "en-US",
+            title,
+            description,
           },
         },
       },
