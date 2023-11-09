@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react"
 
+// Next
+import { useRouter } from "next/navigation"
+
 // States
 import { useSelectedLocale } from "@/actions/states/useSelectedLocale"
 
@@ -51,19 +54,16 @@ export default function EditContentOptions({
   content,
   locales,
   isLoadingLocales,
+  locale,
 }: any) {
+  const router = useRouter()
+
   const [isChecked, setIsChecked] = useState(false)
   const [priority, setPriority] = useState("")
   const [status, setStatus] = useState("")
   const [contentId, setContentId] = useState(content?.contentId)
 
   const { selectedLocale, setSelectedLocale } = useSelectedLocale(locales)
-
-  const updateIsPublished = useUpdateIsPublished(contentId)
-  const updateContentId = useUpdateContentId(contentId)
-  const updatePriority = useUpdatePriority(contentId)
-  const updateStatus = useUpdateStatus(contentId)
-  const updateDescription = useUpdateDescription(contentId)
 
   const debouncedUpdateContentId = useDebouncedCallback((contentId) => {
     setContentId(contentId)
@@ -90,6 +90,8 @@ export default function EditContentOptions({
     }
   }, [content])
 
+  const updateIsPublished = useUpdateIsPublished(contentId)
+
   const handleToggle = () => {
     const newStatus = !isChecked
     setIsChecked(newStatus)
@@ -102,6 +104,8 @@ export default function EditContentOptions({
     updateIsPublished.mutate(payload)
   }
 
+  const updateContentId = useUpdateContentId(contentId)
+
   const handleUpdateContentId = (contentId: string) => {
     const payload = {
       id: content.id,
@@ -110,6 +114,8 @@ export default function EditContentOptions({
 
     updateContentId.mutate(payload)
   }
+
+  const updatePriority = useUpdatePriority(contentId)
 
   const handleUpdatePriority = (priority: string) => {
     const payload = {
@@ -120,6 +126,8 @@ export default function EditContentOptions({
     updatePriority.mutate(payload)
   }
 
+  const updateStatus = useUpdateStatus(contentId)
+
   const handleUpdateStatus = (status: string) => {
     const payload = {
       id: content.id,
@@ -129,10 +137,13 @@ export default function EditContentOptions({
     updateStatus.mutate(payload)
   }
 
+  const updateDescription = useUpdateDescription(contentId, locale)
+
   const handleUpdateDescription = (description: string) => {
     const payload = {
       id: content.id,
       description,
+      locale: locale.code,
     }
 
     updateDescription.mutate(payload)
@@ -272,6 +283,7 @@ export default function EditContentOptions({
                 )
                 if (newLocale) {
                   setSelectedLocale(newLocale)
+                  router.refresh()
                 }
               }}
               value={selectedLocale?.code || ""}

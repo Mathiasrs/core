@@ -88,6 +88,7 @@ export type StatusUpdateRequest = z.infer<typeof StatusValidator>
 export const DescriptionValidator = z.object({
   id: z.string(),
   description: z.string(),
+  locale: z.any(),
 })
 
 export type DescriptionUpdateRequest = z.infer<typeof DescriptionValidator>

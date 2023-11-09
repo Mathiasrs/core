@@ -158,6 +158,7 @@ export default function Page({ params }: pageProps) {
               content={content}
               locales={locales}
               isLoadingLocales={isLoadingLocales}
+              locale={locale}
             />
           </div>
         </div>
