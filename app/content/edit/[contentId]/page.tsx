@@ -87,7 +87,11 @@ export default function Page({ params }: pageProps) {
     updateTitleMutation.mutate(payload)
   }
 
-  const updateContentMutation = useUpdateContent(setSaveStatus)
+  const updateContentMutation = useUpdateContent(
+    setSaveStatus,
+    contentId,
+    locale,
+  )
 
   const handleEditorUpdate = async (editor: any) => {
     setSaveStatus("Saving...")
@@ -138,7 +142,7 @@ export default function Page({ params }: pageProps) {
 
             <div className="relative w-full">
               <Editor
-                key={editorContent || ""}
+                key={locale.code}
                 onDebouncedUpdate={handleEditorUpdate}
                 debounceDuration={750}
                 disableLocalStorage
@@ -150,7 +154,7 @@ export default function Page({ params }: pageProps) {
 
           <div className="order-1 col-span-6 grid gap-4 lg:order-2 lg:col-span-2">
             <EditContentOptions
-              description={description}
+              description={description || ""}
               content={content}
               locales={locales}
               isLoadingLocales={isLoadingLocales}
