@@ -55,36 +55,20 @@ export default function Page({ params }: pageProps) {
   const { data: permissions } = usePermissions()
   const { selectedLocale: locale } = useSelectedLocale(locales)
 
-  const contentId = params.contentId
-  const {
-    data: content,
-    isLoading,
-    refetch: refetchContent,
-  } = useContentByContentIdEdit(contentId, locale)
+  const contentId = decodeURIComponent(params.contentId)
+  const { data: content, isLoading } = useContentByContentIdEdit(contentId)
 
-  const findLocaleContent = (content: any, locale: any) => {
-    if (content?.localizations?.length > 0 && locale) {
-      return content.localizations.find(
-        (loc: any) => loc.locale === locale.code,
-      )
-    }
-    return null
-  }
+  const localeContent = content?.localizations?.filter(
+    (item: any) => item.locale === locale.code,
+  )[0]
 
   useEffect(() => {
-    refetchContent()
-  }, [locale, refetchContent])
-
-  useEffect(() => {
-    if (content) {
-      const localeContent = findLocaleContent(content, locale)
-      if (localeContent) {
-        setTitle(localeContent.title)
-        setDescription(localeContent.description)
-        setEditorContent(localeContent.content)
-      }
+    if (localeContent) {
+      setTitle(localeContent.title)
+      setDescription(localeContent.description)
+      setEditorContent(localeContent.content)
     }
-  }, [content, locale])
+  }, [localeContent])
 
   const debouncedSetTitle = useDebouncedCallback((title) => {
     handleUpdateTitle(title)
@@ -113,12 +97,14 @@ export default function Page({ params }: pageProps) {
       const payload = {
         id: content.id,
         content: json,
+        locale: locale.code,
+        contentId: content.id,
       }
       updateContentMutation.mutate(payload)
     }
   }
 
-  if (isLoading) return <EditorSkeleton />
+  if (isLoading || isLoadingLocales) return <EditorSkeleton />
 
   return (
     <>
@@ -138,7 +124,7 @@ export default function Page({ params }: pageProps) {
             <div className="flex items-center justify-between px-8 pt-10 sm:px-10 lg:px-12">
               <textarea
                 placeholder="Title"
-                defaultValue={title}
+                defaultValue={title || ""}
                 onChange={(e) => {
                   debouncedSetTitle(e.target.value)
                 }}
@@ -152,11 +138,11 @@ export default function Page({ params }: pageProps) {
 
             <div className="relative w-full">
               <Editor
-                key={editorContent}
+                key={editorContent || ""}
                 onDebouncedUpdate={handleEditorUpdate}
                 debounceDuration={750}
                 disableLocalStorage
-                defaultValue={editorContent}
+                defaultValue={editorContent || ""}
                 className="-mt-10"
               />
             </div>

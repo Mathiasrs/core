@@ -1,18 +1,14 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 
-export default function useContentByContentIdEdit(
-  contentId: string,
-  locale: any,
-) {
+export default function useContentByContentIdEdit(contentId: string) {
   return useQuery({
-    queryKey: ["contentAll", contentId, locale],
+    queryKey: ["contentAll", contentId],
     queryFn: async () => {
       const { data } = await axios.post(
         "/api/read/content/readContentByContentId",
         {
           contentId,
-          locale: locale.code,
         },
       )
       return data

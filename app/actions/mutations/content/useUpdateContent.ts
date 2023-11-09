@@ -10,10 +10,17 @@ import axios from "axios"
 // Types
 import { ContentUpdateRequest } from "@/lib/validators/content"
 
-const updateContentMutation = async ({ id, content }: ContentUpdateRequest) => {
+const updateContentMutation = async ({
+  id,
+  content,
+  locale,
+  contentId,
+}: ContentUpdateRequest) => {
   const payload: ContentUpdateRequest = {
     id,
     content,
+    locale,
+    contentId,
   }
 
   const { data } = await axios.post("/api/update/content/updateContent", {

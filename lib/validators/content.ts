@@ -35,6 +35,8 @@ export type ContentDeleteRequest = z.infer<typeof ContentDeleteValidator>
 export const ContentValidator = z.object({
   id: z.string(),
   content: z.any(),
+  locale: z.string(),
+  contentId: z.string(),
 })
 
 export type ContentUpdateRequest = z.infer<typeof ContentValidator>
