@@ -7,11 +7,17 @@ import axios from "axios"
 // Types
 import { TitleUpdateRequest } from "@/lib/validators/content"
 
-const updateTitleMutation = async ({ id, title, slug }: TitleUpdateRequest) => {
+const updateTitleMutation = async ({
+  id,
+  title,
+  locale,
+  contentId,
+}: TitleUpdateRequest) => {
   const payload: TitleUpdateRequest = {
     id,
     title,
-    slug,
+    locale,
+    contentId,
   }
 
   const { data } = await axios.post("/api/update/content/updateContentTitle", {
@@ -21,7 +27,11 @@ const updateTitleMutation = async ({ id, title, slug }: TitleUpdateRequest) => {
   return data
 }
 
-export function useUpdateTitle(setSaveStatus: any) {
+export function useUpdateTitle(
+  setSaveStatus: any,
+  contentId: string,
+  locale: any,
+) {
   const queryClient = useQueryClient()
 
   const mutation = useMutation({
@@ -31,7 +41,9 @@ export function useUpdateTitle(setSaveStatus: any) {
       setSaveStatus("Failed to save")
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["contentAll"] })
+      queryClient.invalidateQueries({
+        queryKey: ["contentAll", contentId, locale],
+      })
 
       setSaveStatus("Saved")
     },

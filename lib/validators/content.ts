@@ -42,7 +42,8 @@ export type ContentUpdateRequest = z.infer<typeof ContentValidator>
 export const TitleValidator = z.object({
   id: z.string(),
   title: z.string(),
-  slug: z.string(),
+  locale: z.string(),
+  contentId: z.string(),
 })
 
 export type TitleUpdateRequest = z.infer<typeof TitleValidator>

@@ -9,7 +9,7 @@ import prisma from "@/lib/prisma"
 
 export async function POST(request: Request) {
   const session = (await getServerSession(authOptions)) as any
-  const { contentId } = await request.json()
+  const { contentId, locale } = await request.json()
 
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
@@ -21,7 +21,11 @@ export async function POST(request: Request) {
         contentId: contentId,
       },
       include: {
-        localizations: true,
+        localizations: {
+          where: {
+            locale: locale,
+          },
+        },
       },
     })
 

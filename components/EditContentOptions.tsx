@@ -46,7 +46,12 @@ import { priorities, statuses } from "@/components/data"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 
-export default function EditContentOptions({ content, locales }: any) {
+export default function EditContentOptions({
+  description,
+  content,
+  locales,
+  isLoadingLocales,
+}: any) {
   const [isChecked, setIsChecked] = useState(false)
   const [priority, setPriority] = useState("")
   const [status, setStatus] = useState("")
@@ -173,7 +178,7 @@ export default function EditContentOptions({ content, locales }: any) {
           <Label htmlFor="picture">Description</Label>
           <Textarea
             placeholder="Provide a short description of the content."
-            defaultValue={content?.description}
+            defaultValue={description}
             onChange={(e) => debouncedUpdateDescription(e.target.value)}
             className={cn(updateDescription.isPending ? "animate-pulse" : "")}
           />
@@ -257,41 +262,43 @@ export default function EditContentOptions({ content, locales }: any) {
         </div>
 
         <div className="grid w-full items-center gap-1.5">
-          <Label htmlFor="picture">Language</Label>
-          <Select
-            onValueChange={(value) => {
-              const newLocale = locales.find(
-                (locale: Locale) => locale.code === value,
-              )
-              if (newLocale) {
-                setSelectedLocale(newLocale)
-              }
-            }}
-            value={selectedLocale?.code || ""}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select language" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Locales</SelectLabel>
-                {locales.map((locale: Locale) => (
-                  <SelectItem
-                    key={locale.id}
-                    value={locale.code || ""}
-                    className="flex items-center"
-                    onClick={() => setSelectedLocale(locale)}
-                  >
-                    <div className="flex items-center justify-center">
-                      <span className="inline-flex items-center">
-                        {locale.name}
-                      </span>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <Label htmlFor="language-select">Language</Label>
+          <div className={cn(isLoadingLocales ? "animate-pulse" : "")}>
+            <Select
+              disabled={isLoadingLocales}
+              onValueChange={(value) => {
+                const newLocale = locales?.find(
+                  (locale: Locale) => locale.code === value,
+                )
+                if (newLocale) {
+                  setSelectedLocale(newLocale)
+                }
+              }}
+              value={selectedLocale?.code || ""}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue
+                  placeholder={
+                    isLoadingLocales ? "Loading..." : "Select language"
+                  }
+                />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Locales</SelectLabel>
+                  {locales?.map((locale: Locale) => (
+                    <SelectItem
+                      key={locale.id}
+                      value={locale.code}
+                      className="flex items-center"
+                    >
+                      {locale.name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </CardContent>
     </Card>

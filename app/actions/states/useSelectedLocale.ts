@@ -12,17 +12,19 @@ const fallbackLocale: Locale = {
   tenantId: "",
 }
 
-export function useSelectedLocale(locales: Locale[]) {
+export function useSelectedLocale(locales?: Locale[]) {
   const getStoredLocale = (): Locale => {
     const storedLocaleCode =
       typeof window !== "undefined"
         ? localStorage.getItem("selectedLocale")
         : null
     const storedLocale = storedLocaleCode
-      ? locales.find((locale) => locale.code === storedLocaleCode)
+      ? locales?.find((locale) => locale.code === storedLocaleCode)
       : null
     return (
-      storedLocale || locales.find((locale) => locale.default) || fallbackLocale
+      storedLocale ||
+      locales?.find((locale) => locale.default) ||
+      fallbackLocale
     )
   }
 

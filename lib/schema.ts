@@ -3,8 +3,8 @@ import { z } from "zod"
 export const localizationSchema = z.object({
   locale: z.string(),
   title: z.string(),
-  description: z.string().optional(),
-  content: z.any(), // Use a more specific schema if possible for the content field
+  description: z.string().nullable().optional(),
+  content: z.any(),
   contentId: z.string(),
 })
 
@@ -14,7 +14,7 @@ export const contentSchema = z.object({
   label: z.string(),
   priority: z.string(),
   contentId: z.string(),
-  localizations: z.array(localizationSchema), // This is how you include localizations
+  localizations: z.array(localizationSchema),
 })
 
 export type Content = z.infer<typeof contentSchema>

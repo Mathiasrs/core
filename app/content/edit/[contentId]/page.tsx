@@ -18,13 +18,13 @@ import useLocales from "@/actions/queries/tenant/useLocales"
 import { useUpdateTitle } from "@/app/actions/mutations/content/useUpdateTitle"
 import { useUpdateContent } from "@/app/actions/mutations/content/useUpdateContent"
 
+// States
+import { useSelectedLocale } from "@/app/actions/states/useSelectedLocale"
+
 // Libraries
 import { Editor } from "novel"
 import { useDebouncedCallback } from "use-debounce"
 import { FaArrowCircleLeft } from "react-icons/fa"
-
-// Helpers
-import { generateSlug } from "@/lib/helpers/generateSlug"
 
 // Components
 import EditorSkeleton from "@/components/ui/skeletons/EditorSkeleton"
@@ -44,32 +44,67 @@ export default function Page({ params }: pageProps) {
     redirect("/")
   }
 
-  const { data: locales } = useLocales()
-
-  const { data: permissions } = usePermissions()
-
-  const [initialContent, setInitialContent] = useState("")
+  // State variables
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
+  const [editorContent, setEditorContent] = useState("")
   const [saveStatus, setSaveStatus] = useState("Saved")
 
+  // Locale and permissions
+  const { data: locales, isLoading: isLoadingLocales } = useLocales()
+  const { data: permissions } = usePermissions()
+  const { selectedLocale: locale } = useSelectedLocale(locales)
+
   const contentId = params.contentId
-  const { data: content, isLoading } = useContentByContentIdEdit(contentId)
+  const {
+    data: content,
+    isLoading,
+    refetch: refetchContent,
+  } = useContentByContentIdEdit(contentId, locale)
+
+  const findLocaleContent = (content: any, locale: any) => {
+    if (content?.localizations?.length > 0 && locale) {
+      return content.localizations.find(
+        (loc: any) => loc.locale === locale.code,
+      )
+    }
+    return null
+  }
+
+  useEffect(() => {
+    refetchContent()
+  }, [locale, refetchContent])
+
+  useEffect(() => {
+    if (content) {
+      // Update the state based on the new content
+      const localeContent = findLocaleContent(content, locale)
+      if (localeContent) {
+        setTitle(localeContent.title)
+        setDescription(localeContent.description)
+        setEditorContent(localeContent.content)
+      }
+    }
+  }, [content, locale])
 
   const debouncedSetTitle = useDebouncedCallback((title) => {
     handleUpdateTitle(title)
   }, 750)
 
-  const updateTitleMutation = useUpdateTitle(setSaveStatus)
-  const updateContentMutation = useUpdateContent(setSaveStatus)
+  const updateTitleMutation = useUpdateTitle(setSaveStatus, contentId, locale)
 
   const handleUpdateTitle = async (title: string) => {
     setSaveStatus("Saving...")
     const payload = {
       id: content.id,
       title: title,
-      slug: generateSlug(title),
+      locale: locale.code,
+      contentId: content.id,
     }
     updateTitleMutation.mutate(payload)
   }
+
+  const updateContentMutation = useUpdateContent(setSaveStatus)
 
   const handleEditorUpdate = async (editor: any) => {
     setSaveStatus("Saving...")
@@ -83,12 +118,6 @@ export default function Page({ params }: pageProps) {
       updateContentMutation.mutate(payload)
     }
   }
-
-  useEffect(() => {
-    if (content?.content) {
-      setInitialContent(content?.content)
-    }
-  }, [content])
 
   if (isLoading) return <EditorSkeleton />
 
@@ -110,7 +139,7 @@ export default function Page({ params }: pageProps) {
             <div className="flex items-center justify-between px-8 pt-10 sm:px-10 lg:px-12">
               <textarea
                 placeholder="Title"
-                defaultValue={content?.title}
+                defaultValue={title}
                 onChange={(e) => {
                   debouncedSetTitle(e.target.value)
                 }}
@@ -124,18 +153,23 @@ export default function Page({ params }: pageProps) {
 
             <div className="relative w-full">
               <Editor
-                key={initialContent}
+                key={editorContent}
                 onDebouncedUpdate={handleEditorUpdate}
                 debounceDuration={750}
                 disableLocalStorage
-                defaultValue={initialContent ? initialContent : ""}
+                defaultValue={editorContent}
                 className="-mt-10"
-              />{" "}
+              />
             </div>
           </div>
 
           <div className="order-1 col-span-6 grid gap-4 lg:order-2 lg:col-span-2">
-            <EditContentOptions content={content} locales={locales} />
+            <EditContentOptions
+              description={description}
+              content={content}
+              locales={locales}
+              isLoadingLocales={isLoadingLocales}
+            />
           </div>
         </div>
       ) : (
