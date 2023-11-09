@@ -77,7 +77,6 @@ export default function Page({ params }: pageProps) {
 
   useEffect(() => {
     if (content) {
-      // Update the state based on the new content
       const localeContent = findLocaleContent(content, locale)
       if (localeContent) {
         setTitle(localeContent.title)
