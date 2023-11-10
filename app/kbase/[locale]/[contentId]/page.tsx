@@ -48,6 +48,8 @@ export default function ContentPage({ params }: pageProps) {
     redirect("/")
   }
 
+  console.log(params)
+
   const { data: permissions } = usePermissions()
 
   const [initialContent, setInitialContent] = useState("")

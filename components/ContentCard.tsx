@@ -18,15 +18,17 @@ import { cn } from "@/lib/utils"
 import { labels } from "@/components/data"
 import Views from "./Views"
 
-export default function ContentCard({ data }: any) {
+export default function ContentCard({ data, locale }: any) {
   const matchedLabel = labels.find(
     (label) => label.label.toLowerCase() === data?.label.toLowerCase(),
   )
 
   const badgeClassNames = matchedLabel ? matchedLabel.classNames : ""
 
+  const defaultLocale = locale !== undefined ? locale : "en-US"
+
   return (
-    <Link href={`kbase/${data?.contentId}`}>
+    <Link href={`kbase/${defaultLocale}/${data?.contentId}`}>
       <Card className="flex h-full flex-col justify-between">
         <div className="flex-grow">
           <CardHeader className="font-semibold">

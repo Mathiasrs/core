@@ -12,7 +12,7 @@ import SectionIntro from "@/components/SectionIntro"
 import LoadingSpinner from "@/components/LoadingSpinner"
 import { DataContentToolbar } from "@/components/ui/content/data-content-toolbar"
 
-export default function ContentList() {
+export default function ContentList({ locale }: { locale: any }) {
   const {
     data: infiniteData,
     fetchNextPage,
@@ -56,10 +56,10 @@ export default function ContentList() {
         {filteredContent?.map((item, i) => {
           return i === filteredContent.length - 1 ? (
             <div key={item.id} ref={ref}>
-              <ContentCard key={item?.id} data={item} />
+              <ContentCard key={item?.id} data={item} locale={locale} />
             </div>
           ) : (
-            <ContentCard key={item?.id} data={item} />
+            <ContentCard key={item?.id} data={item} locale={locale} />
           )
         })}
       </div>
