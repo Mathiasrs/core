@@ -37,6 +37,7 @@ import Message from "@/components/Message"
 
 type pageProps = {
   params: {
+    locale: string
     contentId: string
   }
 }
@@ -48,8 +49,6 @@ export default function ContentPage({ params }: pageProps) {
     redirect("/")
   }
 
-  console.log(params)
-
   const { data: permissions } = usePermissions()
 
   const [initialContent, setInitialContent] = useState("")
@@ -57,9 +56,13 @@ export default function ContentPage({ params }: pageProps) {
   const contentId = params.contentId
   const { data: content, isLoading } = useContentByContentId(contentId)
 
+  const localeContent = content?.localizations?.filter(
+    (item: any) => item.locale === params.locale,
+  )[0]
+
   useEffect(() => {
-    if (content?.content) {
-      setInitialContent(content?.content)
+    if (localeContent) {
+      setInitialContent(localeContent?.content)
     }
   }, [content])
 
@@ -90,13 +93,13 @@ export default function ContentPage({ params }: pageProps) {
               <div className="prose prose-stone dark:prose-invert relative order-2 col-span-6 rounded-xl border border-zinc-200 bg-white p-4 text-zinc-950 shadow dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-50 md:p-6 lg:order-1 lg:col-span-4 lg:p-8">
                 <div className="mb-6 grid items-center justify-between">
                   <h2 className="w-full place-items-center bg-transparent text-3xl font-bold lg:text-4xl xl:text-5xl">
-                    {content?.title}
+                    {localeContent?.title}
                   </h2>
                   <Badge
                     className={cn("mt-4 w-fit uppercase", badgeClassNames)}
                     variant="outline"
                   >
-                    {content?.label}
+                    {localeContent?.label}
                   </Badge>
                 </div>
 
@@ -128,7 +131,10 @@ export default function ContentPage({ params }: pageProps) {
 
                     <div className="grid w-full items-center gap-1.5">
                       <Label htmlFor="picture">Description</Label>
-                      <Textarea defaultValue={content.description} disabled />
+                      <Textarea
+                        defaultValue={localeContent.description}
+                        disabled
+                      />
                     </div>
 
                     <div className="grid w-full items-center gap-1.5">
