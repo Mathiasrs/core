@@ -72,8 +72,6 @@ export default function ContentPage({ params }: pageProps) {
 
   const badgeClassNames = matchedLabel ? matchedLabel.classNames : ""
 
-  console.log(badgeClassNames)
-
   if (isLoading) return <ContentViewerSkeleton />
 
   return (
