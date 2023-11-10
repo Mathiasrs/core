@@ -41,6 +41,13 @@ interface User {
   theme?: string
 }
 
+interface Settings {
+  id?: string
+  userId?: string
+  theme?: string
+  locale?: string
+}
+
 interface Permission {
   id: string
   permissionKey: string

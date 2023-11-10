@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma"
 import { getServerSession } from "next-auth"
 import { authOptions } from "app/api/auth/[...nextauth]/route"
 
-interface User {
+interface UserSettings {
   theme: string
 }
 
@@ -19,13 +19,22 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const userId = session.user.id
 
   try {
-    const { theme }: User = JSON.parse(await request.text())
+    const { theme }: UserSettings = JSON.parse(await request.text())
 
-    const updateTheme = await prisma.user.update({
-      where: { id: userId },
+    const updateTheme = await prisma.userSettings.upsert({
+      where: { userId: userId },
 
-      data: {
-        theme: theme,
+      create: {
+        theme,
+        user: {
+          connect: {
+            id: userId,
+          },
+        },
+      },
+
+      update: {
+        theme,
       },
     })
 
@@ -33,8 +42,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   } catch (error) {
     console.error("Error updateTheme:", error)
     return NextResponse.json(
-      { message: "An error occurred while creating or updating profile" },
-      { status: 500 }
+      { message: "An error occurred while creating or updating theme" },
+      { status: 500 },
     )
   }
 }

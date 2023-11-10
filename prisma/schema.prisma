@@ -80,6 +80,7 @@ model User {
 
   accounts    Account[]
   sessions    Session[]
+  settings    UserSettings?
   permission  Permission[]
   content     Content[]
   comment     Comment[]
@@ -91,6 +92,15 @@ model User {
 
   @@index([id])
   @@index([tenantId])
+}
+
+model UserSettings {
+  id     Int     @id @default(autoincrement())
+  userId String  @unique
+  theme  String?
+  locale String?
+
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Permission {
