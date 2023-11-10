@@ -72,6 +72,8 @@ export default function ContentPage({ params }: pageProps) {
 
   const badgeClassNames = matchedLabel ? matchedLabel.classNames : ""
 
+  console.log(badgeClassNames)
+
   if (isLoading) return <ContentViewerSkeleton />
 
   return (
@@ -99,7 +101,7 @@ export default function ContentPage({ params }: pageProps) {
                     className={cn("mt-4 w-fit uppercase", badgeClassNames)}
                     variant="outline"
                   >
-                    {localeContent?.label}
+                    {content?.label}
                   </Badge>
                 </div>
 
