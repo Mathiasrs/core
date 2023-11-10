@@ -173,5 +173,5 @@ export default function ContentRender({ data }: any) {
     image,
   }
 
-  return <TipTapRender node={data ? data.content : ""} handlers={handlers} />
+  return <TipTapRender node={data ? data : ""} handlers={handlers} />
 }
