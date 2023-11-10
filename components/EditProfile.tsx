@@ -66,7 +66,7 @@ export default function EditUser() {
     error: errorLocales,
   } = useLocales()
 
-  const [locale, setLocale] = useState(settings?.locale || "en-US")
+  const [locale, setLocale] = useState(settings?.locale)
 
   const mutation = useUpdateUser()
 
@@ -108,7 +108,7 @@ export default function EditUser() {
   const handleUpdateLocale = async (newLocale: any) => {
     setLocale(newLocale)
     const payload = {
-      locale: locale,
+      locale: newLocale,
     }
 
     updateLocaleMutation.mutate(payload)
