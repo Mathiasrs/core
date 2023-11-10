@@ -132,7 +132,7 @@ export default function ContentPage({ params }: pageProps) {
                     <div className="grid w-full items-center gap-1.5">
                       <Label htmlFor="picture">Description</Label>
                       <Textarea
-                        defaultValue={localeContent.description}
+                        defaultValue={localeContent?.description}
                         disabled
                       />
                     </div>
