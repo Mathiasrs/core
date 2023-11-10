@@ -27,12 +27,16 @@ export default function ContentCard({ data, locale }: any) {
 
   const defaultLocale = locale !== undefined ? locale : "en-US"
 
+  const localeContent = data?.localizations?.filter(
+    (item: any) => item.locale === defaultLocale,
+  )[0]
+
   return (
     <Link href={`kbase/${defaultLocale}/${data?.contentId}`}>
       <Card className="flex h-full flex-col justify-between">
         <div className="flex-grow">
           <CardHeader className="font-semibold">
-            {data?.title}
+            {localeContent.title}
 
             <Badge
               className={cn("mt-2 w-fit uppercase", badgeClassNames)}
@@ -42,7 +46,7 @@ export default function ContentCard({ data, locale }: any) {
             </Badge>
           </CardHeader>
           <CardContent>
-            <CardDescription>{data?.description}</CardDescription>
+            <CardDescription>{localeContent.description}</CardDescription>
           </CardContent>
         </div>
 
