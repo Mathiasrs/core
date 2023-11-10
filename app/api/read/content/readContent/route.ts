@@ -20,6 +20,9 @@ export async function GET(): Promise<NextResponse> {
       orderBy: {
         createdAt: "desc",
       },
+      include: {
+        localizations: true,
+      },
     })
 
     return NextResponse.json(readContent)

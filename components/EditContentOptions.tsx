@@ -2,6 +2,12 @@
 
 import { useEffect, useState } from "react"
 
+// Next
+import { useRouter } from "next/navigation"
+
+// States
+import { useSelectedLocale } from "@/actions/states/useSelectedLocale"
+
 // Mutations
 import { useUpdateIsPublished } from "@/actions/mutations/content/useUpdateIsPublished"
 import { useUpdateContentId } from "@/app/actions/mutations/content/useUpdateContentId"
@@ -9,9 +15,13 @@ import { useUpdatePriority } from "@/app/actions/mutations/content/useUpdatePrio
 import { useUpdateStatus } from "@/app/actions/mutations/content/useUpdateStatus"
 import { useUpdateDescription } from "@/app/actions/mutations/content/useUpdateDescription"
 
+// Types
+import { Locale } from "types/typings"
+
 // Libraries
 import { RocketIcon } from "@radix-ui/react-icons"
 import { useDebouncedCallback } from "use-debounce"
+import { Label } from "@radix-ui/react-label"
 
 // Components
 import {
@@ -34,22 +44,26 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-import { Label } from "@radix-ui/react-label"
 import { Input, InputDescription } from "@/components/ui/input"
 import { priorities, statuses } from "@/components/data"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 
-export default function EditContentOptions({ content }: any) {
+export default function EditContentOptions({
+  description,
+  content,
+  locales,
+  isLoadingLocales,
+  locale,
+}: any) {
+  const router = useRouter()
+
   const [isChecked, setIsChecked] = useState(false)
   const [priority, setPriority] = useState("")
   const [status, setStatus] = useState("")
   const [contentId, setContentId] = useState(content?.contentId)
-  const updateIsPublished = useUpdateIsPublished(contentId)
-  const updateContentId = useUpdateContentId(contentId)
-  const updatePriority = useUpdatePriority(contentId)
-  const updateStatus = useUpdateStatus(contentId)
-  const updateDescription = useUpdateDescription(contentId)
+
+  const { selectedLocale, setSelectedLocale } = useSelectedLocale(locales)
 
   const debouncedUpdateContentId = useDebouncedCallback((contentId) => {
     setContentId(contentId)
@@ -76,6 +90,8 @@ export default function EditContentOptions({ content }: any) {
     }
   }, [content])
 
+  const updateIsPublished = useUpdateIsPublished(contentId)
+
   const handleToggle = () => {
     const newStatus = !isChecked
     setIsChecked(newStatus)
@@ -88,6 +104,8 @@ export default function EditContentOptions({ content }: any) {
     updateIsPublished.mutate(payload)
   }
 
+  const updateContentId = useUpdateContentId(contentId)
+
   const handleUpdateContentId = (contentId: string) => {
     const payload = {
       id: content.id,
@@ -96,6 +114,8 @@ export default function EditContentOptions({ content }: any) {
 
     updateContentId.mutate(payload)
   }
+
+  const updatePriority = useUpdatePriority(contentId)
 
   const handleUpdatePriority = (priority: string) => {
     const payload = {
@@ -106,6 +126,8 @@ export default function EditContentOptions({ content }: any) {
     updatePriority.mutate(payload)
   }
 
+  const updateStatus = useUpdateStatus(contentId)
+
   const handleUpdateStatus = (status: string) => {
     const payload = {
       id: content.id,
@@ -115,10 +137,13 @@ export default function EditContentOptions({ content }: any) {
     updateStatus.mutate(payload)
   }
 
+  const updateDescription = useUpdateDescription(contentId, locale)
+
   const handleUpdateDescription = (description: string) => {
     const payload = {
       id: content.id,
       description,
+      locale: locale.code,
     }
 
     updateDescription.mutate(payload)
@@ -158,6 +183,16 @@ export default function EditContentOptions({ content }: any) {
           <InputDescription>
             Provide an ID for better handling and finding content.
           </InputDescription>
+        </div>
+
+        <div className="grid w-full items-center gap-1.5">
+          <Label htmlFor="picture">Description</Label>
+          <Textarea
+            placeholder="Provide a short description of the content."
+            defaultValue={description}
+            onChange={(e) => debouncedUpdateDescription(e.target.value)}
+            className={cn(updateDescription.isPending ? "animate-pulse" : "")}
+          />
         </div>
 
         <div className="grid w-full items-center gap-1.5">
@@ -238,13 +273,44 @@ export default function EditContentOptions({ content }: any) {
         </div>
 
         <div className="grid w-full items-center gap-1.5">
-          <Label htmlFor="picture">Description</Label>
-          <Textarea
-            placeholder="Provide a short description of the content."
-            defaultValue={content?.description}
-            onChange={(e) => debouncedUpdateDescription(e.target.value)}
-            className={cn(updateDescription.isPending ? "animate-pulse" : "")}
-          />
+          <Label htmlFor="language-select">Language</Label>
+          <div className={cn(isLoadingLocales ? "animate-pulse" : "")}>
+            <Select
+              disabled={isLoadingLocales}
+              onValueChange={(value) => {
+                const newLocale = locales?.find(
+                  (locale: Locale) => locale.code === value,
+                )
+                if (newLocale) {
+                  setSelectedLocale(newLocale)
+                  router.refresh()
+                }
+              }}
+              value={selectedLocale?.code || ""}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue
+                  placeholder={
+                    isLoadingLocales ? "Loading..." : "Select language"
+                  }
+                />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Locales</SelectLabel>
+                  {locales?.map((locale: Locale) => (
+                    <SelectItem
+                      key={locale.id}
+                      value={locale.code}
+                      className="flex items-center"
+                    >
+                      {locale.name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </CardContent>
     </Card>

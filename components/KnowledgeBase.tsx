@@ -2,6 +2,7 @@
 
 // Queries
 import usePermissions from "@/actions/queries/user/usePermissions"
+import useSettings from "@/actions/queries/user/useSettings"
 
 // Libraries
 import getPhrase from "@/lib/helpers/phrases"
@@ -14,8 +15,14 @@ import Message from "@/components/Message"
 export default function KnowledgeBase({ session }: any) {
   const { data, isLoading, error } = usePermissions()
 
-  if (isLoading) return <div>Loading...</div>
-  if (error) return <div>Error...</div>
+  const {
+    data: settings,
+    isLoading: isLoadingSettings,
+    error: errorSettings,
+  } = useSettings()
+
+  if (isLoading || isLoadingSettings) return <div>Loading...</div>
+  if (error || errorSettings) return <div>Error...</div>
 
   return (
     <div className="flex h-full flex-1 flex-col gap-6 space-y-8 p-2 lg:p-8">
@@ -30,9 +37,9 @@ export default function KnowledgeBase({ session }: any) {
             </div>
           </div>
           <div className="grid gap-12">
-            <FeaturedList />
+            <FeaturedList locale={settings?.locale} />
 
-            <ContentList />
+            <ContentList locale={settings?.locale} />
           </div>
         </>
       ) : (

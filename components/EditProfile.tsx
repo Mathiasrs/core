@@ -7,10 +7,13 @@ import React, { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 
 // Queries
-import useUser from "@/app/actions/queries/user/useUser"
+import useUser from "@/actions/queries/user/useUser"
+import useLocales from "@/actions/queries/tenant/useLocales"
+import useSettings from "@/actions/queries/user/useSettings"
 
 // Mutations
 import { useUpdateUser } from "@/actions/mutations/user/useUpdateUser"
+import { useUpdateLocale } from "@/actions/mutations/user/useUpdateLocale"
 
 // Auth
 import { signOut } from "next-auth/react"
@@ -28,6 +31,19 @@ import { Button } from "@/components/ui/button"
 import LoadingSpinner from "@/components/LoadingSpinner"
 import { ThemeSelector } from "@/components/ThemeSelector"
 
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+// Types
+import { Locale } from "types/typings"
+
 interface IFormInput {
   name: string
   about: string
@@ -39,6 +55,18 @@ export default function EditUser() {
   const [isSigningOut, setIsSigningOut] = useState(false)
 
   const { data: user, isLoading, error } = useUser()
+  const {
+    data: settings,
+    isLoading: isLoadingSettngs,
+    error: errorSettings,
+  } = useSettings()
+  const {
+    data: locales,
+    isLoading: isLoadingLocales,
+    error: errorLocales,
+  } = useLocales()
+
+  const [locale, setLocale] = useState(settings?.locale)
 
   const mutation = useUpdateUser()
 
@@ -75,6 +103,17 @@ export default function EditUser() {
     })
   }
 
+  const updateLocaleMutation = useUpdateLocale()
+
+  const handleUpdateLocale = async (newLocale: any) => {
+    setLocale(newLocale)
+    const payload = {
+      locale: newLocale,
+    }
+
+    updateLocaleMutation.mutate(payload)
+  }
+
   function signOutButton() {
     function handleSignOut() {
       setIsSigningOut(true)
@@ -104,8 +143,9 @@ export default function EditUser() {
     if (isSigningOut === false) return button
   }
 
-  if (isLoading) return <EditUserSkeleton />
-  if (error) return <div>Failed to load</div>
+  if (isLoading || isLoadingSettngs || isLoadingLocales)
+    return <EditUserSkeleton />
+  if (error || errorSettings || errorLocales) return <div>Failed to load</div>
 
   return (
     <div className="md:col-span-2">
@@ -203,6 +243,46 @@ export default function EditUser() {
                   />
                 </div>
               </div>
+            </div>
+
+            <div className="col-span-full">
+              <label
+                htmlFor="url"
+                className="block text-sm font-medium leading-6 text-zinc-900 dark:text-white"
+              >
+                Language
+              </label>
+
+              <div className="my-2">
+                <Select
+                  onValueChange={(newLocale) => {
+                    handleUpdateLocale(newLocale)
+                  }}
+                  value={locale}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder={"Select language"} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Locales</SelectLabel>
+                      {locales?.map((locale: Locale) => (
+                        <SelectItem
+                          key={locale.code}
+                          value={locale.code}
+                          className="flex items-center"
+                        >
+                          {locale.name}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <p className="text-sm leading-6 text-zinc-600  dark:text-zinc-400">
+                Choose your prefered language. As standard it is set to en-US.
+              </p>
             </div>
 
             <div className="col-span-full">

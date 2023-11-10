@@ -6,7 +6,7 @@ import useViews from "@/actions/queries/view/useViews"
 import SectionIntro from "@/components/SectionIntro"
 import ContentCard from "@/components/ContentCard"
 
-export default function FeaturedList() {
+export default function FeaturedList({ locale }: { locale: any }) {
   const { data, isLoading, error } = useContent()
 
   const {
@@ -31,10 +31,9 @@ export default function FeaturedList() {
           .filter(Boolean)
       : []
 
-  if (isLoadingViews)
-    return <div className="grid gap-12 lg:grid-cols-3 lg:gap-6"></div>
+  if (isLoadingViews || isLoading) return <div>Loading...</div>
 
-  if (viewsError) return <div>Failed to load</div>
+  if (error || viewsError) return <div>Failed to load</div>
 
   return (
     <div className="grid gap-6">
@@ -45,7 +44,9 @@ export default function FeaturedList() {
 
       <div className="grid gap-6 lg:grid-cols-3">
         {mostViewedContent?.map((content: any) => {
-          return <ContentCard key={content?.id} data={content} />
+          return (
+            <ContentCard key={content?.id} data={content} locale={locale} />
+          )
         })}
       </div>
     </div>

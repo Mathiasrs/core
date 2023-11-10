@@ -47,10 +47,23 @@ model Session {
 }
 
 model Tenant {
-  id     String @id @default(cuid())
-  name   String @default("default")
-  domain String @unique @default("default")
-  users  User[]
+  id      String   @id @default(cuid())
+  name    String   @default("default")
+  domain  String   @unique @default("default")
+  users   User[]
+  locales Locale[]
+}
+
+model Locale {
+  id       String  @id @default(cuid())
+  code     String
+  name     String
+  default  Boolean @default(false)
+  tenantId String
+  tenant   Tenant  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@unique([code, tenantId])
+  @@index([tenantId])
 }
 
 model User {
@@ -63,10 +76,10 @@ model User {
   status        String?
   url           String?
   role          String?
-  theme         String?
 
   accounts    Account[]
   sessions    Session[]
+  settings    UserSettings?
   permission  Permission[]
   content     Content[]
   comment     Comment[]
@@ -78,6 +91,15 @@ model User {
 
   @@index([id])
   @@index([tenantId])
+}
+
+model UserSettings {
+  id     Int     @id @default(autoincrement())
+  userId String  @unique
+  theme  String?
+  locale String?
+
+  user User @relation(fields: [userId], references: [id])
 }
 
 model Permission {
@@ -106,10 +128,7 @@ model VerificationToken {
 
 model Content {
   id          String   @id @default(cuid())
-  title       String
-  slug        String   @unique
-  description String?
-  content     Json?
+  contentId   String   @unique
   type        String?  @default("article")
   status      String   @default("backlog")
   label       String   @default("new")
@@ -117,15 +136,28 @@ model Content {
   isPublished Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  contentId   String   @unique
 
-  authorId String
-  author   User   @relation(fields: [authorId], references: [id])
-
-  comments Comment[]
-  votes    Vote[]
+  authorId      String
+  author        User               @relation(fields: [authorId], references: [id])
+  localizations LocalizedContent[]
+  comments      Comment[]
+  votes         Vote[]
 
   @@index([authorId])
+}
+
+model LocalizedContent {
+  id          String  @id @default(cuid())
+  locale      String
+  title       String?
+  description String?
+  content     Json?
+  contentId   String
+  contentRef  Content @relation(fields: [contentId], references: [id])
+
+  @@unique([contentId, locale])
+  @@index([contentId])
+  @@index([locale])
 }
 
 model Comment {

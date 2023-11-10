@@ -35,6 +35,8 @@ export type ContentDeleteRequest = z.infer<typeof ContentDeleteValidator>
 export const ContentValidator = z.object({
   id: z.string(),
   content: z.any(),
+  locale: z.string(),
+  contentId: z.string(),
 })
 
 export type ContentUpdateRequest = z.infer<typeof ContentValidator>
@@ -42,7 +44,8 @@ export type ContentUpdateRequest = z.infer<typeof ContentValidator>
 export const TitleValidator = z.object({
   id: z.string(),
   title: z.string(),
-  slug: z.string(),
+  locale: z.string(),
+  contentId: z.string(),
 })
 
 export type TitleUpdateRequest = z.infer<typeof TitleValidator>
@@ -85,6 +88,7 @@ export type StatusUpdateRequest = z.infer<typeof StatusValidator>
 export const DescriptionValidator = z.object({
   id: z.string(),
   description: z.string(),
+  locale: z.any(),
 })
 
 export type DescriptionUpdateRequest = z.infer<typeof DescriptionValidator>

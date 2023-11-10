@@ -4,6 +4,8 @@ import { NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "app/api/auth/[...nextauth]/route"
 
+// APIs
+import { GET as readTenantId } from "../readTenantId/route"
 // Libraries
 import prisma from "@/lib/prisma"
 
@@ -15,21 +17,22 @@ export async function GET(): Promise<NextResponse> {
   }
 
   try {
-    const readContent = await prisma.content.findMany({
-      orderBy: {
-        createdAt: "desc",
-      },
-      include: {
-        localizations: true,
+    const tenantResponse = await readTenantId()
+    const tenantData = await tenantResponse.json()
+    const tenantId = tenantData.tenantId
+
+    const readLocales = await prisma.locale.findMany({
+      where: {
+        tenantId: tenantId,
       },
     })
 
-    return NextResponse.json(readContent)
+    return NextResponse.json(readLocales)
   } catch (error) {
-    console.error("Error reading content:", error)
+    console.error("Error reading profile:", error)
 
     return NextResponse.json(
-      { message: "An error occurred while reading content" },
+      { message: "An error occurred while reading the profile" },
       { status: 500 },
     )
   }

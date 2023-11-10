@@ -13,7 +13,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const { payload }: any = JSON.parse(await request.text())
 
-    const { id, content } = payload
+    const { id, content, locale, contentId } = payload
 
     if (!session) {
       return NextResponse.next({
@@ -21,10 +21,20 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       })
     }
 
-    await prisma.content.update({
-      where: { id: id },
+    await prisma.localizedContent.upsert({
+      where: { contentId_locale: { contentId: id, locale: locale } },
 
-      data: {
+      create: {
+        content,
+        locale,
+        contentRef: {
+          connect: {
+            id: contentId,
+          },
+        },
+      },
+
+      update: {
         content,
       },
     })

@@ -11,10 +11,12 @@ import { DescriptionUpdateRequest } from "@/lib/validators/content"
 const updateDescriptionMutation = async ({
   id,
   description,
+  locale,
 }: DescriptionUpdateRequest) => {
   const payload: DescriptionUpdateRequest = {
     id,
     description,
+    locale,
   }
 
   const { data } = await axios.post(
@@ -27,7 +29,7 @@ const updateDescriptionMutation = async ({
   return data
 }
 
-export function useUpdateDescription(contentId: string) {
+export function useUpdateDescription(contentId: string, locale: string) {
   const queryClient = useQueryClient()
   const { toast } = useToast()
 
@@ -35,7 +37,9 @@ export function useUpdateDescription(contentId: string) {
     mutationFn: updateDescriptionMutation,
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["contentAll", contentId] })
+      queryClient.invalidateQueries({
+        queryKey: ["contentAll", contentId, locale],
+      })
 
       toast({
         title: "Description is now updated!",

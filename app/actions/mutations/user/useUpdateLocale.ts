@@ -8,33 +8,33 @@ import { useToast } from "@/components/ui/use-toast"
 // Types
 import { Settings } from "@/types/typings"
 
-const updateThemeMutation = async ({ theme }: Settings) => {
-  return axios.post("/api/update/user/updateTheme", {
-    theme,
+const updateLocaleMutation = async ({ locale }: Settings) => {
+  return axios.post("/api/update/user/updateLocale", {
+    locale,
   })
 }
 
-export function useUpdateTheme() {
+export function useUpdateLocale() {
   const queryClient = useQueryClient()
   const { toast } = useToast()
 
   const mutation = useMutation({
-    mutationFn: updateThemeMutation,
+    mutationFn: updateLocaleMutation,
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["profile"] })
 
       toast({
-        title: "The theme has been saved! 🚀",
+        title: "The language has been saved! 🚀",
       })
     },
     onError: (error) => {
-      console.error("Mutation error with useUpdateTheme:", error)
+      console.error("Mutation error with useUpdateLocale:", error)
 
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
-        description: "There was a problem saving your theme. 😔",
+        description: "There was a problem saving your locale. 😔",
       })
     },
   })

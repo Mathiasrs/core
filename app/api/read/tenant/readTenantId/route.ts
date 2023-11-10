@@ -7,30 +7,26 @@ import { authOptions } from "app/api/auth/[...nextauth]/route"
 // Libraries
 import prisma from "@/lib/prisma"
 
-export async function POST(request: Request) {
+export async function GET(): Promise<NextResponse> {
   const session = (await getServerSession(authOptions)) as any
-  const { contentId } = await request.json()
 
   if (!session) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
   }
 
   try {
-    const readContentByContentId = await prisma.content.findUnique({
+    const user = await prisma.user.findUnique({
       where: {
-        contentId: contentId,
-      },
-      include: {
-        localizations: true,
+        id: session.user.id,
       },
     })
 
-    return NextResponse.json(readContentByContentId)
+    return NextResponse.json({ tenantId: user?.tenantId })
   } catch (error) {
-    console.error("Error reading content:", error)
+    console.error("Error reading profile:", error)
 
     return NextResponse.json(
-      { message: "An error occurred while reading content" },
+      { message: "An error occurred while reading the profile" },
       { status: 500 },
     )
   }

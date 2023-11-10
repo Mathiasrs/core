@@ -41,6 +41,13 @@ interface User {
   theme?: string
 }
 
+interface Settings {
+  id?: string
+  userId?: string
+  theme?: string
+  locale?: string
+}
+
 interface Permission {
   id: string
   permissionKey: string
@@ -57,4 +64,12 @@ interface MessageProps {
   category: string
   title: string
   description: string
+}
+
+interface Locale {
+  id: string
+  code: string
+  name: string
+  default: boolean
+  tenantId: string
 }

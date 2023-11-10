@@ -1,8 +1,5 @@
 "use client"
 
-// Next
-import { useRouter } from "next/navigation"
-
 // Libraries
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
@@ -10,10 +7,17 @@ import axios from "axios"
 // Types
 import { ContentUpdateRequest } from "@/lib/validators/content"
 
-const updateContentMutation = async ({ id, content }: ContentUpdateRequest) => {
+const updateContentMutation = async ({
+  id,
+  content,
+  locale,
+  contentId,
+}: ContentUpdateRequest) => {
   const payload: ContentUpdateRequest = {
     id,
     content,
+    locale,
+    contentId,
   }
 
   const { data } = await axios.post("/api/update/content/updateContent", {
@@ -23,7 +27,11 @@ const updateContentMutation = async ({ id, content }: ContentUpdateRequest) => {
   return data
 }
 
-export function useUpdateContent(setSaveStatus: any) {
+export function useUpdateContent(
+  setSaveStatus: any,
+  contentId: string,
+  locale: any,
+) {
   const queryClient = useQueryClient()
 
   const mutation = useMutation({
@@ -33,7 +41,9 @@ export function useUpdateContent(setSaveStatus: any) {
       setSaveStatus("Failed to save")
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["contentAll"] })
+      queryClient.invalidateQueries({
+        queryKey: ["contentAll", contentId, locale],
+      })
 
       setSaveStatus("Saved")
     },
