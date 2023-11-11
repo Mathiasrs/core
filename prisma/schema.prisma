@@ -77,14 +77,15 @@ model User {
   url           String?
   role          String?
 
-  accounts    Account[]
-  sessions    Session[]
-  settings    UserSettings?
-  permission  Permission[]
-  content     Content[]
-  comment     Comment[]
-  votes       Vote[]
-  commentVote CommentVote[]
+  accounts         Account[]
+  sessions         Session[]
+  settings         UserSettings?
+  permission       Permission[]
+  content          Content[]
+  contentRevisions ContentRevision[]
+  comment          Comment[]
+  votes            Vote[]
+  commentVote      CommentVote[]
 
   tenantId String? @default("clnoifvo50000b5qus1ailtzy")
   tenant   Tenant? @relation(fields: [tenantId], references: [id])
@@ -147,17 +148,33 @@ model Content {
 }
 
 model LocalizedContent {
-  id          String  @id @default(cuid())
+  id          String            @id @default(cuid())
   locale      String
   title       String?
   description String?
   content     Json?
   contentId   String
-  contentRef  Content @relation(fields: [contentId], references: [id])
+  contentRef  Content           @relation(fields: [contentId], references: [id])
+  revisions   ContentRevision[]
 
   @@unique([contentId, locale])
   @@index([contentId])
   @@index([locale])
+}
+
+model ContentRevision {
+  id              String   @id @default(cuid())
+  revisionContent Json
+  createdAt       DateTime @default(now())
+
+  createdByUserId String
+  createdBy       User   @relation(fields: [createdByUserId], references: [id])
+
+  localizedContentId String
+  localizedContent   LocalizedContent @relation(fields: [localizedContentId], references: [id])
+
+  @@index([localizedContentId])
+  @@index([createdByUserId])
 }
 
 model Comment {

@@ -36,6 +36,16 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
       update: {
         content,
+
+        revisions: {
+          create: {
+            revisionContent: content,
+            createdAt: new Date(),
+            createdBy: {
+              connect: { id: session.user.id },
+            },
+          },
+        },
       },
     })
 
