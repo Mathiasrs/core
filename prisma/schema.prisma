@@ -47,11 +47,12 @@ model Session {
 }
 
 model Tenant {
-  id      String   @id @default(cuid())
-  name    String   @default("default")
-  domain  String   @unique @default("default")
+  id      String    @id @default(cuid())
+  name    String    @default("default")
+  domain  String    @unique @default("default")
   users   User[]
   locales Locale[]
+  content Content[]
 }
 
 model Locale {
@@ -144,7 +145,11 @@ model Content {
   comments      Comment[]
   votes         Vote[]
 
+  tenantId String
+  tenant   Tenant @relation(fields: [tenantId], references: [id])
+
   @@index([authorId])
+  @@index([tenantId])
 }
 
 model LocalizedContent {
