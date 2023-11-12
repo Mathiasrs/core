@@ -21,6 +21,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       })
     }
 
+    await prisma.localizedContent.deleteMany({
+      where: { contentId: id },
+    })
+
     await prisma.content.delete({
       where: { id: id },
     })
