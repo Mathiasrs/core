@@ -4,6 +4,9 @@ import { NextRequest, NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import { authOptions } from "app/api/auth/[...nextauth]/route"
 
+// APIs
+import { GET as readTenantId } from "@/app/api/read/tenant/readTenantId/route"
+
 // Libraries
 import prisma from "@/lib/prisma"
 
@@ -11,6 +14,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const session = (await getServerSession(authOptions)) as any
 
   try {
+    const tenantResponse = await readTenantId()
+    const tenantData = await tenantResponse.json()
+    const tenantId = tenantData.tenantId
+
     const { payload }: any = JSON.parse(await request.text())
 
     const { contentId, title, description } = payload
@@ -34,6 +41,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             locale: "en-US",
             title,
             description,
+          },
+        },
+        tenant: {
+          connect: {
+            id: tenantId,
           },
         },
       },
